@@ -1,4 +1,4 @@
-# Vitrine Perto — planejamento inicial
+# Hackarum-Yvisalro — planejamento inicial
 
 > Nome provisório. Documento para discussão da equipe e primeira entrega acadêmica. O aplicativo, o backend e as landing pages ainda não foram implementados.
 
