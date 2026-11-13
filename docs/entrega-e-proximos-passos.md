@@ -12,7 +12,7 @@ Este documento organiza o trabalho da equipe. Os itens abaixo são pendências d
 ## Pendente para a entrega acadêmica
 
 1. Confirmar a quantidade de landing pages e a finalidade de cada uma. Elas podem ser mais de duas e devem ter conteúdos diferentes.
-2. Confirmar com o professor qual é a tecnologia ou prática sorteada e como demonstrar sua incorporação. As landing pages foram mencionadas, mas a confirmação do requisito continua pendente.
+2. Escolher a ferramenta de construção das landing pages. A tecnologia sorteada (landing page) e a proposta de incorporação estão no [README](../README.md#tecnologia-sorteada-landing-page).
 3. Completar os esboços necessários para o painel da empresa e os pontos de entrada do login com Google e Apple; conferir os 11 protótipos existentes.
 4. Fechar a especificação: política de representantes de empresas, equivalência de produtos, regras de relevância, frequência de emails promocionais e coordenadas fictícias de demonstração.
 5. Elaborar o plano técnico, modelo de dados e contratos da API; conferir autenticação, separação dos dados entre empresas, notificações e integração do mapa.
@@ -21,7 +21,8 @@ Este documento organiza o trabalho da equipe. Os itens abaixo são pendências d
 
 ## Decisões já registradas
 
-- Web e aplicativo móvel; Flutter/Dart, arquitetura MVVM, backend Node.js com JSON, Supabase e PostgreSQL previstos.
+- Tema do desafio: **03. Descoberta de produtos, lojas e promoções**. Tecnologia sorteada: **landing page**.
+- Web e aplicativo móvel; Flutter/Dart, arquitetura MVVM, backend Node.js com TypeScript e JSON, Supabase e PostgreSQL previstos.
 - Autenticação real, login com Google e Apple, recuperação por email e sincronização de desejos e preferências por conta.
 - Uma empresa pode criar a conta e publicar imediatamente; não deve administrar dados de outra empresa.
 - A busca prioriza relevância e, entre resultados semelhantes, o menor preço; itens sem estoque aparecem por último. Variantes relacionadas não são automaticamente idênticas.
@@ -31,4 +32,4 @@ Este documento organiza o trabalho da equipe. Os itens abaixo são pendências d
 
 ## GitHub
 
-Na última verificação desta sessão, a pasta não estava inicializada como repositório Git e não havia repositório GitHub acessível pela conexão. A publicação não foi concluída. Antes de publicar, conferir a conta de destino, a visibilidade e quais arquivos devem ser incluídos, especialmente em razão da dúvida sobre projetos distintos compartilhando a pasta.
+O projeto está publicado em [HackaRun-2026-projeto-Yvisalro-13-](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-). O branch `main` é o principal; o desenvolvimento acontece em branches como `VictorXavierSL-patch-1-dev`, que precisam ser integrados ao `main` para aparecer na versão principal.

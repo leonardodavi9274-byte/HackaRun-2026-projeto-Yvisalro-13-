@@ -10,6 +10,23 @@ Criar um aplicativo para dispositivos móveis que ajude pessoas a descobrir loja
 
 O público principal são consumidores que desejam encontrar produtos e preços em diferentes lojas. O catálogo funcionará como uma vitrine de marketplace; compras e pagamentos não fazem parte do escopo atualmente definido.
 
+## Tema do desafio
+
+**03. Descoberta de produtos, lojas e promoções**
+
+- **Contexto:** um visitante chega ao shopping procurando um produto específico, como uma roupa, um tênis, um perfume ou um eletrônico.
+- **Problemática:** o consumidor pode não saber quais estabelecimentos comercializam o produto desejado, onde encontrá-lo, quais opções estão disponíveis ou onde existem condições comerciais mais interessantes.
+- **Objetivo:** facilitar a descoberta de produtos, estabelecimentos e oportunidades de compra dentro do shopping.
+
+### Como a proposta responde ao tema
+
+| Dúvida do consumidor | Resposta da solução | Requisitos |
+| --- | --- | --- |
+| Quais lojas vendem o produto? | Busca por texto, categoria e sinônimos, com a loja identificada em cada resultado. | FR-003, FR-004 |
+| Onde encontrá-lo? | Mapa interno com aparência 3D, lista de lojas por andar e categoria e rota simulada a partir de um ponto escolhido. | FR-007, FR-008 |
+| Quais opções estão disponíveis? | Disponibilidade em cada oferta, itens esgotados por último, variantes relacionadas e aviso de reposição. | FR-004, FR-005, FR-010 |
+| Onde há condições mais interessantes? | Comparação de preço entre lojas, promoções e stories, ofertas próximas e alerta de preço desejado. | FR-005, FR-009, FR-010, FR-011 |
+
 ## Primeira entrega
 
 A imagem fornecida pela equipe solicita planejamento técnico inicial: proposta e estrutura inicial de telas; documentação; linguagem escolhida; arquitetura; plataformas e tecnologias; e descrição da incorporação da tecnologia ou prática sorteada. Trata-se de uma entrega de planejamento, anterior ao MVP. A imagem informa sexta-feira, 13/11, até 12h; confirme o ano e o horário com a disciplina.
@@ -171,13 +188,35 @@ Os fluxos devem contemplar estados sem resultados, sem conexão, carregamento, e
 | Parte | Decisão inicial | Papel |
 | --- | --- | --- |
 | Aplicativo | Flutter e Dart | Interface mobile; organização MVVM em views, view models e acesso a dados. |
-| Backend | Node.js | Serviços e regras de negócio; comunicação com o aplicativo em JSON. Framework e hospedagem a definir. |
+| Backend | Node.js com TypeScript | Serviços e regras de negócio; comunicação com o aplicativo em JSON. Framework e hospedagem a definir. |
 | Banco e identidade | Supabase, PostgreSQL e Supabase Auth | Persistência e autenticação real; credenciais e configuração não devem ser incluídas no repositório. |
 | Mapa e dados | Mapa interno simulado e dados fictícios | Demonstração visual de lojas e caminhos; geolocalização do dispositivo será real. Fonte e coordenadas dos locais ainda precisam ser definidas. |
-| Landing pages | Tecnologia a definir; Vercel prevista | Publicação das páginas de apresentação do MVP. |
+| Landing pages (tecnologia sorteada) | Ferramenta de construção a definir; Vercel prevista | Publicação das páginas de apresentação do MVP. |
 | Processo | GitHub e Spec Kit | Colaboração e organização de especificação, planejamento e tarefas. |
 
 Fluxo proposto: **Flutter → API Node.js em JSON → Supabase/PostgreSQL**. A integração de autenticação e o controle de acesso serão detalhados no contrato técnico. Contratos mock e dados fictícios poderão apoiar o desenvolvimento, mas não substituem a autenticação real planejada.
+
+## Tecnologia sorteada: landing page
+
+A tecnologia sorteada para a equipe foi a **landing page**. Ela será a porta de entrada pública da solução: apresenta o problema do tema 03, mostra como o aplicativo ajuda a descobrir produtos, lojas e promoções e leva o visitante a usar o app ou o painel da empresa.
+
+### Proposta inicial de páginas
+
+A quantidade e o conteúdo final ainda serão confirmados pela equipe.
+
+| Página | Público | Conteúdo | Chamada para ação |
+| --- | --- | --- | --- |
+| Apresentação do app | Consumidores | O problema do tema; como funciona (buscar, comparar, ir até a loja); telas do protótipo; recursos principais. | Acessar a versão web ou baixar o app. |
+| Para lojistas | Empresas do shopping | Vantagens de publicar produtos e promoções; como funciona o painel da empresa; publicação imediata, sem aprovação prévia. | Criar a conta da empresa. |
+| Oferta compartilhada | Quem recebe um link | Produto, preço, loja e identificação da oferta (melhoria 14), com aviso de dado demonstrativo. | Abrir no app ou ver a rota até a loja. |
+
+### Como será incorporada
+
+- As páginas serão responsivas, para celular e computador, e publicadas na Vercel.
+- O conteúdo e a identidade visual seguirão o protótipo, com as mesmas cores e tipografia.
+- As páginas usarão os dados fictícios da demonstração e deixarão claro que lojas, preços e promoções são ilustrativos.
+- A página de oferta compartilhada poderá buscar os dados na API Node.js; as demais podem ser estáticas.
+- A ferramenta de construção das páginas ainda será escolhida pela equipe.
 
 ## Estrutura preliminar de dados
 
@@ -199,7 +238,7 @@ Esta é uma proposta conceitual, não um esquema de banco final.
 3. A localização indisponível exibirá mensagem de erro e seleção manual; o ponto inicial interno será escolhido no mapa.
 4. Listas de desejos e preferências serão sincronizadas por usuário. Avisos solicitados serão enviados por email quando houver reposição ou quando o preço desejado for atingido; a frequência das mensagens promocionais ainda precisa ser definida.
 5. A busca deverá encontrar variantes relacionadas, sem tratá-las automaticamente como produtos idênticos. Resultados disponíveis serão ordenados por relevância e, entre semelhantes, menor preço; itens sem estoque virão por último. A equivalência exata ainda precisa ser detalhada.
-6. Confirmar com o professor qual foi a prática ou tecnologia sorteada e como as landing pages atendem ao requisito.
+6. A tecnologia sorteada é a landing page (ver seção própria). Falta confirmar a quantidade de páginas, o conteúdo final e a ferramenta de construção.
 7. A plataforma será web e aplicativo móvel; a equipe de TI do shopping é a responsável indicada. Cronograma, hospedagem do backend e limites dos serviços permanecem a definir.
 
 ## Próximos passos
@@ -208,7 +247,7 @@ Esta é uma proposta conceitual, não um esquema de banco final.
 2. Preparar wireframes e fluxo das telas para a primeira entrega.
 3. Formalizar a especificação com Spec Kit, esclarecer requisitos e elaborar plano, modelo de dados e contratos.
 4. Gerar tarefas, incluindo autenticação, backend, banco, geolocalização e landing pages, e revisar a cobertura antes da implementação.
-5. Criar o repositório GitHub e compartilhar o link com a equipe.
+5. Compartilhar o link do repositório GitHub com a equipe e o professor.
 
 ## Situação atual
 

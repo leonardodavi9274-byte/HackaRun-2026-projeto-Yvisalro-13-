@@ -7,6 +7,8 @@
 
 ## Contexto e objetivo
 
+Esta feature responde ao tema do desafio **03. Descoberta de produtos, lojas e promoções**: facilitar a descoberta de produtos, estabelecimentos e oportunidades de compra dentro do shopping. O texto completo do tema e a relação com os requisitos estão no [README](../../README.md#tema-do-desafio).
+
 Uma vitrine para web e dispositivos móveis ajudará consumidores a encontrar produtos e ofertas em lojas de um shopping fictício inspirado em Palmas, Tocantins. O objetivo é apresentar os produtos que correspondam à busca e indicar onde encontrá-los; comprar não é obrigatório e o sistema não pode garantir a existência de um produto que não esteja cadastrado.
 
 O protótipo usará nomes fictícios, por exemplo **Shopping Veredas Douradas**, **Passo do Cerrado** e **Vitrine das Veredas**. Esses nomes são apenas exemplos e não identificam estabelecimentos reais. O mapa interno e os trajetos serão simulados; a geolocalização do dispositivo será real.
@@ -139,6 +141,6 @@ Como visitante, quero conhecer o MVP em landing pages com conteúdos diferentes.
 - O MVP é uma vitrine e não inclui pagamento ou compra dentro do aplicativo.
 - O shopping, lojas, ofertas e mapa usados na demonstração são fictícios; o uso de coordenadas para demonstração ainda exige definição.
 - A medida de relevância e o critério exato de equivalência entre variantes, os detalhes de associação de representantes a empresas e a frequência de emails promocionais ainda precisam de detalhamento.
-- As landing pages são exigência da entrega final; podem ser mais de duas, e a quantidade e as finalidades específicas aguardam confirmação. A prática sorteada e a forma de atendimento ao requisito devem ser confirmadas com o professor; “sim pode” não identifica a prática.
+- As landing pages são exigência da entrega final; podem ser mais de duas, e a quantidade e as finalidades específicas aguardam confirmação. A tecnologia sorteada para a equipe é a landing page; a proposta de incorporação está no [README](../../README.md#tecnologia-sorteada-landing-page).
 - A equipe de TI do shopping é a responsável indicada; cronograma e hospedagem do backend ainda não foram definidos.
 - O documento é um rascunho; prioridade e dificuldade das 14 melhorias constam no README e não tornam todas obrigatórias no primeiro recorte de implementação.

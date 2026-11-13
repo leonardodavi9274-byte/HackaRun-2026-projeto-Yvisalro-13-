@@ -14,7 +14,8 @@
 - [ ] Autorização das empresas, ordenação e programação de emails estão definidos sem ambiguidade.
 - [x] Os fluxos principais, os estados de erro e os limites de escopo estão identificados.
 - [x] Os critérios de sucesso são verificáveis e independentes de tecnologia.
-- [ ] As finalidades de cada landing page e a prática sorteada estão identificadas.
+- [x] A tecnologia sorteada (landing page) e o tema do desafio estão identificados.
+- [ ] A quantidade e as finalidades de cada landing page estão confirmadas pela equipe.
 - [ ] A cobertura de critérios de aceite para todas as funcionalidades está completa.
 
 ## Preparação para implementação
