@@ -1,6 +1,6 @@
-# Achei — Detalhamento funcional do aplicativo
+# hackarum-yvisalro-telasprototipo — Detalhamento funcional do aplicativo
 
-O Achei é uma vitrine para quem está no shopping. A pessoa pode procurar um produto, comparar ofertas de lojas, acompanhar itens de interesse e visualizar o caminho até uma loja. O **Shopping Aurora**, as lojas, os preços e os trajetos das imagens são demonstrativos. O protótipo usa o nome **Achei**, e o planejamento inicial registra **Vitrine Perto** como nome provisório.
+O hackarum-yvisalro-telasprototipo representa uma vitrine para quem está no shopping. A pessoa pode procurar um produto, comparar ofertas de lojas, acompanhar itens de interesse e visualizar o caminho até uma loja. O **Shopping Aurora**, as lojas, os preços e os trajetos das imagens são demonstrativos. O protótipo usa o nome **hackarum-yvisalro-telasprototipo**, e o planejamento inicial registra **Vitrine Perto** como nome provisório.
 
 **Estado do projeto.** Já existem o protótipo visual com 11 imagens, o planejamento e a especificação. As telas, as integrações e os comportamentos descritos abaixo estão planejados. Cada imagem é acompanhada das ações esperadas e dos pontos que precisam ser decididos antes da implementação.
 
@@ -32,7 +32,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 01 — Login
 
-<img src="imagens/achei/01-login.png" alt="Login com conta lembrada, campos de credenciais e opção de preencher uma senha salva" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/01-login.png" alt="Login com conta lembrada, campos de credenciais e opção de preencher uma senha salva" width="320">
 
 **Objetivo.** Dar acesso à conta e oferecer caminhos para quem precisa se cadastrar, trocar de conta ou recuperar a senha.
 
@@ -49,7 +49,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 02 — Cadastro · dados da conta
 
-<img src="imagens/achei/02-cadastro.png" alt="Primeira etapa do cadastro com foto opcional, nome, e-mail, senha e indicador de força" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/02-cadastro.png" alt="Primeira etapa do cadastro com foto opcional, nome, e-mail, senha e indicador de força" width="320">
 
 **Objetivo.** Coletar os dados essenciais da conta antes da personalização do aplicativo.
 
@@ -65,7 +65,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 03 — Cadastro · preferências
 
-<img src="imagens/achei/03-preferencias.png" alt="Segunda etapa do cadastro com categorias selecionáveis, produtos desejados e opção de receber ofertas por e-mail" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/03-preferencias.png" alt="Segunda etapa do cadastro com categorias selecionáveis, produtos desejados e opção de receber ofertas por e-mail" width="320">
 
 **Objetivo.** Personalizar as recomendações do Início e registrar a escolha sobre ofertas por e-mail.
 
@@ -82,7 +82,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 04 — Recuperação de senha
 
-<img src="imagens/achei/04-recuperacao-de-senha.png" alt="Recuperação com e-mail, confirmação de envio, código de seis dígitos e contagem para reenvio" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/04-recuperacao-de-senha.png" alt="Recuperação com e-mail, confirmação de envio, código de seis dígitos e contagem para reenvio" width="320">
 
 **Objetivo.** Permitir que a pessoa volte a acessar a conta mediante confirmação por e-mail.
 
@@ -98,7 +98,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 05 — Início
 
-<img src="imagens/achei/05-inicio.png" alt="Início com shopping e piso, busca, atalhos das lojas, recomendações, promoção e barra inferior" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/05-inicio.png" alt="Início com shopping e piso, busca, atalhos das lojas, recomendações, promoção e barra inferior" width="320">
 
 **Objetivo.** Ser o ponto de partida para procurar um produto ou descobrir ofertas no shopping.
 
@@ -115,7 +115,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 06 — Resultados da busca
 
-<img src="imagens/achei/06-resultados-da-busca.png" alt="Resultados para fone bluetooth até 300 com filtros, comparação entre lojas, preços, estoque e ação de rota" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/06-resultados-da-busca.png" alt="Resultados para fone bluetooth até 300 com filtros, comparação entre lojas, preços, estoque e ação de rota" width="320">
 
 **Objetivo.** Ajudar a decidir onde encontrar o produto pesquisado e qual oferta vale consultar.
 
@@ -132,7 +132,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 07 — Story promocional
 
-<img src="imagens/achei/07-story-promocional.png" alt="Story da Moda Leve com preço anterior e atual, desconto, validade, botão de rota e coração" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/07-story-promocional.png" alt="Story da Moda Leve com preço anterior e atual, desconto, validade, botão de rota e coração" width="320">
 
 **Objetivo.** Apresentar uma oferta em tela cheia e permitir agir sobre ela imediatamente.
 
@@ -149,7 +149,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 08 — Desejos e alertas
 
-<img src="imagens/achei/08-desejos.png" alt="Lista de desejos com abas Desejos e Avise-me, quedas de preço e a loja com a melhor oferta" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/08-desejos.png" alt="Lista de desejos com abas Desejos e Avise-me, quedas de preço e a loja com a melhor oferta" width="320">
 
 **Objetivo.** Reunir produtos salvos e facilitar o acompanhamento de preço e disponibilidade.
 
@@ -166,7 +166,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 09 — Mapa do shopping
 
-<img src="imagens/achei/09-mapa.png" alt="Mapa interno com busca, marcadores de lojas, posição, seletor de pisos, zoom e painel Perto de você" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/09-mapa.png" alt="Mapa interno com busca, marcadores de lojas, posição, seletor de pisos, zoom e painel Perto de você" width="320">
 
 **Objetivo.** Localizar lojas dentro do shopping e orientar a escolha de um destino.
 
@@ -183,7 +183,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 10 — Rota ativa
 
-<img src="imagens/achei/10-rota-ativa.png" alt="Mapa em rota ativa com instrução de curva, anúncios pausados, resumo do trajeto e ações de encerrar e reservar" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/10-rota-ativa.png" alt="Mapa em rota ativa com instrução de curva, anúncios pausados, resumo do trajeto e ações de encerrar e reservar" width="320">
 
 **Objetivo.** Manter as instruções do trajeto visíveis enquanto a pessoa segue até a loja.
 
@@ -200,7 +200,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 ### 11 — Oferta próxima sobre o Início
 
-<img src="imagens/achei/11-oferta-proxima.png" alt="Oferta do Grão Fino sobre o Início com distância, preço, validade e ações Agora não e Me leve lá" width="320">
+<img src="imagens/hackarum-yvisalro-telasprototipo/11-oferta-proxima.png" alt="Oferta do Grão Fino sobre o Início com distância, preço, validade e ações Agora não e Me leve lá" width="320">
 
 **Objetivo.** Dar visibilidade a uma promoção relevante que pode ser aproveitada em uma loja próxima.
 
@@ -241,5 +241,5 @@ Os dados principais são **conta e preferências**, **shopping, piso e loja**, *
 - **Mapa, rota e oferta.** Alternar pisos, testar a seleção manual de shopping, iniciar a rota a partir de uma oferta e conferir a direção do traçado, a troca de piso e a suspensão dos avisos. Encerrar a rota e verificar o retorno ao mapa.
 - **Falhas.** Conferir a interface com catálogo vazio, localização indisponível, conexão interrompida e oferta vencida. A mensagem deve explicar a condição e indicar o que a pessoa pode fazer em seguida.
 
-As telas documentadas correspondem às páginas do PDF **Achei — telas do app**. O [planejamento inicial](../README.md) e a [especificação do produto](../specs/001-vitrine-perto/spec.md) registram as decisões que orientam os comportamentos previstos.
+As telas documentadas correspondem às páginas do PDF **hackarum-yvisalro-telasprototipo**. O [planejamento inicial](../README.md) e a [especificação do produto](../specs/001-vitrine-perto/spec.md) registram as decisões que orientam os comportamentos previstos.
 

@@ -20,6 +20,8 @@
 ## Preparação para implementação
 
 - [ ] As decisões pendentes foram resolvidas e os fluxos foram detalhados o suficiente para planejamento e tarefas.
+- [x] A prototipagem inicial das telas do consumidor está registrada e vinculada às histórias e aos requisitos ([prototipo/README.md](../prototipo/README.md)).
+- [ ] O protótipo cobre o painel da empresa, o login com Google e Apple, o erro de localização com seleção manual, a lista textual de lojas e a escolha do ponto inicial.
 - [x] Premissas e dependências não resolvidas estão identificadas.
 
 ## Notas

@@ -1,6 +1,6 @@
 # Especificação: Vitrine Perto
 
-**Branch**: não criada; o diretório atual ainda não é um repositório Git  
+**Branch**: `VictorXavierSL-patch-1-dev`  
 **Criada**: 2026-11-13  
 **Estado**: rascunho em esclarecimento  
 **Origem**: proposta da equipe, README e decisões fornecidas na conversa.
@@ -19,6 +19,14 @@ O protótipo usará nomes fictícios, por exemplo **Shopping Veredas Douradas**,
 - Q: Quando o aplicativo deve enviar emails de reposição e de preço desejado? → A: Quando o produto voltar ao estoque ou atingir o preço desejado.
 - Q: Como os resultados disponíveis devem ser ordenados inicialmente na busca? → A: Primeiro os mais relacionados à busca; entre semelhantes, o menor preço. Itens fora de estoque aparecem por último.
 - Q: Que conteúdos diferentes as duas landing pages devem apresentar? → A: O projeto pode ter mais de duas páginas; a quantidade e os conteúdos serão confirmados posteriormente.
+
+## Prototipagem inicial
+
+O protótipo visual **hackarum-yvisalro-telasprototipo** (11 telas de celular) foi criado em 2026-11-13. Ele serve de referência de experiência para as Histórias 1, 2, 3 e 5. O índice das telas, a rastreabilidade por história e requisito, a identidade visual, as lacunas e as divergências estão em [prototipo/README.md](prototipo/README.md). As imagens ficam em [docs/imagens/hackarum-yvisalro-telasprototipo/](../../docs/imagens/hackarum-yvisalro-telasprototipo/) e o comportamento de cada tela em [docs/frontend.md](../../docs/frontend.md).
+
+- O protótipo ilustra os requisitos, mas não os substitui. Quando houver conflito, vale esta especificação.
+- A História 4 (painel da empresa), o login com Google e Apple, o erro de localização com seleção manual, a lista textual de lojas, a escolha do ponto inicial e as landing pages ainda não foram prototipados.
+- A ação **Reservar item** da tela de rota ativa ainda depende de decisão de escopo. Até lá, o MVP continua sem compra e pagamento.
 
 ## Cenários e validação
 
