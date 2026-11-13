@@ -1,17 +1,17 @@
-# Achei — Detalhamento funcional do aplicativo
+# Hackarum-Yvisalro — proposta e estrutura inicial das telas
 
-O Achei é uma vitrine para quem está no shopping. A pessoa pode procurar um produto, comparar ofertas de lojas, acompanhar itens de interesse e visualizar o caminho até uma loja. O **Shopping Aurora**, as lojas, os preços e os trajetos das imagens são demonstrativos. O protótipo usa o nome **Achei**, e o planejamento inicial registra **Vitrine Perto** como nome provisório.
+O Hackarum-Yvisalro é uma vitrine para quem está no shopping. A pessoa pode procurar um produto, comparar ofertas de lojas, acompanhar itens de interesse e visualizar o caminho até uma loja. O **Shopping Aurora**, as lojas, os preços e os trajetos das imagens são demonstrativos. **Achei** é o nome ainda impresso nas imagens antigas; **Vitrine Perto** aparece no caminho da especificação histórica. Ambos se referem ao mesmo projeto; as imagens não foram redesenhadas nesta revisão.
 
 **Estado do projeto.** Já existem o protótipo visual com 11 imagens, o planejamento e a especificação. As telas, as integrações e os comportamentos descritos abaixo estão planejados. Cada imagem é acompanhada das ações esperadas e dos pontos que precisam ser decididos antes da implementação.
 
 ## Decisões recentes para o frontend
 
-- **Plataformas:** a experiência está prevista para web e aplicativo móvel. Flutter e Dart foram escolhidos para o aplicativo; o formato do painel web e das landing pages ainda será detalhado.
+- **Plataformas:** React para a interface web e o painel empresarial; Flutter/Dart para o aplicativo móvel. MVVM separará apresentação, estado e dados. TypeScript é a linguagem prevista para Node.js e proposta para React; os contratos serão detalhados no plano técnico.
 - **Acesso da empresa:** além das telas de consumidor mostradas no protótipo, será necessário desenhar o painel da empresa. Qualquer empresa poderá criar sua conta e publicar imediatamente; cada empresa deverá ter acesso de gestão apenas aos próprios dados.
 - **Busca:** os resultados disponíveis devem aparecer por relevância ao termo pesquisado e, entre semelhantes, pelo menor preço. Os esgotados ficam por último. Variações semelhantes, como cores diferentes, não são automaticamente o mesmo produto.
 - **Localização:** se não for possível obter a localização do dispositivo, mostrar a mensagem “Não foi possível encontrar a localização do dispositivo” e oferecer a escolha manual do shopping. No trajeto interno simulado, a pessoa escolhe um ponto inicial conhecido.
 - **Conta e alertas:** desejos e preferências acompanham a conta entre dispositivos. Os alertas solicitados são previstos por email quando houver reposição ou quando o preço desejado for atingido, conforme as preferências do usuário.
-- **Páginas de apresentação:** poderão existir mais de duas landing pages com conteúdos diferentes. A quantidade e a finalidade de cada uma ainda aguardam confirmação.
+- **Páginas de apresentação:** serão representadas em slides no Canva, com [roteiros propostos para consumidores e lojistas](landing-pages-canva.md). Quantidade final e eventual publicação web dependem de revisão; os slides ainda não foram produzidos.
 
 Estas decisões descrevem o comportamento esperado. O painel empresarial e os pontos de acesso às opções de login Google e Apple ainda precisam de telas próprias no protótipo.
 
@@ -218,10 +218,10 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 | Área | Responsabilidade | Planejamento atual |
 | --- | --- | --- |
-| Interface | Apresentar telas, navegação, formulários, filtros, cards e estados como carregamento e erro. | **Flutter e Dart** previstos para o app móvel. |
-| Estado da interface | Controlar ações e estado de cada tela, como busca, seleção de piso, favoritos e rota ativa. | Arquitetura **MVVM**, com telas, view models e camada de dados. |
-| API e regras de negócio | Fornecer catálogo, ofertas, disponibilidade, dados do mapa e informações da conta. | **Node.js** com comunicação em **JSON**. Contratos e hospedagem a definir. |
-| Identidade e persistência | Autenticar e armazenar dados de conta, preferências, itens salvos e pedidos de alerta. | **Supabase Auth** e **PostgreSQL** previstos. |
+| Interface | Apresentar telas, navegação, formulários, filtros, cards e estados como carregamento e erro. | **Flutter/Dart** no app; **React** na web e no painel empresarial. |
+| Estado da interface | Controlar ações e estado de cada tela, como busca, seleção de piso, favoritos e rota ativa. | **MVVM**; no React, componentes como Views e hooks ou módulos de estado como ViewModels. |
+| API e regras de negócio | Fornecer catálogo, ofertas, disponibilidade, dados do mapa e informações da conta. | **Node.js/TypeScript**, com comunicação HTTPS/JSON. Contratos e hospedagem a definir. |
+| Identidade e persistência | Autenticar e armazenar dados de conta, preferências, itens salvos e pedidos de alerta. | **Supabase Auth** e **PostgreSQL** principal. **MySQL** somente alternativa documentada, conforme esclarecimento da equipe. |
 | Localização e trajeto | Apoiar a escolha do shopping e representar um percurso até a loja. | Geolocalização do dispositivo prevista. Mapa, pisos e rotas internas simulados. |
 
 Os dados principais são **conta e preferências**, **shopping, piso e loja**, **produto e oferta**, **desejo e pedido de alerta**, e **ponto de partida, destino e rota**. O produto identifica o item. A oferta liga esse item a uma loja com preço, estoque e vigência próprios. Essa relação sustenta a comparação da busca, o preço exibido nos Desejos e o destino dos botões de rota.

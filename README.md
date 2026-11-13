@@ -1,20 +1,38 @@
 # Hackarum-Yvisalro — planejamento inicial
 
-> Nome provisório. Documento para discussão da equipe e primeira entrega acadêmica. O aplicativo, o backend e as landing pages ainda não foram implementados.
+> Nome padronizado: **Hackarum-Yvisalro**. Primeira entrega acadêmica de planejamento. Aplicativo, backend, frontend web e slides das landing pages ainda não foram implementados ou produzidos nesta revisão.
 
 [Detalhamento do frontend](docs/frontend.md) com as 11 imagens do protótipo, a navegação e o comportamento esperado em cada tela.
 
-## Proposta
+[Detalhamento geral do projeto](docs/detalhamento-projeto.md) com o estado atual, funcionalidades, arquitetura prevista e pendências. O [guia de Git e GitHub](docs/guia-git.md) explica como atualizar o computador e publicar o trabalho da equipe.
+
+## Proposta e estrutura inicial das telas
 
 Criar um aplicativo para dispositivos móveis que ajude pessoas a descobrir lojas em um shopping, buscar produtos, comparar preços e encontrar promoções. Uma representação de mapa com aparência 3D deverá mostrar lojas e trajetos simulados. Nomes de lojas, produtos e shopping utilizados na demonstração serão fictícios.
 
 O público principal são consumidores que desejam encontrar produtos e preços em diferentes lojas. O catálogo funcionará como uma vitrine de marketplace; compras e pagamentos não fazem parte do escopo atualmente definido.
 
+O projeto atende ao tema **03. Descoberta de produtos, lojas e promoções**, registrado na branch da equipe. O visitante procura um produto, compara ofertas, identifica a loja e consulta um trajeto interno simulado. Lojistas usam um painel para publicar seus próprios produtos. As [11 telas documentadas](docs/frontend.md) representam o consumidor; painel empresarial, estados de erro e demais lacunas estão identificados nesse documento.
+
+Os seis títulos desta entrega organizam os materiais do mesmo projeto. **Achei** é o nome impresso nas imagens antigas e **Vitrine Perto** permanece em caminhos históricos; ambos se referem ao Hackarum-Yvisalro.
+
 ## Primeira entrega
 
 A imagem fornecida pela equipe solicita planejamento técnico inicial: proposta e estrutura inicial de telas; documentação; linguagem escolhida; arquitetura; plataformas e tecnologias; e descrição da incorporação da tecnologia ou prática sorteada. Trata-se de uma entrega de planejamento, anterior ao MVP. A imagem informa sexta-feira, 13/11, até 12h; confirme o ano e o horário com a disciplina.
 
-Este README reúne a proposta inicial. Os wireframes, os contratos e os demais documentos ainda precisam ser preparados e revisados pela equipe.
+Este README reúne a proposta inicial. Já existem 11 imagens de protótipo e uma especificação em rascunho; os fluxos ausentes, o plano técnico e os contratos ainda precisam ser preparados e revisados pela equipe.
+
+## Documentação inicial do projeto
+
+| Material | Evidência |
+| --- | --- |
+| Proposta, telas e comportamento | Este README e [frontend](docs/frontend.md). |
+| Regras do produto | [Especificação funcional](specs/001-vitrine-perto/spec.md). |
+| Revisão da entrega inicial | [Feature 002](specs/002-planejamento-hackarum-yvisalro/spec.md) e [checklist](specs/002-planejamento-hackarum-yvisalro/checklists/requirements.md). |
+| Arquitetura e tecnologias | Seções próprias abaixo e [detalhamento técnico](docs/detalhamento-projeto.md). |
+| Apresentação da prática sorteada | [Roteiro dos slides no Canva](docs/landing-pages-canva.md). |
+| Conferência das versões e seis itens | [Relatório de conformidade](docs/revisao-conformidade.md). |
+| Organização e versionamento | [Entrega](docs/entrega-e-proximos-passos.md) e [guia de Git](docs/guia-git.md). |
 
 ## Funcionalidades planejadas para o MVP
 
@@ -22,11 +40,11 @@ Este README reúne a proposta inicial. Os wireframes, os contratos e os demais d
 - Autenticação real com Supabase, recuperação de senha por email, login com Google e Apple e suporte ao preenchimento automático de senhas. O envio efetivo de campanhas publicitárias ainda precisa ser definido.
 - Tela inicial com pesquisa, categorias, ofertas em destaque, stories promocionais e carrosséis de produtos.
 - Busca por texto, categorias e sinônimos, filtros de tipo e preço, produtos semelhantes e comparação de ofertas do mesmo produto em lojas diferentes. Exibir a loja identificada abaixo do produto.
-- Priorizar produtos disponíveis e preços e promoções relevantes; produtos fora de estoque aparecem por último, com opção de pedir aviso de reposição. A forma de envio do aviso precisa ser definida.
+- Priorizar disponíveis por relevância e, entre semelhantes, menor preço; produtos fora de estoque aparecem por último, com opção de aviso de reposição por email quando houver retorno ao estoque.
 - Lista de desejos e recomendações baseadas em interesses e interações. A origem de histórico de compras ainda precisa ser definida.
 - Geolocalização para apoiar a descoberta de lojas próximas; mapa fictício com aparência 3D, ícones de sacola que se tornam logos ao aproximar e indicação de trajeto simulado até a loja.
 - Pop-ups de promoções próximas; não exibi-los enquanto um trajeto estiver ativo.
-- Landing pages com conteúdos diferentes para apresentar o MVP. Podem ser mais de duas; quantidade e finalidades serão confirmadas.
+- Landing pages apresentadas em slides do Canva, com roteiros distintos para consumidores e lojistas. São demonstrações de apresentação; quantidade final e eventual publicação como site dependem da revisão da equipe.
 
 Promoções e preços de demonstração devem ser identificáveis como fictícios; quando houver desconto, preço anterior e preço promocional devem ser coerentes.
 
@@ -70,7 +88,7 @@ Cada loja terá uma página com nome, logo, descrição, horário de funcionamen
 
 **Prioridade:** alta · **Dificuldade:** média
 
-Uma área de preferências permitirá escolher quais comunicações deseja receber, como avisos de reposição, queda de preço e promoções. A autorização para publicidade por email deve ser apresentada de forma clara e poderá ser alterada pelo usuário. A equipe ainda definirá os canais disponíveis e se o envio será real no MVP.
+Uma área de preferências permitirá escolher quais comunicações deseja receber, como avisos de reposição, queda de preço e promoções. A autorização para publicidade por email deve ser apresentada de forma clara e poderá ser alterada pelo usuário. Alertas solicitados estão previstos por email quando houver reposição ou o preço desejado for atingido; serviço de envio e frequência promocional ainda serão definidos.
 
 **Benefício:** reduz mensagens indesejadas e permite que cada pessoa receba informações relevantes para seus interesses.
 
@@ -161,23 +179,62 @@ Para um primeiro recorte, a equipe pode priorizar informações claras das ofert
 7. **Mapa e lista de lojas:** escolha do shopping e do ponto inicial, localização das lojas, aproximação e rota simulada.
 8. **Lista de desejos e compras:** produtos salvos, preço desejado, agrupamento por shopping e roteiro com várias lojas.
 9. **Perfil e notificações:** dados da conta, preferências e controles de comunicação.
-10. **Landing pages:** páginas responsivas com conteúdos diferentes para apresentar o MVP; quantidade e finalidades a confirmar.
+10. **Landing pages:** slides no Canva com conteúdos diferentes para apresentar o MVP; roteiro inicial para consumidores e lojistas, com quantidade final a confirmar.
 11. **Painel da empresa:** cadastro e publicação imediata de produtos, preços, promoções e estoque pela própria empresa, com acesso limitado aos seus dados.
 
 Os fluxos devem contemplar estados sem resultados, sem conexão, carregamento, erro e permissão de localização negada; o comportamento detalhado ainda precisa ser especificado.
 
-## Arquitetura e tecnologias
+## Linguagem de programação escolhida
 
-| Parte | Decisão inicial | Papel |
+- **TypeScript:** linguagem prevista para o backend Node.js, conforme a definição registrada na branch da equipe; também proposta para o frontend React para compartilhar os tipos dos contratos. O build e a versão serão definidos no plano técnico.
+- **Dart:** linguagem do aplicativo Flutter.
+- **SQL:** definição e consulta dos dados no PostgreSQL.
+
+Node.js é o ambiente de execução; React e Flutter são ferramentas de interface. Canva será usado para compor os slides das landing pages e não exige programar essas apresentações. Referências: [Node.js](https://nodejs.org/en/about), [React](https://react.dev/) e [arquitetura Flutter](https://docs.flutter.dev/app-architecture/guide).
+
+## Arquitetura proposta
+
+Adotar **MVVM (Model–View–ViewModel)** nas interfaces: a View apresenta a tela, o ViewModel mantém estado e ações, e Models representam os dados. Repositórios e serviços cuidam do acesso à API. No React, componentes serão as Views e hooks ou módulos de estado exercerão o papel de ViewModels; essa é a organização proposta para o projeto. A documentação oficial de Flutter apresenta essa [separação de responsabilidades](https://docs.flutter.dev/app-architecture/guide).
+
+```mermaid
+flowchart LR
+    W[React: Views e ViewModels] --> A[API Node.js / TypeScript]
+    M[Flutter / Dart: Views e ViewModels] --> A
+    A --> S[Serviços e regras de negócio]
+    S --> R[Repositórios de dados]
+    R --> P[(PostgreSQL no Supabase)]
+    W --> I[Supabase Auth]
+    M --> I
+    I -. token validado .-> A
+```
+
+A API recebe requisições HTTPS/JSON, valida a identidade e a autorização da empresa e aplica as regras de catálogo, ofertas, desejos e alertas. As credenciais do banco ficam no servidor. O backend seguirá camadas de entrada, serviços e persistência; MVVM organiza as interfaces. Os slides do Canva apresentam esses fluxos, sem executar chamadas reais.
+
+**Decisão esclarecida em 13/11/2026:** PostgreSQL será o banco principal do MVP, mantendo Supabase para dados e identidade. **MySQL fica como alternativa documentada**, sem segundo banco operacional, replicação ou escrita dupla. Supabase oferece [um banco PostgreSQL](https://supabase.com/docs/guides/database/overview).
+
+## Plataforma e tecnologias adotadas
+
+| Parte | Escolha | Papel e situação |
 | --- | --- | --- |
-| Aplicativo | Flutter e Dart | Interface mobile; organização MVVM em views, view models e acesso a dados. |
-| Backend | Node.js | Serviços e regras de negócio; comunicação com o aplicativo em JSON. Framework e hospedagem a definir. |
-| Banco e identidade | Supabase, PostgreSQL e Supabase Auth | Persistência e autenticação real; credenciais e configuração não devem ser incluídas no repositório. |
-| Mapa e dados | Mapa interno simulado e dados fictícios | Demonstração visual de lojas e caminhos; geolocalização do dispositivo será real. Fonte e coordenadas dos locais ainda precisam ser definidas. |
-| Landing pages | Tecnologia a definir; Vercel prevista | Publicação das páginas de apresentação do MVP. |
-| Processo | GitHub e Spec Kit | Colaboração e organização de especificação, planejamento e tarefas. |
+| Aplicativo móvel | Flutter / Dart | Interface com MVVM; planejada, sem código da aplicação. |
+| Frontend web e painel empresarial | React; TypeScript proposto | Interface web com separação de apresentação e estado; planejada. Node.js apoia as ferramentas de desenvolvimento e build. |
+| Backend | Node.js / TypeScript | API, validações e regras de negócio; framework e hospedagem pendentes. |
+| Banco principal | PostgreSQL no Supabase | Persistência do MVP; integração ainda não configurada. |
+| Identidade | Supabase Auth | Login real, recuperação e provedores sociais previstos; integração pendente. |
+| Banco alternativo | MySQL | Alternativa documentada para avaliação futura; fora da operação do primeiro MVP. |
+| Landing pages | Slides no Canva | Apresentação da prática sorteada; roteiro preparado, slides ainda a produzir. |
+| Mapa e dados | Mapa fictício e geolocalização | Rotas simuladas e localização do dispositivo prevista; coordenadas e implementação pendentes. |
+| Processo | Git, GitHub e Spec Kit | Versionamento e organização dos requisitos; já disponíveis. |
 
-Fluxo proposto: **Flutter → API Node.js em JSON → Supabase/PostgreSQL**. A integração de autenticação e o controle de acesso serão detalhados no contrato técnico. Contratos mock e dados fictícios poderão apoiar o desenvolvimento, mas não substituem a autenticação real planejada.
+Vercel não é requisito para os slides. A hospedagem da aplicação web e da API será escolhida no plano técnico; não há implantação configurada.
+
+## Descrição de como a tecnologia ou prática sorteada será incorporada à solução
+
+A tecnologia sorteada é **landing page**, conforme o registro da equipe na [branch verificada](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-/commit/8bcbfeb5889c9be843ef8917be56fb7ebbca67ae). Nesta etapa, a equipe a apresentará por **slides do Canva**, como você definiu.
+
+O [roteiro](docs/landing-pages-canva.md) propõe uma página para o consumidor (buscar, comparar e encontrar a loja) e outra para o lojista (publicar produtos e promoções). Cada página tem problema, benefício, referência visual e chamada para ação ilustrativa. O material deve identificar os dados fictícios e as funcionalidades futuras. Uma página de oferta compartilhada poderá ser acrescentada como evolução.
+
+A evidência final deverá incluir o link de visualização e uma exportação PDF dos slides. Esses materiais ainda não foram produzidos. A equipe deve conferir se a avaliação exige também uma página web publicada; apresentar slides não comprova essa publicação.
 
 ## Estrutura preliminar de dados
 
@@ -194,21 +251,21 @@ Esta é uma proposta conceitual, não um esquema de banco final.
 
 ## Pontos para decidir com a equipe
 
-1. Quantas landing pages serão necessárias e qual será a finalidade específica de cada uma? A confirmação ficou para depois.
+1. Revisar os dois roteiros de landing pages no Canva e confirmar a quantidade final. Consumidor e lojista são os públicos iniciais propostos.
 2. As lojas serão fictícias e inspiradas em Palmas; quais coordenadas serão usadas na demonstração de proximidade?
 3. A localização indisponível exibirá mensagem de erro e seleção manual; o ponto inicial interno será escolhido no mapa.
 4. Listas de desejos e preferências serão sincronizadas por usuário. Avisos solicitados serão enviados por email quando houver reposição ou quando o preço desejado for atingido; a frequência das mensagens promocionais ainda precisa ser definida.
 5. A busca deverá encontrar variantes relacionadas, sem tratá-las automaticamente como produtos idênticos. Resultados disponíveis serão ordenados por relevância e, entre semelhantes, menor preço; itens sem estoque virão por último. A equivalência exata ainda precisa ser detalhada.
-6. Confirmar com o professor qual foi a prática ou tecnologia sorteada e como as landing pages atendem ao requisito.
+6. A prática sorteada é landing page e a ferramenta escolhida é Canva. Confirmar com a disciplina se os slides bastam ou se também será exigido site publicado.
 7. A plataforma será web e aplicativo móvel; a equipe de TI do shopping é a responsável indicada. Cronograma, hospedagem do backend e limites dos serviços permanecem a definir.
 
 ## Próximos passos
 
 1. Validar esta proposta e responder aos pontos em aberto.
 2. Preparar wireframes e fluxo das telas para a primeira entrega.
-3. Formalizar a especificação com Spec Kit, esclarecer requisitos e elaborar plano, modelo de dados e contratos.
+3. Usar as especificações registradas para elaborar plano, modelo de dados, contratos e tarefas de implementação com Spec Kit.
 4. Gerar tarefas, incluindo autenticação, backend, banco, geolocalização e landing pages, e revisar a cobertura antes da implementação.
-5. Criar o repositório GitHub e compartilhar o link com a equipe.
+5. Manter o [repositório GitHub](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-) atualizado e integrar o trabalho da equipe por pull requests.
 
 ## Situação atual
 

@@ -1,11 +1,13 @@
-# Especificação: Vitrine Perto
+# Especificação funcional: Hackarum-Yvisalro
 
-**Branch**: não criada; o diretório atual ainda não é um repositório Git  
-**Criada**: 2026-11-13  
-**Estado**: rascunho em esclarecimento  
+**Branch da revisão**: `docs/detalhamento-frontend`; repositório Git existente
+**Criada**: 2026-11-13
+**Estado**: rascunho em esclarecimento
 **Origem**: proposta da equipe, README e decisões fornecidas na conversa.
 
 ## Contexto e objetivo
+
+O nome canônico é **Hackarum-Yvisalro**. O caminho `001-vitrine-perto` é histórico. Esta especificação mantém as regras do produto; a [feature 002](../002-planejamento-hackarum-yvisalro/spec.md) registra a revisão da entrega inicial e a decisão esclarecida sobre persistência. As escolhas técnicas estão no [README](../../README.md).
 
 Uma vitrine para web e dispositivos móveis ajudará consumidores a encontrar produtos e ofertas em lojas de um shopping fictício inspirado em Palmas, Tocantins. O objetivo é apresentar os produtos que correspondam à busca e indicar onde encontrá-los; comprar não é obrigatório e o sistema não pode garantir a existência de um produto que não esteja cadastrado.
 
@@ -106,7 +108,7 @@ Como visitante, quero conhecer o MVP em landing pages com conteúdos diferentes.
 - **FR-010**: Permitir que o usuário gerencie desejos, interesses e consentimento para comunicação e solicite alertas por email; enviar o aviso quando houver reposição ou o preço desejado for atingido, conforme as preferências do usuário.
 - **FR-011**: Exibir recomendações e stories conforme interesses e interações disponíveis; não presumir histórico de compras existente.
 - **FR-012**: Prever listas por shopping, roteiros com várias lojas, preço por unidade, histórico de preços e compartilhamento como evoluções priorizadas conforme prazo.
-- **FR-013**: Criar landing pages com conteúdos diferentes sobre o MVP; a quantidade definitiva pode ser superior a duas e será confirmada com suas finalidades.
+- **FR-013**: Apresentar landing pages com conteúdos distintos sobre o MVP; propor apresentação ao consumidor e ao lojista, confirmar quantidade final e identificar demonstrações e funções futuras. O roteiro e a ferramenta escolhida estão no [planejamento](../../docs/landing-pages-canva.md); eventual publicação web depende da exigência da disciplina.
 - **FR-014**: Disponibilizar experiência em web e aplicativo móvel; apresentar mensagens compreensíveis para resultados vazios e falhas.
 
 ### Entidades principais
@@ -131,6 +133,6 @@ Como visitante, quero conhecer o MVP em landing pages com conteúdos diferentes.
 - O MVP é uma vitrine e não inclui pagamento ou compra dentro do aplicativo.
 - O shopping, lojas, ofertas e mapa usados na demonstração são fictícios; o uso de coordenadas para demonstração ainda exige definição.
 - A medida de relevância e o critério exato de equivalência entre variantes, os detalhes de associação de representantes a empresas e a frequência de emails promocionais ainda precisam de detalhamento.
-- As landing pages são exigência da entrega final; podem ser mais de duas, e a quantidade e as finalidades específicas aguardam confirmação. A prática sorteada e a forma de atendimento ao requisito devem ser confirmadas com o professor; “sim pode” não identifica a prática.
+- A prática sorteada é landing page, conforme o registro da equipe no commit remoto `8bcbfeb`. A apresentação inicial propõe públicos consumidor e lojista; quantidade final e exigência de site publicado dependem de revisão. O roteiro não representa páginas ou slides já produzidos.
 - A equipe de TI do shopping é a responsável indicada; cronograma e hospedagem do backend ainda não foram definidos.
 - O documento é um rascunho; prioridade e dificuldade das 14 melhorias constam no README e não tornam todas obrigatórias no primeiro recorte de implementação.

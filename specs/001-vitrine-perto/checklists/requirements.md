@@ -1,4 +1,4 @@
-# Checklist de qualidade da especificação: Vitrine Perto
+# Checklist de qualidade da especificação funcional: Hackarum-Yvisalro
 
 **Objetivo:** avaliar se os requisitos estão claros e completos antes do planejamento.  
 **Criado:** 2026-11-13  
