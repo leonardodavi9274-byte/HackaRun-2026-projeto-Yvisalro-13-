@@ -1,11 +1,13 @@
-# Especificação: Vitrine Perto
+# Especificação funcional: Hackarum-Yvisalro
 
-**Branch**: `VictorXavierSL-patch-1-dev`  
+**Branch**: sem branch próprio da feature; editada em `VictorXavierSL-patch-1-dev` e `docs/detalhamento-frontend` e integrada ao `main` por pull request  
 **Criada**: 2026-11-13  
 **Estado**: rascunho em esclarecimento  
 **Origem**: proposta da equipe, README e decisões fornecidas na conversa.
 
 ## Contexto e objetivo
+
+O nome canônico é **Hackarum-Yvisalro**. O caminho `001-vitrine-perto` é histórico. Esta especificação mantém as regras do produto; a [feature 002](../002-planejamento-hackarum-yvisalro/spec.md) registra a revisão da entrega inicial. As escolhas técnicas estão no [README](../../README.md).
 
 Esta feature responde ao tema do desafio **03. Descoberta de produtos, lojas e promoções**: facilitar a descoberta de produtos, estabelecimentos e oportunidades de compra dentro do shopping. O texto completo do tema e a relação com os requisitos estão no [README](../../README.md#tema-do-desafio).
 
@@ -116,7 +118,7 @@ Como visitante, quero conhecer o MVP em landing pages com conteúdos diferentes.
 - **FR-010**: Permitir que o usuário gerencie desejos, interesses e consentimento para comunicação e solicite alertas por email; enviar o aviso quando houver reposição ou o preço desejado for atingido, conforme as preferências do usuário.
 - **FR-011**: Exibir recomendações e stories conforme interesses e interações disponíveis; não presumir histórico de compras existente.
 - **FR-012**: Prever listas por shopping, roteiros com várias lojas, preço por unidade, histórico de preços e compartilhamento como evoluções priorizadas conforme prazo.
-- **FR-013**: Criar landing pages com conteúdos diferentes sobre o MVP; a quantidade definitiva pode ser superior a duas e será confirmada com suas finalidades.
+- **FR-013**: Apresentar landing pages com conteúdos distintos sobre o MVP; propor apresentação ao consumidor e ao lojista, confirmar quantidade final e identificar demonstrações e funções futuras. O formato e a ferramenta serão decididos pela equipe; há um [rascunho de roteiro](../../docs/landing-pages-canva.md). Eventual publicação web depende da exigência da disciplina.
 - **FR-014**: Disponibilizar experiência em web e aplicativo móvel; apresentar mensagens compreensíveis para resultados vazios e falhas.
 
 ### Entidades principais
@@ -141,6 +143,6 @@ Como visitante, quero conhecer o MVP em landing pages com conteúdos diferentes.
 - O MVP é uma vitrine e não inclui pagamento ou compra dentro do aplicativo.
 - O shopping, lojas, ofertas e mapa usados na demonstração são fictícios; o uso de coordenadas para demonstração ainda exige definição.
 - A medida de relevância e o critério exato de equivalência entre variantes, os detalhes de associação de representantes a empresas e a frequência de emails promocionais ainda precisam de detalhamento.
-- As landing pages são exigência da entrega final; podem ser mais de duas, e a quantidade e as finalidades específicas aguardam confirmação. A tecnologia sorteada para a equipe é a landing page; a proposta de incorporação está no [README](../../README.md#tecnologia-sorteada-landing-page).
+- A tecnologia sorteada para a equipe é a landing page. O formato, a quantidade e as finalidades das páginas serão decididos pela equipe, e a exigência de site publicado depende da disciplina. O [rascunho de roteiro em slides do Canva](../../docs/landing-pages-canva.md) não representa páginas ou slides já produzidos.
 - A equipe de TI do shopping é a responsável indicada; cronograma e hospedagem do backend ainda não foram definidos.
 - O documento é um rascunho; prioridade e dificuldade das 14 melhorias constam no README e não tornam todas obrigatórias no primeiro recorte de implementação.
