@@ -8,7 +8,7 @@ export async function request(path,{method="GET",body,headers={},signal,binary=f
  if(body!==undefined&&!binary)h["Content-Type"]="application/json";
  const response=await fetch(base+path,{method,headers:h,body:body===undefined?undefined:binary?body:JSON.stringify(body),signal,credentials:"same-origin",cache:"no-store"});
  const payload=await response.json().catch(()=>null);
- if(!response.ok)throw new HttpError(response.status,payload?.error,response.headers.get("Retry-After"));
+ if(!response.ok){if(response.status===401&&(path==="/me"||path.startsWith("/me/")))window.dispatchEvent(new Event("app:private-session-expired"));throw new HttpError(response.status,payload?.error,response.headers.get("Retry-After"));}
  if(!payload||!("data"in payload))throw new HttpError(502,{message:"O serviço retornou uma resposta inesperada."});
  return payload.data;
 }
@@ -19,4 +19,4 @@ export const mutate=(path,method,body,options={})=>request(path,{...options,meth
 export const upload=(path,file,key,signal)=>request(path,{method:"PUT",body:file,binary:true,signal,headers:{"Content-Type":file.type,"Idempotency-Key":key}});
 
 
-export async function getPrivateImage(signal){const response=await fetch(base+"/me/avatar",{signal,credentials:"same-origin",cache:"no-store",headers:{Accept:"image/webp"}});if(!response.ok){const payload=await response.json().catch(()=>null);throw new HttpError(response.status,payload?.error);}return response.blob();}
+export async function getPrivateImage(signal){const response=await fetch(base+"/me/avatar",{signal,credentials:"same-origin",cache:"no-store",headers:{Accept:"image/webp"}});if(!response.ok){if(response.status===401)window.dispatchEvent(new Event("app:private-session-expired"));const payload=await response.json().catch(()=>null);throw new HttpError(response.status,payload?.error);}return response.blob();}

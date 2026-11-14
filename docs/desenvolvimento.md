@@ -115,3 +115,11 @@ executadas em PostgreSQL/Supabase. Não houve configuração de SMTP/bucket ou p
 Para ativar a integração, usar o [guia da feature](../specs/004-cadastro-preferencias/quickstart.md)
 e concluir T070 no [tasks.md](../specs/004-cadastro-preferencias/tasks.md). A ausência dos
 serviços reais não é tratada pela aplicação como autenticação ou salvamento bem-sucedido.
+
+## Preparação para autenticação 007
+
+Esta seção descreve a configuração necessária para o futuro funcionamento dos fluxos; ela não afirma que a recuperação ou o login social estejam implementados ou ativados. Antes de habilitá-los, resolver os bloqueios de segurança B1–B3 em [plan.md](../specs/007-autenticacao-supabase/plan.md), inclusive a confirmação adicional antes de vincular contas e a restrição de senha em contas exclusivamente sociais.
+
+Para e-mail transacional, configure no projeto Supabase um [provedor SMTP próprio](https://supabase.com/docs/guides/auth/auth-smtp), remetente e domínio autorizados. No [modelo de recuperação](https://supabase.com/docs/guides/auth/auth-email-templates), inclua o código `{{ .Token }}`; configure seis dígitos, validade de 600 segundos e intervalo mínimo de 60 segundos segundo as opções disponíveis no projeto. A validade de OTP pode afetar também a confirmação de cadastro: reveja o fluxo 004 antes de aplicar. Os limites de tentativas são os do Supabase e o aceite de uma solicitação não comprova entrega ao destinatário. Esses e-mails transacionais não dependem de consentimento publicitário e não configuram campanhas.
+
+Para Google e Apple, prepare as credenciais dos provedores e a lista restrita de URLs de retorno por ambiente conforme os guias oficiais de [Google](https://supabase.com/docs/guides/auth/social-sign-in/auth-google), [Apple](https://supabase.com/docs/guides/auth/social-sign-in/auth-apple) e [URLs de retorno](https://supabase.com/docs/guides/auth/redirect-urls). Planeje a rotação do segredo Apple conforme as exigências do provedor. Guarde credenciais em configurações protegidas dos respectivos serviços, fora do Git; não as coloque em `backend/.env.example` ou no frontend. Ter credenciais configuradas não resolve, por si só, os bloqueios do plano.
