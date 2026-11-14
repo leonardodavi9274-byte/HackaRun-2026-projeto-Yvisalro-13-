@@ -1,32 +1,11 @@
 -- Catálogo público somente leitura da tela inicial (feature 006).
--- Escrita fica para o painel empresarial futuro; anon/authenticated recebem apenas SELECT filtrado por RLS.
+-- Reutiliza public.malls e public.stores da feature 005 (0015): o shopping da tela inicial é o
+-- shopping ativo. Escrita fica para o painel empresarial futuro; anon/authenticated recebem
+-- apenas SELECT filtrado por RLS. Aplicar após 0015 e 0016.
 begin;
 
 create type public.catalog_status as enum ('draft','published','archived');
 create type public.catalog_stock_status as enum ('in_stock','out_of_stock','unknown');
-
-create table public.shopping_centers(
- id uuid primary key default gen_random_uuid(),
- name text not null check(char_length(name) between 1 and 120),
- active boolean not null default true,
- is_demo boolean not null default false,
- is_home_default boolean not null default false,
- created_at timestamptz not null default now(),
- updated_at timestamptz not null default now()
-);
--- No máximo um shopping padrão ativo.
-create unique index shopping_centers_one_home_default on public.shopping_centers(is_home_default) where active and is_home_default;
-
-create table public.stores(
- id uuid primary key default gen_random_uuid(),
- shopping_center_id uuid not null references public.shopping_centers on delete cascade,
- name text not null check(char_length(name) between 1 and 120),
- floor_label text check(floor_label is null or char_length(floor_label) between 1 and 40),
- active boolean not null default true,
- is_demo boolean not null default false,
- created_at timestamptz not null default now(),
- updated_at timestamptz not null default now()
-);
 
 create table public.catalog_categories(
  id text primary key check(id ~ '^[a-z0-9]+(-[a-z0-9]+)*$' and char_length(id)<=50),
@@ -53,7 +32,7 @@ create table public.catalog_products(
 create table public.catalog_offers(
  id uuid primary key default gen_random_uuid(),
  product_id uuid not null references public.catalog_products on delete cascade,
- store_id uuid not null references public.stores on delete cascade,
+ store_id text not null references public.stores on delete cascade,
  price_cents integer not null check(price_cents>0),
  currency text not null default 'BRL' check(currency='BRL'),
  previous_price_cents integer check(previous_price_cents is null or previous_price_cents>price_cents),
@@ -74,7 +53,7 @@ create table public.catalog_offers(
 
 create table public.promo_stories(
  id uuid primary key default gen_random_uuid(),
- store_id uuid not null references public.stores on delete cascade,
+ store_id text not null references public.stores on delete cascade,
  offer_id uuid,
  title text not null check(char_length(title) between 1 and 100),
  image_path text not null check(char_length(image_path) between 1 and 500),
@@ -113,12 +92,9 @@ create table public.home_carousel_items(
  foreign key(offer_id,product_id) references public.catalog_offers(id,product_id) on delete set null(offer_id)
 );
 
--- Conteúdo demonstrativo só pode pertencer a uma cadeia também demonstrativa.
+-- Conteúdo de loja ou produto demonstrativo precisa ser marcado como demonstrativo.
 create function app_private.catalog_demo_coherence() returns trigger language plpgsql security invoker set search_path='' as $$
 begin
- if tg_table_name='stores' and new.is_demo and not exists(select 1 from public.shopping_centers s where s.id=new.shopping_center_id and s.is_demo) then
-  raise exception 'Loja demonstrativa precisa pertencer a shopping demonstrativo.' using errcode='23514';
- end if;
  if tg_table_name='catalog_offers' and not new.is_demo and (
   exists(select 1 from public.stores s where s.id=new.store_id and s.is_demo)
   or exists(select 1 from public.catalog_products p where p.id=new.product_id and p.is_demo)
@@ -131,11 +107,9 @@ begin
  return new;
 end $$;
 revoke all on function app_private.catalog_demo_coherence() from public;
-create trigger stores_demo_coherence before insert or update on public.stores for each row execute function app_private.catalog_demo_coherence();
 create trigger catalog_offers_demo_coherence before insert or update on public.catalog_offers for each row execute function app_private.catalog_demo_coherence();
 create trigger promo_stories_demo_coherence before insert or update on public.promo_stories for each row execute function app_private.catalog_demo_coherence();
 
-create index stores_shopping_active on public.stores(shopping_center_id) where active;
 create index catalog_products_category_status on public.catalog_products(category_id,status);
 create index catalog_offers_product on public.catalog_offers(product_id);
 create index catalog_offers_store on public.catalog_offers(store_id);
@@ -147,8 +121,6 @@ create index promo_stories_visible on public.promo_stories(status,starts_at,ends
 create index home_carousel_items_product on public.home_carousel_items(product_id);
 create index home_carousel_items_offer on public.home_carousel_items(offer_id) where offer_id is not null;
 
-alter table public.shopping_centers enable row level security;
-alter table public.stores enable row level security;
 alter table public.catalog_categories enable row level security;
 alter table public.catalog_products enable row level security;
 alter table public.catalog_offers enable row level security;
@@ -157,15 +129,20 @@ alter table public.home_carousels enable row level security;
 alter table public.home_carousel_items enable row level security;
 
 -- O Supabase concede privilégios amplos por padrão; revogar antes de liberar somente leitura.
-revoke all on public.shopping_centers,public.stores,public.catalog_categories,public.catalog_products,public.catalog_offers,public.promo_stories,public.home_carousels,public.home_carousel_items from anon,authenticated;
-grant select on public.shopping_centers,public.stores,public.catalog_categories,public.catalog_products,public.catalog_offers,public.promo_stories,public.home_carousels,public.home_carousel_items to anon,authenticated;
-grant all on public.shopping_centers,public.stores,public.catalog_categories,public.catalog_products,public.catalog_offers,public.promo_stories,public.home_carousels,public.home_carousel_items to service_role;
+revoke all on public.catalog_categories,public.catalog_products,public.catalog_offers,public.promo_stories,public.home_carousels,public.home_carousel_items from anon,authenticated;
+grant select on public.catalog_categories,public.catalog_products,public.catalog_offers,public.promo_stories,public.home_carousels,public.home_carousel_items to anon,authenticated;
+grant all on public.catalog_categories,public.catalog_products,public.catalog_offers,public.promo_stories,public.home_carousels,public.home_carousel_items to service_role;
+
+-- Feature 005 mantém malls/stores sem acesso público (leitura pelo mapa via service_role).
+-- O leitor público da tela inicial recebe somente as colunas de identificação, sem o mapa.
+grant select(id,name,is_demo,active) on public.malls to anon,authenticated;
+grant select(id,mall_id,name,is_demo,active) on public.stores to anon,authenticated;
+create policy home_mall_public_read on public.malls for select to anon,authenticated
+ using(active);
+create policy home_store_public_read on public.stores for select to anon,authenticated
+ using(active and exists(select 1 from public.malls m where m.id=mall_id));
 
 -- Políticas encadeadas: subconsultas também passam pela RLS da tabela consultada.
-create policy catalog_shopping_public_read on public.shopping_centers for select to anon,authenticated
- using(active);
-create policy catalog_store_public_read on public.stores for select to anon,authenticated
- using(active and exists(select 1 from public.shopping_centers s where s.id=shopping_center_id));
 create policy catalog_category_public_read on public.catalog_categories for select to anon,authenticated
  using(active);
 create policy catalog_product_public_read on public.catalog_products for select to anon,authenticated
@@ -186,7 +163,7 @@ create policy home_carousel_item_public_read on public.home_carousel_items for s
 
 -- Categorias com ao menos um produto publicado e oferta visível no shopping informado.
 -- security invoker: a RLS das tabelas acima continua aplicada a quem chama.
-create function public.hy_home_categories(p_shopping_center_id uuid,p_limit integer default 12)
+create function public.hy_home_categories(p_mall_id text,p_limit integer default 12)
 returns table(id text,label text,is_demo boolean)
 language sql stable security invoker set search_path='' as $$
  select c.id,c.label,c.is_demo from public.catalog_categories c
@@ -194,12 +171,12 @@ language sql stable security invoker set search_path='' as $$
   select 1 from public.catalog_products p
   join public.catalog_offers o on o.product_id=p.id
   join public.stores s on s.id=o.store_id
-  where p.category_id=c.id and s.shopping_center_id=p_shopping_center_id)
+  where p.category_id=c.id and s.mall_id=p_mall_id)
  order by c.sort_order,c.id
  limit least(greatest(coalesce(p_limit,12),1),12);
 $$;
-revoke all on function public.hy_home_categories(uuid,integer) from public;
-grant execute on function public.hy_home_categories(uuid,integer) to anon,authenticated,service_role;
+revoke all on function public.hy_home_categories(text,integer) from public;
+grant execute on function public.hy_home_categories(text,integer) to anon,authenticated,service_role;
 
 -- Bucket público de imagens do catálogo: leitura pública, sem listagem nem upload pelo cliente.
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)

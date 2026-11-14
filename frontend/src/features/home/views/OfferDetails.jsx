@@ -1,4 +1,5 @@
 import {HomeDialog} from "./HomeDialog.jsx";
+import {AppLink} from "../../../app/Link.jsx";
 import {DemoBadge} from "./HomeSectionState.jsx";
 import {OfferImage,OfferPrice,OfferStatus} from "./FeaturedOffers.jsx";
 import {formatDateTime,storeLabel} from "../models/home.js";
@@ -14,6 +15,7 @@ export function OfferDetails({offer,now,returnFocus,onClose}){
    <div><dt>Situação</dt><dd><OfferStatus offer={offer} now={now}/></dd></div>
    {offer.lastUpdatedAt&&<div><dt>Atualizada em</dt><dd>{formatDateTime(offer.lastUpdatedAt)}</dd></div>}
   </dl>
+  <AppLink className="home-primary-button home-map-link" to={"/mapa?loja="+encodeURIComponent(offer.store.id)}>Ver loja no mapa</AppLink>
   <p className="dialog-note">{offer.isDemo?"Oferta fictícia, apenas para demonstração. ":""}A compra acontece na loja, fora do aplicativo.</p>
  </HomeDialog>;
 }

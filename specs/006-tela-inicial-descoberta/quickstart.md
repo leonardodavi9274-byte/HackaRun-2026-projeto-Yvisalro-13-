@@ -12,8 +12,8 @@ Guia de preparação para futura conferência manual. Não é suíte de testes n
 ## Supabase de desenvolvimento
 
 1. Confirmar que o ambiente é o projeto de desenvolvimento pretendido.
-2. Aplicar backend/supabase/migrations/0015_home_catalog.sql após as migrações existentes.
-3. Aplicar backend/supabase/seed/home-demo.sql para criar shopping e conteúdo demo (reexecutar substitui o conteúdo demo).
+2. Aplicar backend/supabase/migrations/0017_home_catalog.sql após 0001–0016 (0015/0016 são o mapa e as lojas da feature 005).
+3. Aplicar backend/supabase/seed/home-demo.sql para criar o conteúdo demo sobre o Shopping Aurora e as lojas da 0016 (reexecutar substitui o conteúdo demo).
 4. Enviar backend/supabase/seed/media/demo/ ao bucket catalog-media criado pela migração, mantendo os caminhos demo/stories/*.svg.
 5. Conferir RLS em todas as tabelas e ausência de DML público.
 6. Configurar SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY em backend/.env sem registrar segredos no Git. O leitor usa publishable key; a secret key não é usada pela rota /home.
@@ -29,7 +29,7 @@ npm run build
 npm run dev
 ~~~
 
-Abrir http://127.0.0.1:5173/inicio. A landing continua em /. Busca e categoria levam a /buscar?q=… e /buscar?categoria=…, página de passagem que preserva o termo até a feature 005. API local usa porta 3000; frontend usa proxy existente. Seguir docs/desenvolvimento.md se usar a cópia portátil de Node.
+Abrir http://127.0.0.1:5173/inicio. A landing continua em /. Busca e categoria levam a /buscar?q=… e /buscar?categoria=…, página de passagem que preserva o termo até a feature de resultados. O detalhe da oferta leva a /mapa?loja=… (feature 005). API local usa porta 3000; frontend usa proxy existente. Seguir docs/desenvolvimento.md se usar a cópia portátil de Node.
 
 ## Conferência manual futura (não executada)
 

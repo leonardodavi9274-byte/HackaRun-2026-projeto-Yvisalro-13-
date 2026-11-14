@@ -29,6 +29,8 @@ import {SessionService} from "./application/services/session.service.ts";
 import {OnboardingService} from "./application/services/onboarding.service.ts";
 import {SupabaseHomeContentRepository} from "./infrastructure/supabase/home-content.repository.ts";
 import {HomeContentService} from "./application/services/home-content.service.ts";
+import {MallService} from "./application/services/mall.service.ts";
+import {SupabaseMallRepository} from "./infrastructure/supabase/mall.repository.ts";
 export function createApp(){
  const app=express();const health=new HealthController(new SystemStatusService(isSupabaseConfigured()));
  app.disable("x-powered-by");
@@ -38,6 +40,6 @@ export function createApp(){
  const auth=new SupabaseAuthGateway(),repo=new SupabaseRegistrationRepository(),consumerRepo=new SupabaseConsumerRepository(),config=new RegistrationConfigService();
  const webSessions=new WebSessionService(auth,new SupabaseSessionStore()),consumers=new ConsumerService(consumerRepo,repo);
  const registrations=new RegistrationService(auth,repo,consumerRepo,config);
- const services={avatars:new AvatarService(new SupabaseAvatarRepository(),new SharpImageProcessor(),consumers),marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo),home:new HomeContentService(new SupabaseHomeContentRepository())};
+ const services={mall:new MallService(new SupabaseMallRepository()),avatars:new AvatarService(new SupabaseAvatarRepository(),new SharpImageProcessor(),consumers),marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo),home:new HomeContentService(new SupabaseHomeContentRepository())};
  app.use("/api/v1",createApiRoutes(health,services));app.use(notFound);app.use(errorHandler);return app;
 }

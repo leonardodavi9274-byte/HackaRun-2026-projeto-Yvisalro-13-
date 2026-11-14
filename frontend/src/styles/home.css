@@ -587,47 +587,18 @@
 .story-offer .offer-name {
   margin: 0;
 }
+.home-map-link {
+  justify-self: start;
+  text-align: center;
+}
 .story-offer .home-primary-button {
   justify-self: start;
 }
 
-/* Navegação inferior */
-.home-bottom-nav {
+/* Navegação inferior compartilhada (shared/components/BottomNav, estilo em mall-map.css) */
+.home-page > .bottom-nav {
   position: fixed;
   inset: auto 0 0;
-  z-index: 5;
-  background: #fffffff2;
-  border-top: 1px solid var(--home-line);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  backdrop-filter: blur(8px);
-}
-.home-bottom-nav ul {
-  list-style: none;
-  margin: 0 auto;
-  padding: 0 8px;
-  max-width: 560px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-.home-bottom-nav a,
-.home-bottom-soon {
-  display: grid;
-  justify-items: center;
-  gap: 2px;
-  padding: 10px 4px;
-  font-size: 12px;
-  color: var(--home-muted);
-  text-align: center;
-}
-.home-bottom-nav a[aria-current="page"] {
-  color: var(--primary);
-  font-weight: 650;
-}
-.home-bottom-soon {
-  opacity: 0.6;
-}
-.home-bottom-soon small {
-  font-size: 10px;
 }
 
 @media (max-width: 480px) {
@@ -636,9 +607,6 @@
   }
   .home-account {
     gap: 12px;
-  }
-  .home-bottom-soon small {
-    display: block;
   }
 }
 @media (prefers-reduced-motion: reduce) {

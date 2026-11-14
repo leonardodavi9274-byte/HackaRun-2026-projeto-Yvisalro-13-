@@ -5,13 +5,14 @@ import {HOME_LIMITS,previousPrice,utc,type HomeCarousel,type HomeCategory,type H
 
 // Leitor público: publishable key, papel anon, sem sessão. A RLS decide o que é visível.
 // Nunca usar SUPABASE_SECRET_KEY aqui — chaves secret/service_role ignoram a RLS.
+// Shopping e lojas são public.malls/public.stores da feature 005 (colunas públicas liberadas na 0017).
 const MEDIA_BUCKET = "catalog-media";
 const PRODUCT = "id,name,image_path,image_alt,is_demo";
-const STORE = "id,name,floor_label,is_demo,shopping_center_id";
+const STORE = "id,name,is_demo,mall_id";
 const OFFER = "id,price_cents,currency,previous_price_cents,stock_status,ends_at,last_updated_at,is_demo";
 
 type ProductRow = {id: string; name: string; image_path: string | null; image_alt: string | null; is_demo: boolean};
-type StoreRow = {id: string; name: string; floor_label: string | null; is_demo: boolean; shopping_center_id: string};
+type StoreRow = {id: string; name: string; is_demo: boolean; mall_id: string};
 type OfferRow = {
   id: string; price_cents: number; currency: string; previous_price_cents: number | null; stock_status: StockStatus;
   ends_at: string | null; last_updated_at: string; is_demo: boolean;
@@ -43,11 +44,12 @@ const product = (p: ProductRow): HomeProduct => {
   const url = imageUrl(p.image_path);
   return {id: p.id, name: p.name, imageUrl: url, imageAlt: url ? p.image_alt : null};
 };
-const store = (s: StoreRow): HomeStore => ({id: s.id, name: s.name, floorLabel: s.floor_label});
+// O piso está no documento do mapa (restrito à feature 005); sem ele, não é presumido.
+const store = (s: StoreRow): HomeStore => ({id: s.id, name: s.name, floorLabel: null});
 // Oferta só é devolvida com produto e loja visíveis e no shopping consultado.
 function offer(o: OfferRow | null, shoppingId: string, fallbackProduct?: ProductRow, fallbackStore?: StoreRow): HomeOffer | null {
   const p = o?.catalog_products ?? fallbackProduct, s = o?.stores ?? fallbackStore;
-  if (!o || !p || !s || s.shopping_center_id !== shoppingId || o.currency !== "BRL") return null;
+  if (!o || !p || !s || s.mall_id !== shoppingId || o.currency !== "BRL") return null;
   return {
     offerId: o.id, product: product(p), store: store(s),
     priceCents: o.price_cents, currency: "BRL", previousPriceCents: previousPrice(o.price_cents, o.previous_price_cents),
@@ -62,20 +64,21 @@ const rows = <T>(section: string, result: {data: unknown; error: unknown}) => {
 
 export class SupabaseHomeContentRepository implements HomeContentRepository {
   async defaultShopping(): Promise<HomeShopping | null> {
-    const result = await db().from("shopping_centers").select("id,name,is_demo").eq("is_home_default", true).limit(1);
+    // A RLS só expõe o shopping ativo (no máximo um, índice malls_single_active).
+    const result = await db().from("malls").select("id,name,is_demo").limit(1);
     const row = rows<{id: string; name: string; is_demo: boolean}>("shopping", result)[0];
     return row ? {id: row.id, name: row.name, isDemo: row.is_demo} : null;
   }
 
   async categories(shoppingId: string): Promise<HomeCategory[]> {
-    const result = await db().rpc("hy_home_categories", {p_shopping_center_id: shoppingId, p_limit: HOME_LIMITS.categories});
+    const result = await db().rpc("hy_home_categories", {p_mall_id: shoppingId, p_limit: HOME_LIMITS.categories});
     return rows<{id: string; label: string; is_demo: boolean}>("categorias", result).map(c => ({id: c.id, label: c.label, isDemo: c.is_demo}));
   }
 
   async featuredOffers(shoppingId: string): Promise<HomeOffer[]> {
     const result = await db().from("catalog_offers")
       .select(OFFER + ",catalog_products!inner(" + PRODUCT + "),stores!inner(" + STORE + ")")
-      .eq("stores.shopping_center_id", shoppingId).not("home_rank", "is", null)
+      .eq("stores.mall_id", shoppingId).not("home_rank", "is", null)
       .order("home_rank").order("id").limit(HOME_LIMITS.featuredOffers);
     return rows<OfferRow>("ofertas", result).flatMap(o => offer(o, shoppingId) ?? []);
   }
@@ -83,7 +86,7 @@ export class SupabaseHomeContentRepository implements HomeContentRepository {
   async stories(shoppingId: string): Promise<HomeStory[]> {
     const result = await db().from("promo_stories")
       .select("id,title,image_path,image_alt,ends_at,is_demo,offer_id,stores!inner(" + STORE + "),catalog_offers(" + OFFER + ",catalog_products(" + PRODUCT + "))")
-      .eq("stores.shopping_center_id", shoppingId)
+      .eq("stores.mall_id", shoppingId)
       .order("sort_order").order("id").limit(HOME_LIMITS.stories);
     return rows<StoryRow>("stories", result).flatMap(s => {
       const url = imageUrl(s.image_path);

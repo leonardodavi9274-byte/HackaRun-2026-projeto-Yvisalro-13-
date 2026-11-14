@@ -1,8 +1,9 @@
 import {AppLink} from "../../../app/Link.jsx";
 import {navigate,readSearchIntent,searchPath,useSearch} from "../../../app/navigation.js";
 import {SearchBox} from "./SearchBox.jsx";
-import {HomeBottomNav} from "./HomeBottomNav.jsx";
-// Ponto de entrega para os resultados da feature 005. Preserva q/categoria e não inventa resultados.
+import {BottomNav} from "../../../shared/components/BottomNav.jsx";
+import "../../../styles/mall-map.css";
+// Ponto de entrega para a futura feature de resultados da busca. Preserva q/categoria e não inventa resultados.
 export function SearchHandoffView(){
  const search=useSearch(),{query,categoryId}=readSearchIntent(search);
  return <div className="home-page">
@@ -17,6 +18,6 @@ export function SearchHandoffView(){
    </dl>}
    <p className="home-state home-empty" role="status">Os resultados de busca ainda não estão disponíveis nesta versão. A pesquisa foi preservada para a próxima etapa.</p>
   </main>
-  <HomeBottomNav current="buscar"/>
+  <BottomNav/>
  </div>;
 }

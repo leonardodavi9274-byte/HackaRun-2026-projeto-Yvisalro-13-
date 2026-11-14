@@ -19,11 +19,18 @@ Consulte ../../specs/004-cadastro-preferencias/quickstart.md para pré-requisito
 
 0001–0006 definem tabelas e restrições; 0007 define sessões; 0008 vincula a identidade Auth;
 0009–0010 inicializam perfil/intenção; 0011–0012 suportam retomada; 0013 altera publicidade;
-0014 registra e associa avatar com revisão; 0015 cria o catálogo público da tela inicial.
-Aplicar 0015 após as anteriores. Ela cria o bucket público `catalog-media` (somente leitura pública,
-sem upload pelo cliente) e concede a anon/authenticated apenas SELECT filtrado por RLS.
+0014 registra e associa avatar com revisão; 0015–0016 criam o mapa e as lojas (feature 005);
+0017 cria o catálogo público da tela inicial (feature 006).
 
-## Seed demonstrativo da tela inicial
+## Catálogo da tela inicial (feature 006)
+
+Aplicar 0017_home_catalog.sql depois de 0015 e 0016. Ofertas e stories referenciam public.stores e o
+shopping da tela inicial é o shopping ativo em public.malls. A 0017 libera a anon/authenticated
+somente as colunas id, name, is_demo, active (malls) e id, mall_id, name, is_demo, active (stores),
+sob RLS; mall_maps continua restrito à service_role. Cria também o bucket público `catalog-media`
+(leitura pública, sem upload pelo cliente). O leitor GET /api/v1/home usa a publishable key.
+
+### Seed demonstrativo
 
 Convenção: arquivos em `seed/` contêm apenas dados fictícios, com `is_demo=true`, e ficam fora das
 migrações estruturais. Somente no ambiente de desenvolvimento:
@@ -43,6 +50,29 @@ Para objetos órfãos, identificar operações superseded ou não vigentes, conf
 consumer_profiles.photo_object_path ou operação ainda retomável referencia o objeto e então
 remover pela API Storage administrativa. Nunca apagar linhas de storage.objects diretamente
 ou remover foto vigente. Não executar limpeza automática junto ao cadastro/upload.
+
+## Mapa do shopping (feature 005)
+
+Aplicar depois de 0001–0014, em ordem: 0015_mall_map_stores.sql (malls, mall_maps, stores,
+RLS e grants só para service_role) e 0016_demo_mall_seed.sql (Shopping Aurora, mapa
+provisório de três pisos e 18 lojas fictícias, uma delas sem posição). O 0015 depende de
+interest_categories (0002). A WebAPI é a única leitora, por GET /api/v1/mall.
+
+Logos são opcionais: criar bucket público store-logos e preencher stores.logo_url com a URL
+pública HTTPS. As lojas de demonstração não usam logo.
+
+Troca do mapa provisório pela planta da coordenação, sem mudar código:
+
+1. Converter a planta para o documento schemaVersion 1 (metros, eixo y para baixo), conforme
+   ../../specs/005-mapa-rota-lojas/data-model.md.
+2. Inserir a nova linha em mall_maps com source = 'coordination' e active = false.
+3. Atualizar stores.unit_id para as unidades da nova planta; lojas sem unidade ficam sem posição.
+4. Numa transação: update mall_maps set active = false onde está ativo; depois
+   update mall_maps set active = true na nova versão (o índice único parcial exige essa ordem).
+5. Ajustar malls.reference_lat, reference_lng, area_radius_m e is_demo conforme a coordenação.
+
+Se o documento ativo for inválido, a API responde 503 MAP_INVALID e o log registra a regra
+violada, sem o conteúdo do mapa.
 
 Em 2026-11-14, o código e os arquivos SQL foram preparados; nenhum projeto remoto recebeu
 essas migrações nesta execução. Os scripts SQL não foram executados contra PostgreSQL/Supabase.

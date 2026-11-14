@@ -9,7 +9,8 @@ import {FeaturedOffers} from "./FeaturedOffers.jsx";
 import {ProductCarousel} from "./ProductCarousel.jsx";
 import {OfferDetails} from "./OfferDetails.jsx";
 import {StoryViewer} from "./StoryViewer.jsx";
-import {HomeBottomNav} from "./HomeBottomNav.jsx";
+import {BottomNav} from "../../../shared/components/BottomNav.jsx";
+import "../../../styles/mall-map.css";
 
 // Tela 05 — Início, pública. A sessão é opcional: falha ao consultá-la não bloqueia o conteúdo.
 export function HomeView({auth,onLogout}){
@@ -44,7 +45,7 @@ export function HomeView({auth,onLogout}){
     <ProductCarousel section={sections.carousels} now={now} onOpenOffer={openOffer} onSearch={search} onRetry={vm.retry}/>
    </>}
   </main>
-  <HomeBottomNav current="inicio"/>
+  <BottomNav current="/inicio"/>
   {detail?.type==="offer"&&<OfferDetails key={"o-"+detail.item.offerId} offer={detail.item} now={now} returnFocus={detail.opener} onClose={close}/>}
   {detail?.type==="story"&&<StoryViewer key={"s-"+detail.item.id} story={detail.item} now={now} returnFocus={detail.opener} onClose={close} onOpenOffer={offer=>openOffer(offer)}/>}
  </div>;

@@ -304,10 +304,10 @@ implementados no código. A página de apresentação e a saúde da base foram p
 A [feature 006](specs/006-tela-inicial-descoberta/plan.md) implementa no código a tela 05 — Início
 pública em /inicio: busca, categorias, stories, ofertas em destaque e carrosséis lidos de um catálogo
 no Supabase por GET /api/v1/home. O conteúdo inicial é um seed fictício marcado como demonstração;
-os resultados da busca dependem da feature 005.
+os resultados da busca dependem de uma feature futura. Lojas e shopping são os da feature 005.
 
 Em 2026-11-14, os builds de frontend e backend passaram. Supabase, SMTP, bucket e documentos
-legais ainda precisam de configuração real; as 15 migrações estão em backend/supabase/migrations.
+legais ainda precisam de configuração real; as 17 migrações estão em backend/supabase/migrations.
 Nenhuma migração remota, criação de conta ou envio de e-mail foi executado nesta entrega.
 
 As demais funcionalidades da vitrine continuam pendentes. O fluxo permanece sem testes.

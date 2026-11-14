@@ -13,6 +13,8 @@ export async function request(path,{method="GET",body,headers={},signal,binary=f
  return payload.data;
 }
 export const getJson=(path,options)=>request(path,options);
+/** Falha de rede/tempo esgotado (fetch rejeitado), distinta de resposta HTTP de erro e de cancelamento. */
+export const isNetworkFailure=error=>Boolean(error)&&!(error instanceof HttpError)&&error.name!=="AbortError";
 export const mutate=(path,method,body,options={})=>request(path,{...options,method,body});
 export const upload=(path,file,key,signal)=>request(path,{method:"PUT",body:file,binary:true,signal,headers:{"Content-Type":file.type,"Idempotency-Key":key}});
 
