@@ -91,3 +91,27 @@ foi iniciado nas portas 5173 e 3000; o frontend respondeu HTTP 200, e a saúde d
 respondeu `ok` diretamente e pelo proxy do Vite. `database.configured` ficou `false` e
 `database.connection`, `not_checked`. Esse registro confirma disponibilidade da base
 local, sem comprovar funcionalidades futuras ou conexão com o banco.
+
+
+## Implementação do cadastro — 2026-11-14
+
+A feature 004 acrescenta as telas /cadastro, /cadastro/preferencias, /cadastro/confirmar,
+/entrar, /inicio e /perfil/preferencias, com integração HTTP para identidade, retomada,
+interesses, publicidade e foto privada. A página de apresentação da base permanece em /.
+
+Os exemplos de ambiente foram ampliados. Usar http://127.0.0.1:5173 para manter origem e
+cookie iguais aos do link de confirmação. O modo preview continua dependendo de proxy
+/api de mesma origem para este fluxo autenticado.
+
+Nesta execução, npm run build compilou backend (TypeScript) e frontend (Vite) com sucesso.
+Sharp 0.35.5 foi instalado no backend, com versão exata no manifest/lockfile. Não foram
+executados testes automatizados ou manuais, nem cenários de cadastro, e-mail ou upload.
+
+O ambiente não contém backend/.env configurado, Docker, psql ou CLI Supabase disponíveis.
+A integração Supabase foi localizada como disponível, mas sua instalação/conexão não foi
+confirmada. As migrações 0001–0014 foram escritas e revisadas como código; não foram
+executadas em PostgreSQL/Supabase. Não houve configuração de SMTP/bucket ou publicação.
+
+Para ativar a integração, usar o [guia da feature](../specs/004-cadastro-preferencias/quickstart.md)
+e concluir T070 no [tasks.md](../specs/004-cadastro-preferencias/tasks.md). A ausência dos
+serviços reais não é tratada pela aplicação como autenticação ou salvamento bem-sucedido.

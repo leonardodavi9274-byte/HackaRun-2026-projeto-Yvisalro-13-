@@ -2,7 +2,7 @@ import type {Intent,OnboardingState} from "./registration.ts";
 export function onboarding(i:Intent|null,authenticated=false,confirmed=false,completedAt?:string|null):OnboardingState{
  const result=(status:string,actions:string[],wait:number|null=null)=>({status,pendingActions:actions,preferredNextAction:actions[0]??null,retryAfterSeconds:wait});
  if(!i)return result("incomplete",["complete_profile"]);
- if(!i.user_id){if(i.identity_state==="not_created")return result("not_created",["correct_data"]);return result(i.identity_state==="in_flight"?"processing":"unknown",["check_status"],3);}
+ if(!i.user_id){if(i.identity_state==="not_created")return result("not_created",["correct_data"]);return result(i.identity_state==="in_flight"&&Date.parse(i.lease_expires_at??"")>Date.now()?"processing":"unknown",["check_status"],3);}
  const actions:string[]=[];
  if(!confirmed)actions.push("confirm_email");
  else if(!authenticated)actions.push("authenticate");

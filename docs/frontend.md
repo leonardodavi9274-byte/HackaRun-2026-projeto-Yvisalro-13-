@@ -2,11 +2,11 @@
 
 O Hackarum-Yvisalro é uma vitrine para quem está no shopping. A pessoa pode procurar um produto, comparar ofertas de lojas, acompanhar itens de interesse e visualizar o caminho até uma loja. O **Shopping Aurora**, as lojas, os preços e os trajetos das imagens são demonstrativos. **Achei** é o nome ainda impresso nas imagens antigas; **Vitrine Perto** aparece no caminho da especificação histórica. Ambos se referem ao mesmo projeto; as imagens não foram redesenhadas nesta revisão.
 
-**Estado do projeto.** Já existem o protótipo visual com 11 imagens, o planejamento e a especificação. A base React em `frontend/` tem uma página inicial e consulta o estado da WebAPI, conforme a [feature 003](../specs/003-base-webapi-frontend/plan.md). As 11 telas, as integrações e os comportamentos descritos abaixo continuam planejados. Cada imagem é acompanhada das ações esperadas e dos pontos que precisam ser decididos antes da implementação.
+**Estado do projeto.** Já existem o protótipo visual com 11 imagens, o planejamento e a especificação. A base React em `frontend/` tem uma página inicial e consulta o estado da WebAPI, conforme a [feature 003](../specs/003-base-webapi-frontend/plan.md). As telas 02/03, a entrada mínima e os estados de conta têm código implementado na feature 004; dependem de configuração real do Supabase. As demais telas e integrações continuam planejadas. Cada imagem é acompanhada das ações esperadas e dos pontos que precisam ser decididos antes da implementação.
 
 **Protótipo confirmado em 13/11/2026.** As 11 telas permanecem no canvas de design atual. As imagens exportadas neste documento continuam como referência de UX para a implementação em React na web. O formato das landing pages será definido separadamente.
 
-**Cadastro e preferências detalhados.** A [feature 004](../specs/004-cadastro-preferencias/spec.md) especifica as telas 02 e 03, as regras dos campos, a foto opcional, os interesses, o consentimento promocional e a integração funcional entre frontend e backend. Ela registra as adequações necessárias às imagens, incluindo publicidade desligada inicialmente. Trata-se de especificação; esses fluxos ainda não estão implementados.
+**Cadastro e preferências detalhados.** A [feature 004](../specs/004-cadastro-preferencias/spec.md) especifica as telas 02 e 03, as regras dos campos, a foto opcional, os interesses, o consentimento promocional e a integração funcional entre frontend e backend. Ela registra as adequações necessárias às imagens, incluindo publicidade desligada inicialmente. O código desses fluxos está implementado; a configuração externa e a execução funcional ainda estão pendentes.
 
 ## Decisões recentes para o frontend
 
@@ -238,7 +238,9 @@ Os dados principais são **conta e preferências**, **shopping, piso e loja**, *
 - **Ações e acessibilidade.** Dar nomes compreensíveis aos ícones de olho, filtro, rota, coração e fechamento. Usar texto junto às cores para distinguir estoque baixo, queda de preço e filtros ativos.
 - **Escopo do protótipo.** O detalhamento cobre a experiência do consumidor retratada nas 11 imagens. A especificação geral também prevê web, páginas de apresentação e um painel para empresas, cujo desenho segue em aberto neste material.
 
-## Validação da demonstração
+## Critérios de demonstração
+
+Estes roteiros descrevem resultados esperados e não foram executados nesta entrega. Não constituem etapa obrigatória de testes; a política sem testes da constituição permanece vigente.
 
 - **Conta e personalização.** Passar pelo cadastro com e sem preferências, testar uma credencial inválida e conferir a recuperação por código.
 - **Catálogo e preço.** Buscar um produto com ofertas de várias lojas e conferir a ordem, o estoque e o destino do botão de rota. Revisar a consistência entre preço e desconto. Por exemplo, de R$ 299 para R$ 229 a redução é de cerca de **23%**. O selo das imagens 05 e 06 indica **25%**.

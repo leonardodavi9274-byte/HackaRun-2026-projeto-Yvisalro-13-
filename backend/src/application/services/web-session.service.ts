@@ -15,7 +15,7 @@ export class WebSessionService{
   if(Date.parse(row.access_expires_at)<Date.now()+60000){
    const owner=randomUUID();const claimed=await this.store.claim(hash,owner);
    if(!claimed)throw new ApiError(503,"SESSION_REFRESH_IN_PROGRESS","A sessão está sendo atualizada. Tente novamente.",undefined,1);
-   try{const fresh=await this.auth.refresh(tokens.refresh_token);const saved=await this.store.rotate(hash,owner,claimed.revision,encrypt(fresh),fresh.expires_at??Math.floor(Date.now()/1000)+3600);
+   try{tokens=decrypt(claimed.encrypted_tokens);const fresh=Date.parse(claimed.access_expires_at)>Date.now()+60000?{...tokens,expires_at:Math.floor(Date.parse(claimed.access_expires_at)/1000)}:await this.auth.refresh(tokens.refresh_token);const saved=await this.store.rotate(hash,owner,claimed.revision,encrypt(fresh),fresh.expires_at??Math.floor(Date.now()/1000)+3600);
    if(!saved)throw new ApiError(401,"INVALID_SESSION","Entre novamente para continuar.");tokens=fresh;
    }catch(error){if(error instanceof ApiError&&error.code==="SESSION_REFRESH_IN_PROGRESS")throw error;await this.store.revoke(hash).catch(()=>{});throw new ApiError(401,"INVALID_SESSION","Entre novamente para continuar.");}
   }

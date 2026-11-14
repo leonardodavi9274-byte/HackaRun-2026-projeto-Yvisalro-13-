@@ -1,3 +1,4 @@
+import {registrationRepository as r} from "../../registration/repositories/registration.repository.js";
 import { useCallback, useEffect, useState } from "react";
 import { systemRepository } from "../repositories/system.repository.js";
 
@@ -37,7 +38,6 @@ export function useHomeViewModel() {
 export function useAccountHomeViewModel(){
  const [profile,setProfile]=useState(null),[categories,setCategories]=useState([]),[accountError,setAccountError]=useState(null),[categoryError,setCategoryError]=useState(null);
  const reloadAccount=useCallback(async()=>{
-  const {registrationRepository:r}=await import("../../registration/repositories/registration.repository.js");
   const results=await Promise.allSettled([r.profile(),r.categories()]);
   if(results[0].status==="fulfilled"){setProfile(results[0].value);setAccountError(null);}else setAccountError(results[0].reason);
   if(results[1].status==="fulfilled"){setCategories(results[1].value.categories);setCategoryError(null);}else setCategoryError(results[1].reason);

@@ -1,3 +1,4 @@
+import {hasPendingConfirmation} from "../features/registration/viewmodels/useIdentityViewModel.js";
 import {MarketingPreferencesView} from "../features/account-preferences/views/MarketingPreferencesView.jsx";
 import {useEffect} from "react";
 import {HomeView} from "../features/home/views/HomeView.jsx";
@@ -14,6 +15,7 @@ import {AppLink} from "./Link.jsx";
 import "../styles/registration.css";
 function Application(){
  const path=usePath(),auth=useSessionViewModel(),reg=useRegistration();
+ useEffect(()=>{const email=auth.session?.user?.email;if(email&&reg.file&&reg.fileOwner!==email){reg.setFile(null);reg.setFileOwner(null);}},[auth.session?.user?.id,reg.fileOwner,reg.file]);
  const complete=auth.session?.authenticated&&auth.session.onboarding?.status==="completed";
  const protectedRoute=["/inicio","/perfil/preferencias"].includes(path);
  useEffect(()=>{
@@ -21,13 +23,13 @@ function Application(){
   if(protectedRoute&&!auth.session?.authenticated){navigate("/entrar",{replace:true});return;}
   if(auth.session?.authenticated){
    if(!complete&&protectedRoute)navigate("/cadastro/confirmar",{replace:true});
-   if(complete&&["/entrar","/cadastro","/cadastro/preferencias","/cadastro/confirmar"].includes(path)&&!location.hash)navigate("/inicio",{replace:true});
+   if(complete&&["/entrar","/cadastro","/cadastro/preferencias","/cadastro/confirmar"].includes(path)&&!(path==="/cadastro/confirmar"&&hasPendingConfirmation()))navigate("/inicio",{replace:true});
   }
   if(path==="/cadastro/preferencias"&&!reg.draft.name&&!reg.frozen)navigate("/cadastro",{replace:true});
  },[path,auth.loading,auth.session,auth.error,complete,reg.draft.name,reg.frozen]);
  if(path==="/")return <><nav className="account-entry-links" style={{display:"flex",justifyContent:"flex-end",gap:20,padding:"14px 32px",fontSize:13}} aria-label="Acesso à conta"><AppLink to="/cadastro">Criar conta</AppLink><AppLink to={complete?"/inicio":"/entrar"}>{complete?"Minha conta":"Entrar"}</AppLink></nav><ProjectHomeView/></>;
  if(auth.loading)return <main className="auth-page"><div className="auth-shell"><p role="status">Consultando sua sessão…</p></div></main>;
- if(auth.error)return <main className="auth-page"><div className="auth-shell"><FormFeedback message={auth.error.message}/><button className="primary-button" onClick={()=>auth.refresh().catch(()=>{})}>Tentar novamente</button></div></main>;
+ if(auth.error)return <main className="auth-page"><div className="auth-shell"><FormFeedback message={auth.error}/><button className="primary-button" onClick={()=>auth.refresh().catch(()=>{})}>Tentar novamente</button></div></main>;
  if(path==="/entrar")return <LoginView auth={auth}/>;
  if(path==="/cadastro")return <AccountStepView/>;
  if(path==="/cadastro/preferencias")return <PreferencesStepView/>;

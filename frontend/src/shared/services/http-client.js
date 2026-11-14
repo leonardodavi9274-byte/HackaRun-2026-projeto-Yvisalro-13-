@@ -15,3 +15,6 @@ export async function request(path,{method="GET",body,headers={},signal,binary=f
 export const getJson=(path,options)=>request(path,options);
 export const mutate=(path,method,body,options={})=>request(path,{...options,method,body});
 export const upload=(path,file,key,signal)=>request(path,{method:"PUT",body:file,binary:true,signal,headers:{"Content-Type":file.type,"Idempotency-Key":key}});
+
+
+export async function getPrivateImage(signal){const response=await fetch(base+"/me/avatar",{signal,credentials:"same-origin",cache:"no-store",headers:{Accept:"image/webp"}});if(!response.ok){const payload=await response.json().catch(()=>null);throw new HttpError(response.status,payload?.error);}return response.blob();}

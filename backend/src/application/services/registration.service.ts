@@ -16,20 +16,21 @@ export class RegistrationService{
  async create(raw:unknown,id:string,token:string){
   this.config.requireReady();const input=registration(raw);const {email,password,mode,...draft}=input;const s:Snapshot=draft;
   const proof=bindingProof(id,email);let intent=await this.repo.create(id,digest(token),digest(proof),email,digest(JSON.stringify({email,mode,...s})),s);
-  if(intent.user_id)return {http:200,data:{registrationId:id,onboarding:await this.status(intent)},session:null};
+  if(intent.user_id)return {http:200,data:{registrationId:id,onboarding:onboarding(intent,false,true)},session:null};
   const owner=randomUUID();const claim=await this.repo.claim(id,owner);
   if(!claim)return {http:202,data:{registrationId:id,onboarding:await this.status(intent)},session:null};
-  let session:Session|null=null;let accepted=false;let failedCode:string|null=null;let uncertain=false;
-  try{const result=await this.auth.signup(email,password,{registration_id:id,registration_proof:proof});session=result.session;accepted=result.accepted;failedCode=result.failedCode;}catch{uncertain=true;}
+  let session:Session|null=null;let accepted=false;let failedCode:string|null=null;let uncertain=false;let retryAfter=60;
+  try{const result=await this.auth.signup(email,password,{registration_id:id,registration_proof:proof});session=result.session;accepted=result.accepted;failedCode=result.failedCode;retryAfter=result.retryAfter??60;}catch{uncertain=true;}
   try{intent=await this.repo.byId(id,digest(token));}catch{return {http:202,data:{registrationId:id,onboarding:{status:"unknown",pendingActions:["check_status"],preferredNextAction:"check_status",retryAfterSeconds:3}},session:null};}
   if(!intent.user_id){await this.repo.finish(id,owner,uncertain?"unknown":"not_created",uncertain?"unknown":accepted?"accepted":"failed");if(uncertain)return {http:202,data:{registrationId:id,onboarding:onboarding({...intent,identity_state:"unknown"})},session:null};
-   if(failedCode==="AUTH_RATE_LIMITED")throw new ApiError(429,"AUTH_RATE_LIMITED","Aguarde antes de tentar novamente.",undefined,60);
+   if(failedCode==="AUTH_RATE_LIMITED")throw new ApiError(429,"AUTH_RATE_LIMITED","Aguarde antes de tentar novamente.",undefined,retryAfter);
    throw new ApiError(409,"REGISTRATION_NOT_COMPLETED","Não foi possível concluir com este e-mail. Entre na sua conta ou consulte as opções de recuperação de acesso.");}
   const issues=[];
   try{await this.consumers.complete(intent.user_id,id,s,null,owner,false);}catch(e){issues.push({stage:"profile",code:e instanceof ApiError?e.code:"PROFILE_SAVE_FAILED",message:"A conta existe, mas os dados ainda precisam ser concluídos.",...(e instanceof ApiError&&e.fields?{fields:e.fields}:{})});}
   await this.repo.finish(id,owner,"bound",uncertain?"unknown":accepted?"accepted":"failed").catch(()=>{});
   intent=await this.repo.byId(id,digest(token));
   if(session&&session.user.id!==intent.user_id)session=null;
-  return {http:issues.length?202:201,data:{registrationId:id,onboarding:await this.status(intent,Boolean(session)),emailDispatch:uncertain?"unknown":accepted?"accepted":"failed",...(issues.length?{issues}:{})},session};
+  let state;try{state=await this.status(intent,Boolean(session));}catch{state={status:"incomplete",pendingActions:["authenticate","complete_profile"],preferredNextAction:"authenticate",retryAfterSeconds:null};issues.push({stage:"identity",code:"STATUS_UNAVAILABLE",message:"A conta existe. Entre para consultar as etapas pendentes."});}
+  return {http:issues.length?202:201,data:{registrationId:id,onboarding:state,emailDispatch:uncertain?"unknown":accepted?"accepted":"failed",...(issues.length?{issues}:{})},session};
  }
 }

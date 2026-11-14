@@ -1,6 +1,6 @@
 # Execução futura: cadastro e preferências
 
-**Estado:** guia para depois da implementação. Esta entrega contém somente design; executar agora os endpoints novos resulta em recurso ausente. Nenhum serviço, tabela, bucket ou SMTP foi configurado por este planejamento.
+**Estado:** código implementado em 2026-11-14, com builds concluídos. Supabase/Auth/SMTP/bucket/documentos ainda não foram configurados nesta execução; a tarefa T070 permanece pendente. Este guia prepara a ativação real e não comprova cenários funcionais.
 
 Referências: [API](contracts/api.md), [telas](contracts/ui.md), [modelo](data-model.md), [desenvolvimento da base](../../docs/desenvolvimento.md).
 
@@ -15,7 +15,7 @@ O fluxo da equipe permanece sem testes: não haverá scripts/suítes de teste ne
 
 ## Preparar banco, identidade e imagens
 
-Após os arquivos serem produzidos na implementação:
+As migrações 0001–0014 e os adaptadores já estão no repositório. Para configurar o projeto:
 
 1. Aplicar no projeto de desenvolvimento as migrações em backend/supabase/migrations, na ordem numérica: tabelas/categorias; RPCs e privilégios; trigger mínimo de vínculo. Usar o SQL Editor do Supabase com acesso administrativo; não aplicar em banco de terceiros ou produção inadvertidamente.
 2. Confirmar que o esquema app_private não está exposto pela Data API e que EXECUTE/DML privados não são concedidos a anon/authenticated. A lista de regras está no modelo, sem duplicação de SQL neste guia.
@@ -44,7 +44,7 @@ if (-not (Test-Path -LiteralPath frontend/.env)) {
 }
 ~~~
 
-A implementação deverá acrescentar estas entradas ao exemplo do backend, sem valores reais:
+Estas entradas já estão no exemplo do backend, sem valores reais:
 
 | Variável | Uso |
 | --- | --- |

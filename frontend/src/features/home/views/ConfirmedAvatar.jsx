@@ -1,0 +1,3 @@
+import {useEffect,useState} from "react";
+import {getPrivateImage} from "../../../shared/services/http-client.js";
+export function ConfirmedAvatar({name}){const [url,setUrl]=useState(null);useEffect(()=>{let live=true,objectUrl;const abort=new AbortController();getPrivateImage(abort.signal).then(blob=>{if(live){objectUrl=URL.createObjectURL(blob);setUrl(objectUrl);}}).catch(()=>{});return()=>{live=false;abort.abort();if(objectUrl)URL.revokeObjectURL(objectUrl);};},[]);return url?<img className="account-avatar" src={url} alt={"Foto de "+name}/>:<span className="account-avatar" role="img" aria-label="Perfil sem foto disponível">{name.slice(0,1)}</span>;}
