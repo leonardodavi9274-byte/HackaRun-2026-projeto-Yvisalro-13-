@@ -13,7 +13,8 @@ import type {WebSessionService} from "../../../application/services/web-session.
 import type {RegistrationConfigService} from "../../../application/services/registration-config.service.ts";
 import type {RegistrationOptionsRepository} from "../../../infrastructure/supabase/registration-options.repository.ts";
 import type {MallService} from "../../../application/services/mall.service.ts";
-export type Services={mall:MallService;avatars:AvatarService;marketing:MarketingService;registrations:RegistrationService;identity:IdentityService;sessions:SessionService;consumers:ConsumerService;onboarding:OnboardingService;webSessions:WebSessionService;config:RegistrationConfigService;options:RegistrationOptionsRepository};
+import type {PromotionService} from "../../../application/services/promotion.service.ts";
+export type Services={mall:MallService;promotions:PromotionService;avatars:AvatarService;marketing:MarketingService;registrations:RegistrationService;identity:IdentityService;sessions:SessionService;consumers:ConsumerService;onboarding:OnboardingService;webSessions:WebSessionService;config:RegistrationConfigService;options:RegistrationOptionsRepository};
 export const user=(res:Response)=>res.locals.user as Identity;
 export function mutation(req:Request){const id=req.get("Idempotency-Key");if(!uuid(id))throw new ApiError(400,"INVALID_OPERATION_KEY","A operação precisa de uma chave válida.");return id.toLowerCase();}
 export function registrationProof(req:Request){const token=req.get("Registration-Token");if(!token||!/^[A-Za-z0-9_-]{43}$/.test(token))throw new ApiError(401,"REGISTRATION_PROOF_INVALID","A referência do cadastro não é válida.");return token;}

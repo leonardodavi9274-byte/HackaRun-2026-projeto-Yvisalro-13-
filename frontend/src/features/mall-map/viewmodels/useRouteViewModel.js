@@ -10,7 +10,7 @@ export const NO_PATH="Não foi possível traçar um caminho até esta loja";
  * encerramento, substituição com confirmação e lojas próximas.
  * Transições: consulta → escolhendo-partida → ativa → chegou → consulta.
  */
-export function useRouteViewModel(index,graph){
+export function useRouteViewModel(index,graph,ownerId){
  const active=useActiveRoute();
  const [picking,setPicking]=useState(null);
  const [confirm,setConfirm]=useState(null);
@@ -19,7 +19,7 @@ export function useRouteViewModel(index,graph){
  function compute(pointId,storeId){
   const route=index&&graph?buildRoute(index,graph,{startPointId:pointId,storeId}):null;
   if(!route){setError(NO_PATH);return false;}
-  active.setStartPointId(pointId);
+  active.setStartPointId(pointId,{mallId:index.mall.id,mapVersion:index.map.versionLabel,ownerId});
   if(active.isActive)active.replace(route);else active.start(route);
   setPicking(null);setError(null);
   return true;
@@ -47,7 +47,7 @@ export function useRouteViewModel(index,graph){
    if(pointId!==active.startPointId)setConfirm({storeId:active.route.storeId,pointId});
    return;
   }
-  active.setStartPointId(pointId);setPicking(null);setError(null);
+  active.setStartPointId(pointId,{mallId:index.mall.id,mapVersion:index.map.versionLabel,ownerId});setPicking(null);setError(null);
  }
 
  function confirmReplace(){
