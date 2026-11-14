@@ -53,12 +53,26 @@ Troca do mapa provisório pela planta da coordenação, sem mudar código:
 Se o documento ativo for inválido, a API responde 503 MAP_INVALID e o log registra a regra
 violada, sem o conteúdo do mapa.
 
-Planta da coordenação (Capim Dourado Shopping): 0020_capim_dourado_map.sql aplica os passos
-acima de uma vez. Cria as categorias inativas alimentacao, servicos e lazer (só para lojas), o
-shopping capim-dourado, a versão planta-mix-2026-11 (source = 'coordination', Térreo e Praça de
-Alimentação) e 152 lojas, e torna o capim-dourado o shopping ativo. Aplicar depois de 0001–0018;
-o número 0019 está reservado para a migração da feature 006 na branch dev. Coordenadas de
-referência e raio continuam provisórios (passo 5 pendente). Ver research D13 da feature 005.
+Planta de dois pisos em escala real (Shopping Veredas Douradas, fictício):
+0021_veredas_douradas_map.sql aplica os passos 1–3 de uma vez. Cria as categorias inativas
+alimentacao, servicos e lazer (só para lojas), o shopping veredas-douradas (is_demo = true,
+inativo), a versão planta-2026-11 (Térreo e Praça de Alimentação) e 152 lojas com nomes
+inventados (ids com prefixo vd-). O Shopping Aurora continua ativo; o passo 4 está comentado no
+fim do arquivo. Aplicar depois de 0001–0020 (0019 e 0020 são do catálogo da feature 010).
+Ver research D13 da feature 005.
+
+Lojas e ofertas das telas do protótipo: 0022_prototype_demo_stores.sql acrescenta ao Shopping
+Aurora as lojas fictícias Megatech, Sport Vibe e Som&Cia e três ofertas (Grão Fino, Moda Leve,
+Pixel House) com vigência relativa ao momento da aplicação. Requer 0016 e 0017.
+
+## Modo demonstração sem Supabase
+
+Sem SUPABASE_URL e SUPABASE_SECRET_KEY, a API serve GET /mall e /promotions a partir de
+backend/src/infrastructure/demo: a planta do Shopping Veredas Douradas (0021) em memória, com as
+21 lojas do catálogo do protótipo posicionadas por backend/scripts/generate-demo-veredas.mjs
+(que também grava piso e distância de caminhada em frontend/src/features/demo/data). O frontend
+detecta database.configured = false em /health e usa o catálogo fictício e uma conta local
+(frontend/src/features/demo). Em produção, defina VITE_DEMO_MODE=false.
 
 ## Promoções próximas (feature 008)
 

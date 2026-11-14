@@ -37,6 +37,8 @@ import {CatalogReferenceService} from "./application/services/catalog-reference.
 import {CatalogSearchService} from "./application/services/catalog-search.service.ts";
 import {CatalogSimilarService} from "./application/services/catalog-similar.service.ts";
 import {CatalogComparisonService} from "./application/services/catalog-comparison.service.ts";
+import {DemoMallRepository} from "./infrastructure/demo/demo-mall.repository.ts";
+import {DemoPromotionRepository} from "./infrastructure/demo/demo-promotion.repository.ts";
 export function createApp(){
  const app=express();const health=new HealthController(new SystemStatusService(isSupabaseConfigured()));
  app.disable("x-powered-by");
@@ -46,11 +48,14 @@ export function createApp(){
  const auth=new SupabaseAuthGateway(),repo=new SupabaseRegistrationRepository(),consumerRepo=new SupabaseConsumerRepository(),config=new RegistrationConfigService();
  const webSessions=new WebSessionService(auth,new SupabaseSessionStore()),consumers=new ConsumerService(consumerRepo,repo);
  const registrations=new RegistrationService(auth,repo,consumerRepo,config);
+ // Sem Supabase, mapa e promoções vêm do Shopping Aurora fictício em memória (modo demonstração).
+ const demo=!isSupabaseConfigured();
+ if(demo)console.info("Supabase não configurado: mapa e promoções em modo demonstração (dados fictícios).");
  const catalogRepo=new SupabaseCatalogRepository(),catalogReader=new SupabaseCatalogReader(catalogRepo);
  const catalog=new CatalogReferenceService(catalogRepo,catalogReader),catalogSearch=new CatalogSearchService(catalog);
  catalogReader.search=async term=>{const result=await catalogSearch.search({q:term}),seen=new Set<string>();
   return result.offers.filter(o=>{if(seen.has(o.product.id))return false;seen.add(o.product.id);return true;})
    .map(o=>({id:o.product.id,name:o.product.name,isDemo:o.isDemo}));};
- const services={catalog,catalogSearch,catalogSimilar:new CatalogSimilarService(catalog),catalogComparison:new CatalogComparisonService(catalog),mall:new MallService(new SupabaseMallRepository()),promotions:new PromotionService(new SupabasePromotionRepository()),avatars:new AvatarService(new SupabaseAvatarRepository(),new SharpImageProcessor(),consumers),marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo)};
+ const services={catalog,catalogSearch,catalogSimilar:new CatalogSimilarService(catalog),catalogComparison:new CatalogComparisonService(catalog),mall:new MallService(demo?new DemoMallRepository():new SupabaseMallRepository()),promotions:new PromotionService(demo?new DemoPromotionRepository():new SupabasePromotionRepository()),avatars:new AvatarService(new SupabaseAvatarRepository(),new SharpImageProcessor(),consumers),marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo)};
  app.use("/api/v1",createApiRoutes(health,services));app.use(notFound);app.use(errorHandler);return app;
 }

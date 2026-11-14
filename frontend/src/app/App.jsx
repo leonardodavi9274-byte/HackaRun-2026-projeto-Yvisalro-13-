@@ -18,6 +18,9 @@ import {PromotionSessionProvider} from "../features/nearby-promotions/viewmodels
 import {VariantDetailView} from "../features/catalog/views/VariantDetailView.jsx";
 import {CatalogSearchView} from "../features/catalog/views/CatalogSearchView.jsx";
 import "../styles/catalog.css";
+import {isDemoMode} from "../features/demo/demo-mode.js";
+import {DemoStoreProvider} from "../features/demo/viewmodels/DemoStore.jsx";
+import {DemoApplication} from "../features/demo/DemoApplication.jsx";
 import "../styles/registration.css";
 function Application(){
  const path=usePath(),auth=useSessionViewModel(),reg=useRegistration();
@@ -53,4 +56,8 @@ function Application(){
  if(path==="/perfil/preferencias")return complete?<MarketingPreferencesView key={auth.session.user.id}/>:null;
  return <main className="auth-page"><div className="auth-shell"><h1>Página não encontrada</h1><AppLink to="/">Voltar ao início</AppLink></div></main>;
 }
-export function App(){return <RegistrationProvider><ActiveRouteProvider><PromotionSessionProvider><Application/></PromotionSessionProvider></ActiveRouteProvider></RegistrationProvider>;}
+export function App(){
+ // Modo demonstração (sem Supabase): as 11 telas do protótipo com catálogo fictício.
+ if(isDemoMode())return <DemoStoreProvider><ActiveRouteProvider><DemoApplication/></ActiveRouteProvider></DemoStoreProvider>;
+ return <RegistrationProvider><ActiveRouteProvider><PromotionSessionProvider><Application/></PromotionSessionProvider></ActiveRouteProvider></RegistrationProvider>;
+}
