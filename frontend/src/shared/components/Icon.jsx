@@ -99,6 +99,8 @@ const paths = {
   ),
   "trend-down": <path d="M6 6l12 12M18 9v9H9" />,
   pulse: <path d="M3 12h4l2.5-6 5 12 2.5-6h4" />,
+  play: <path d="M7 4.5v15l12-7.5-12-7.5Z" />,
+  pause: <path d="M8 5v14M16 5v14" />,
   logout: <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11" />,
   refresh: <path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5" />,
 };
