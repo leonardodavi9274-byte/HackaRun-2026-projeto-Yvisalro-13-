@@ -31,6 +31,8 @@ import {MallService} from "./application/services/mall.service.ts";
 import {SupabaseMallRepository} from "./infrastructure/supabase/mall.repository.ts";
 import {PromotionService} from "./application/services/promotion.service.ts";
 import {SupabasePromotionRepository} from "./infrastructure/supabase/promotion.repository.ts";
+import {DemoMallRepository} from "./infrastructure/demo/demo-mall.repository.ts";
+import {DemoPromotionRepository} from "./infrastructure/demo/demo-promotion.repository.ts";
 export function createApp(){
  const app=express();const health=new HealthController(new SystemStatusService(isSupabaseConfigured()));
  app.disable("x-powered-by");
@@ -40,6 +42,9 @@ export function createApp(){
  const auth=new SupabaseAuthGateway(),repo=new SupabaseRegistrationRepository(),consumerRepo=new SupabaseConsumerRepository(),config=new RegistrationConfigService();
  const webSessions=new WebSessionService(auth,new SupabaseSessionStore()),consumers=new ConsumerService(consumerRepo,repo);
  const registrations=new RegistrationService(auth,repo,consumerRepo,config);
- const services={mall:new MallService(new SupabaseMallRepository()),promotions:new PromotionService(new SupabasePromotionRepository()),avatars:new AvatarService(new SupabaseAvatarRepository(),new SharpImageProcessor(),consumers),marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo)};
+ // Sem Supabase, mapa e promoções vêm do Shopping Aurora fictício em memória (modo demonstração).
+ const demo=!isSupabaseConfigured();
+ if(demo)console.info("Supabase não configurado: mapa e promoções em modo demonstração (dados fictícios).");
+ const services={mall:new MallService(demo?new DemoMallRepository():new SupabaseMallRepository()),promotions:new PromotionService(demo?new DemoPromotionRepository():new SupabasePromotionRepository()),avatars:new AvatarService(new SupabaseAvatarRepository(),new SharpImageProcessor(),consumers),marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo)};
  app.use("/api/v1",createApiRoutes(health,services));app.use(notFound);app.use(errorHandler);return app;
 }

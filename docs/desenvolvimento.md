@@ -18,12 +18,35 @@ Também é possível usar terminais separados com `npm run dev:backend` e `npm r
 
 | Serviço | Endereço local |
 | --- | --- |
-| Frontend | `http://localhost:5173` |
+| Frontend | `http://127.0.0.1:5173` |
 | WebAPI | `http://127.0.0.1:3000/api/v1` |
 | Saúde da WebAPI | `http://127.0.0.1:3000/api/v1/health` |
 
 Os servidores escutam apenas a máquina local. Portas ocupadas devem ser liberadas ou
 reconfiguradas; o frontend não troca de porta silenciosamente.
+
+## Modo demonstração (sem Supabase)
+
+Sem `backend/.env` (ou sem `SUPABASE_URL` e `SUPABASE_SECRET_KEY`), `npm run dev` já abre o sistema
+em modo demonstração: a WebAPI serve o mapa e as promoções do Shopping Aurora fictício em memória e
+o frontend mostra as 11 telas do protótipo (`docs/imagens/achei/`) com um catálogo fictício.
+
+| Tela | Endereço |
+| --- | --- |
+| 01 Login | `/entrar` (botão **Preencher** usa a conta fictícia `marina.souza@exemplo.com`) |
+| 02–03 Cadastro e preferências | `/cadastro`, `/cadastro/preferencias` |
+| 04 Recuperação de senha | `/recuperar-senha` (o código aparece na tela; nenhum e-mail é enviado) |
+| 05 Início e 11 Oferta próxima | `/inicio` (a oferta surge após alguns segundos, nunca com rota ativa) |
+| 06 Busca | `/buscar?q=fone bluetooth até 300` |
+| 07 Stories | `/stories?loja=moda-leve` |
+| 08 Desejos e Avise-me | `/desejos` |
+| 09–10 Mapa e rota | `/mapa`, `/mapa?loja=pixel-house` |
+| Perfil | `/perfil` (interesses, e-mails, sair, restaurar dados) |
+
+Lojas, produtos, preços, estoques, distâncias e contas são fictícios. Contas, desejos e buscas
+ficam apenas no `localStorage` do navegador; senhas criadas na demonstração são guardadas como
+hash. `VITE_DEMO_MODE=true` força o modo; `VITE_DEMO_MODE=false` o desliga (use em produção).
+Abra `http://127.0.0.1:5173`: o Vite escuta só nesse endereço e a API confere a origem.
 
 ## Windows sem Node.js instalado
 

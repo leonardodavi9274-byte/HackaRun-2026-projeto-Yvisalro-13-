@@ -55,6 +55,52 @@ const paths = {
   "u-turn": <path d="M8 20V9a4 4 0 0 1 8 0v8M12 13l4 4 4-4" />,
   "floor-change": <path d="M4 20h5v-5h5v-5h5V5" />,
   arrive: <path d="M5 21V4h12l-2.5 4L17 12H5" />,
+  // Telas do protótipo (01–08).
+  bell: <path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9ZM10 20a2.2 2.2 0 0 0 4 0" />,
+  eye: (
+    <>
+      <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </>
+  ),
+  "eye-off": <path d="M3 3l18 18M10.6 5.6A10 10 0 0 1 12 5.5c6.4 0 10 6.5 10 6.5a17 17 0 0 1-3.2 3.9M6.6 6.7A16.7 16.7 0 0 0 2 12s3.6 6.5 10 6.5a9.6 9.6 0 0 0 4.4-1M9.9 10a3 3 0 0 0 4.2 4.1" />,
+  key: (
+    <>
+      <circle cx="7.5" cy="15.5" r="3.5" />
+      <path d="m10 13 9-9M16 7l2.5 2.5M14 9l2 2" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="m4 7 8 6 8-6" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="5" y="10.5" width="14" height="10" rx="2.5" />
+      <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
+    </>
+  ),
+  camera: (
+    <>
+      <path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z" />
+      <circle cx="12" cy="13.5" r="3.5" />
+    </>
+  ),
+  filter: <path d="M4 7h16M7 12h10M10 17h4" />,
+  back: <path d="M15 5 8 12l7 7" />,
+  navigate: <path d="M12 3 19.5 20 12 16l-7.5 4L12 3Z" />,
+  user: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21a8 8 0 0 1 16 0" />
+    </>
+  ),
+  "trend-down": <path d="M6 6l12 12M18 9v9H9" />,
+  pulse: <path d="M3 12h4l2.5-6 5 12 2.5-6h4" />,
+  logout: <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11" />,
+  refresh: <path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5" />,
 };
 
 export function Icon({ name, size = 24, ...props }) {
