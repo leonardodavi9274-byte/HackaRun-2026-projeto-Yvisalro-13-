@@ -1,3 +1,5 @@
+import {MarketingService} from "./application/services/marketing.service.ts";
+import {SupabaseMarketingRepository} from "./infrastructure/supabase/marketing.repository.ts";
 import {randomUUID} from "node:crypto";
 import express from "express";
 import cors from "cors";
@@ -31,6 +33,6 @@ export function createApp(){
  const auth=new SupabaseAuthGateway(),repo=new SupabaseRegistrationRepository(),consumerRepo=new SupabaseConsumerRepository(),config=new RegistrationConfigService();
  const webSessions=new WebSessionService(auth,new SupabaseSessionStore()),consumers=new ConsumerService(consumerRepo,repo);
  const registrations=new RegistrationService(auth,repo,consumerRepo,config);
- const services={webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo)};
+ const services={marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo)};
  app.use("/api/v1",createApiRoutes(health,services));app.use(notFound);app.use(errorHandler);return app;
 }
