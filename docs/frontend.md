@@ -6,6 +6,8 @@ O Hackarum-Yvisalro é uma vitrine para quem está no shopping. A pessoa pode pr
 
 **Protótipo confirmado em 13/11/2026.** As 11 telas permanecem no canvas de design atual. As imagens exportadas neste documento continuam como referência de UX para a implementação em React na web. O formato das landing pages será definido separadamente.
 
+**Cadastro e preferências detalhados.** A [feature 004](../specs/004-cadastro-preferencias/spec.md) especifica as telas 02 e 03, as regras dos campos, a foto opcional, os interesses, o consentimento promocional e a integração funcional entre frontend e backend. Ela registra as adequações necessárias às imagens, incluindo publicidade desligada inicialmente. Trata-se de especificação; esses fluxos ainda não estão implementados.
+
 ## Decisões recentes para o frontend
 
 - **Plataformas:** React confirmado para a interface web e o painel empresarial; Flutter/Dart para o aplicativo móvel. MVVM separará apresentação, estado e dados. TypeScript confirmado para o backend Node.js e proposto para React; os contratos serão detalhados no plano técnico.
@@ -48,7 +50,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 - **Esqueci a senha** leva à imagem 04. **Criar conta** leva à imagem 02.
 - Se as credenciais forem inválidas ou a conexão falhar, a tela informa o problema e permite tentar novamente.
 
-**A definir.** O cadastro da imagem 02 só pede e-mail. A equipe precisa decidir se haverá um nome de usuário separado e como a conta lembrada será escolhida. A especificação também prevê login com Google e Apple. Os pontos de acesso para essas opções ainda precisam ser definidos.
+**Cadastro detalhado e pontos restantes.** A feature 004 não cria nome de usuário separado; o e-mail identifica a conta no cadastro. O rótulo de entrada da imagem 01 deverá ser alinhado a essa regra quando o login for implementado. A escolha da conta lembrada e os pontos de acesso para Google e Apple continuam a definir, fora desse recorte.
 
 ### 02 — Cadastro · dados da conta
 
@@ -64,7 +66,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 - **Continuar** verifica os dados obrigatórios e abre Preferências (imagem 03) quando os dados passam na validação.
 - Campos inválidos recebem uma indicação que ajude a corrigir o problema. Ao voltar da segunda etapa, os dados já preenchidos devem ser preservados durante o cadastro.
 
-**A definir.** Regras de senha, tratamento de e-mail já cadastrado, momento de criação ou confirmação da conta, limites e armazenamento da foto e endereços dos documentos legais.
+**Regras especificadas.** A feature 004 define validação de nome/e-mail/senha, tratamento de conta existente, criação somente ao concluir ou pular o passo 2, confirmação de e-mail, limites da foto e retomada de falhas. O plano técnico deve definir o armazenamento e os contratos de integração; os destinos reais dos documentos legais são dependência para liberar o cadastro.
 
 ### 03 — Cadastro · preferências
 
@@ -81,7 +83,7 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 - **Concluir cadastro** salva as preferências e segue para o Início quando o cadastro é confirmado. **Pular** permite seguir sem preencher essa etapa.
 - As preferências salvas devem acompanhar a conta. Quando estiverem vazias, o Início precisa ter conteúdo que a pessoa possa explorar.
 
-**A definir.** Se os produtos digitados serão texto livre ou itens do catálogo, se passarão a integrar a lista de Desejos, quais recomendações aparecem sem preferências e qual será o estado inicial do controle de e-mail.
+**Regras especificadas.** Na feature 004, os produtos digitados são termos livres de interesse e não criam Desejos ou alertas; categorias e publicidade começam sem seleção. **Pular** conclui sem interesses e sem publicidade, preservando a foto do passo 1 quando houver. Sem preferências, a pessoa pode explorar categorias; o algoritmo de recomendação fica fora desse recorte. O texto promocional da imagem deve ser ajustado para não misturar publicidade com alertas solicitados.
 
 ### 04 — Recuperação de senha
 

@@ -9,6 +9,8 @@
 
 O nome canônico é **Hackarum-Yvisalro**. O caminho `001-vitrine-perto` é histórico. Esta especificação mantém as regras do produto; a [feature 002](../002-planejamento-hackarum-yvisalro/spec.md) registra a revisão da entrega inicial e a decisão esclarecida sobre persistência. As escolhas técnicas estão no [README](../../README.md).
 
+O cadastro do consumidor e suas preferências são detalhados na [feature 004](../004-cadastro-preferencias/spec.md), incluindo a correspondência com as telas 02/03 e a integração funcional entre frontend e backend. Esse detalhamento não indica implementação concluída.
+
 Uma vitrine para web e dispositivos móveis ajudará consumidores a encontrar produtos e ofertas em lojas de um shopping fictício inspirado em Palmas, Tocantins. O objetivo é apresentar os produtos que correspondam à busca e indicar onde encontrá-los; comprar não é obrigatório e o sistema não pode garantir a existência de um produto que não esteja cadastrado.
 
 O protótipo usará nomes fictícios, por exemplo **Shopping Veredas Douradas**, **Passo do Cerrado** e **Vitrine das Veredas**. Esses nomes são apenas exemplos e não identificam estabelecimentos reais. O mapa interno e os trajetos serão simulados; a geolocalização do dispositivo será real.
