@@ -12,14 +12,17 @@ let active = flag === "true";
 
 export async function detectDemoMode() {
   if (flag === "true" || flag === "false") return (active = flag === "true");
-  try {
-    const response = await fetch(base + "/health", {headers: {Accept: "application/json"}, cache: "no-store"});
-    const payload = await response.json();
-    active = payload?.data?.database?.configured === false;
-  } catch {
-    active = false; // sem resposta da API, mantém o fluxo real e seus estados de erro
+  // Até 5 tentativas: a API pode estar reiniciando (watch) no momento em que a página abre.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      const response = await fetch(base + "/health", {headers: {Accept: "application/json"}, cache: "no-store"});
+      const payload = await response.json();
+      return (active = payload?.data?.database?.configured === false);
+    } catch {
+      await new Promise(resolve => setTimeout(resolve, 800));
+    }
   }
-  return active;
+  return (active = false); // sem resposta da API, mantém o fluxo real e seus estados de erro
 }
 
 export const isDemoMode = () => active;

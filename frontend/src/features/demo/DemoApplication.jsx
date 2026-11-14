@@ -23,14 +23,15 @@ export function DemoApplication() {
   const isPrivate = PRIVATE.includes(path);
 
   useEffect(() => {
+    // A raiz não é uma das telas do protótipo: abre direto o login (ou o Início, com sessão).
+    if (path === "/") { navigate(account ? "/inicio" : "/entrar", {replace: true}); return; }
     if (isPrivate && !account) navigate("/entrar", {replace: true});
     if (account && GUEST_ONLY.includes(path) && path !== "/cadastro/preferencias") navigate("/inicio", {replace: true});
   }, [path, account, isPrivate]);
 
-  if (path === "/") return <>
-    <nav className="account-entry-links" style={{display: "flex", justifyContent: "flex-end", gap: 20, padding: "14px 32px", fontSize: 13}} aria-label="Acesso à conta">
-      <span className="demo-pill">Modo demonstração</span><AppLink to="/cadastro">Criar conta</AppLink><AppLink to={account ? "/inicio" : "/entrar"}>{account ? "Abrir o app" : "Entrar"}</AppLink>
-    </nav><ProjectHomeView /></>;
+  if (path === "/") return null;
+  // A landing page do projeto continua disponível em /sobre.
+  if (path === "/sobre") return <ProjectHomeView />;
   if (path === "/mapa") return <MallMapView ownerId={account ? "demo:" + account.email : null} />;
   if (path === "/entrar") return <DemoLoginView />;
   if (path === "/cadastro") return <DemoSignupView />;
@@ -42,5 +43,5 @@ export function DemoApplication() {
   if (path === "/stories") return <StoryView />;
   if (path === "/desejos") return <WishesView />;
   if (path === "/perfil") return <ProfileView />;
-  return <main className="auth-page"><div className="auth-shell"><h1>Página não encontrada</h1><AppLink to="/">Voltar ao início</AppLink></div></main>;
+  return <main className="auth-page"><div className="auth-shell"><h1>Página não encontrada</h1><AppLink to={account ? "/inicio" : "/entrar"}>Voltar ao início</AppLink></div></main>;
 }
