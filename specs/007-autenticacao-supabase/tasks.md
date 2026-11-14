@@ -20,15 +20,15 @@ Os bloqueios são independentes: T003–T005 condicionam apenas os fluxos indica
 **Objetivo e critério independente**: login confirmado, recarga da sessão, acesso à própria conta e saída sem dados privados remanescentes. A garantia de revogação imediata depende de T004.
 
 - [X] T006 [US1] Reconciliar erros genéricos de login e confirmação pendente sem enumerar contas em `backend/src/infrastructure/supabase/auth-gateway.ts` e `frontend/src/features/session/views/LoginView.jsx`.
-- [ ] T007 [US1] Após T004, implementar validação da sessão de origem e revogação por usuário com proteção contra refresh em `backend/src/application/services/web-session.service.ts`, `backend/src/application/ports/session-store.ts`, `backend/src/infrastructure/supabase/session-store.ts` e nova migração proposta `backend/supabase/migrations/0017_auth_session_security.sql`.
-- [ ] T008 [US1] Após T004 e T007, aplicar a mesma garantia a bearer e acessos diretos em `backend/src/presentation/http/middlewares/require-auth.ts` e políticas na migração proposta `backend/supabase/migrations/0017_auth_session_security.sql`.
+- [ ] T007 [US1] Após T004, implementar validação da sessão de origem e revogação por usuário com proteção contra refresh em `backend/src/application/services/web-session.service.ts`, `backend/src/application/ports/session-store.ts`, `backend/src/infrastructure/supabase/session-store.ts` e nova migração proposta `backend/supabase/migrations/0019_auth_session_security.sql`.
+- [ ] T008 [US1] Após T004 e T007, aplicar a mesma garantia a bearer e acessos diretos em `backend/src/presentation/http/middlewares/require-auth.ts` e políticas na migração proposta `backend/supabase/migrations/0019_auth_session_security.sql`.
 - [X] T009 [US1] Atualizar navegação após sessão expirada e saída para não exibir dados privados no histórico em `frontend/src/shared/services/http-client.js` e `frontend/src/features/session/viewmodels/useSessionViewModel.js`, usando a proteção de rotas existente em `frontend/src/app/App.jsx`.
 
 ## Fase 4 — US2: Recuperar senha por e-mail (P1)
 
 **Objetivo e critério independente**: solicitar código real, definir senha e retornar ao login, com revogação de sessões anteriores. T003 e T004 são pré-requisitos.
 
-- [ ] T010 [US2] Após T003, projetar transação compartilhada de recuperação na migração proposta `backend/supabase/migrations/0018_password_recovery.sql`: código de seis dígitos, validade de 10 minutos, reenvio mínimo de 60 segundos, limites do Supabase e invalidação do código anterior em todas as vias.
+- [ ] T010 [US2] Após T003, projetar transação compartilhada de recuperação na migração proposta `backend/supabase/migrations/0020_password_recovery.sql`: código de seis dígitos, validade de 10 minutos, reenvio mínimo de 60 segundos, limites do Supabase e invalidação do código anterior em todas as vias.
 - [ ] T011 [US2] Após T003, integrar envio e verificação real pelo Supabase em `backend/src/infrastructure/supabase/auth-gateway.ts`, mantendo resposta uniforme e sessão de recuperação somente no servidor.
 - [ ] T012 [US2] Após T004 e T010–T011, implementar autorização limitada, redefinição e revogação antes da confirmação no serviço proposto `backend/src/application/services/password-recovery.service.ts` e em `backend/src/presentation/http/routes/auth.routes.ts`, incluindo resultado desconhecido e proteção CSRF.
 - [ ] T013 [US2] Após T012, implementar formulários acessíveis de solicitação, código e nova senha na tela proposta `frontend/src/features/session/views/PasswordRecoveryView.jsx` e navegação em `frontend/src/app/App.jsx`; exigir mínimo de 8 caracteres Unicode e máximo de 72 bytes UTF-8 sem truncamento.
@@ -39,7 +39,7 @@ Os bloqueios são independentes: T003–T005 condicionam apenas os fluxos indica
 **Objetivo e critério independente**: autorização real por cada provedor, primeiro cadastro e acesso seguinte com a mesma identidade e preferências. T005 é pré-requisito.
 
 - [ ] T015 [US3] Após T005, implementar transação social protegida e troca PKCE no serviço proposto `backend/src/application/services/social-auth.service.ts`, em `backend/src/infrastructure/supabase/auth-gateway.ts` e `backend/src/presentation/http/routes/auth.routes.ts`; retornos repetidos ou adulterados não criam sessão.
-- [ ] T016 [US3] Após T015, implementar inicialização social idempotente por `user_id` sem senha ou `registration_intent` anterior, preservando perfil e publicidade desativada, na migração proposta `backend/supabase/migrations/0019_social_onboarding.sql` e em `backend/src/application/services/onboarding.service.ts`.
+- [ ] T016 [US3] Após T015, implementar inicialização social idempotente por `user_id` sem senha ou `registration_intent` anterior, preservando perfil e publicidade desativada, na migração proposta `backend/supabase/migrations/0021_social_onboarding.sql` e em `backend/src/application/services/onboarding.service.ts`.
 - [ ] T017 [US3] Após T015–T016, integrar botões sociais, retorno e pendências em `frontend/src/features/session/views/LoginView.jsx`, `frontend/src/features/registration/views/ResumeRegistrationView.jsx` e `frontend/src/app/App.jsx`; permitir nome ausente e endereço privado Apple.
 - [X] T018 [US3] Documentar configuração e rotação de credenciais dos provedores em `docs/desenvolvimento.md` e `backend/.env.example` sem registrar segredos.
 
