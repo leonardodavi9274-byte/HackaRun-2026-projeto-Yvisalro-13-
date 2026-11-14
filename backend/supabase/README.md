@@ -66,3 +66,12 @@ não armazena coordenadas ou ponto no servidor. Nenhum SQL foi aplicado remotame
 
 Em 2026-11-14, o código e os arquivos SQL foram preparados; nenhum projeto remoto recebeu
 essas migrações nesta execução. Os scripts SQL não foram executados contra PostgreSQL/Supabase.
+
+## Desejos e histórico (feature 009)
+
+Antes de criar as migrações de desejos e histórico, conferir a próxima numeração livre no
+conjunto integrado de migrações e coordená-la com as outras branches. Nesta revisão local,
+0018 é o último número presente; 0019 e 0020 são nomes previstos nas tarefas da feature 009,
+não uma reserva garantida nem arquivos já criados. Preservar 0017 e 0018 da feature 008.
+O esquema concreto de desejos depende dos identificadores e do ciclo de vida de produto e
+oferta do catálogo ainda não disponibilizado; não aplicar ou inventar migrações antes disso.
