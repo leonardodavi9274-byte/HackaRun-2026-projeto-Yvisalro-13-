@@ -9,6 +9,7 @@ Todas usam /api/v1, exceto o alias /health. A saúde informa presença de config
 | Grupo | Rotas |
 | --- | --- |
 | Base | GET /, GET /health; alias GET /health fora do prefixo |
+| Tela inicial pública | GET /home |
 | Configuração | GET /registration-config, GET /interest-categories |
 | Cadastro | POST /auth/registrations, GET /auth/registrations/:registrationId |
 | Identidade | POST /auth/email/verify, POST /auth/email/resend |
@@ -43,8 +44,8 @@ No Windows sem Node global, usar scripts/npm.ps1 conforme [desenvolvimento](../d
 
 Copiar .env.example para .env e preencher as entradas reais. Nunca versionar chaves ou usar VITE_* para segredos. APP_SECURITY_KEY representa 32 bytes em base64 e não possui fallback inseguro.
 
-[Migrações e preparação](supabase/README.md): aplicar 0001–0014 em ordem no projeto da equipe, configurar Auth e SMTP, criar bucket consumer-avatars privado e informar URLs reais de Termos/Política.
+[Migrações e preparação](supabase/README.md): aplicar 0001–0015 em ordem (e o seed demonstrativo apenas em desenvolvimento) no projeto da equipe, configurar Auth e SMTP, criar bucket consumer-avatars privado e informar URLs reais de Termos/Política.
 
-Sem configuração, a saúde continua disponível e cadastro/operações dependentes retornam indisponibilidade. Não existem catálogo, autorização empresarial, recuperação completa, provedores sociais ou campanhas neste recorte.
+Sem configuração, a saúde continua disponível e cadastro/operações dependentes retornam indisponibilidade. O catálogo da tela inicial depende da migração 0015 e do seed demonstrativo; o painel empresarial de escrita, recuperação completa, provedores sociais e campanhas ficam fora deste recorte.
 
 Build de backend concluído em 2026-11-14. Não foram executados testes, cadastros, migrações remotas ou envios reais nesta execução.

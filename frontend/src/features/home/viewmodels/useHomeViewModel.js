@@ -1,47 +1,27 @@
-import {registrationRepository as r} from "../../registration/repositories/registration.repository.js";
-import { useCallback, useEffect, useState } from "react";
-import { systemRepository } from "../repositories/system.repository.js";
+import {useCallback,useEffect,useState} from "react";
+import {homeRepository} from "../repositories/home.repository.js";
+import {createClock,loadingSections} from "../models/home.js";
 
-export function useHomeViewModel() {
-  const [attempt, setAttempt] = useState(0);
-  const [state, setState] = useState({
-    status: "loading",
-    data: null,
-    error: null,
-  });
-  useEffect(() => {
-    const controller = new AbortController();
-    setState({ status: "loading", data: null, error: null });
-    systemRepository
-      .getStatus({ signal: controller.signal })
-      .then((data) => {
-        if (!controller.signal.aborted)
-          setState({ status: "ready", data, error: null });
-      })
-      .catch((error) => {
-        if (!controller.signal.aborted) {
-          setState({
-            status: "error",
-            data: null,
-            error: "Não foi possível conectar ao serviço. Tente novamente.",
-          });
-        }
-      });
-    return () => controller.abort();
-  }, [attempt]);
+const FAILURE="Não foi possível carregar a tela inicial. Verifique sua conexão e tente novamente.";
+const TICK_MS=30000;
 
-  const retry = useCallback(() => setAttempt((value) => value + 1), []);
-  return { ...state, retry };
-}
-
-
-export function useAccountHomeViewModel(){
- const [profile,setProfile]=useState(null),[categories,setCategories]=useState([]),[accountError,setAccountError]=useState(null),[categoryError,setCategoryError]=useState(null);
- const reloadAccount=useCallback(async()=>{
-  const results=await Promise.allSettled([r.profile(),r.categories()]);
-  if(results[0].status==="fulfilled"){setProfile(results[0].value);setAccountError(null);}else setAccountError(results[0].reason);
-  if(results[1].status==="fulfilled"){setCategories(results[1].value.categories);setCategoryError(null);}else setCategoryError(results[1].reason);
- },[]);
- useEffect(()=>{reloadAccount();},[reloadAccount]);
- return {profile,categories,accountError,categoryError,reloadAccount};
+// Tela inicial pública: não depende da sessão. Nova tentativa refaz o agregado e
+// preserva o conteúdo já carregado se a nova consulta falhar.
+export function useHomeViewModel(){
+ const [attempt,setAttempt]=useState(0);
+ const [state,setState]=useState({status:"loading",content:null,error:null,refreshing:false,clock:null});
+ const [now,setNow]=useState(()=>Date.now());
+ useEffect(()=>{
+  const controller=new AbortController();
+  setState(s=>({...s,status:s.content?s.status:"loading",refreshing:Boolean(s.content),error:null}));
+  homeRepository.get({signal:controller.signal})
+   .then(content=>{if(controller.signal.aborted)return;const clock=createClock(content.generatedAt);setState({status:"ready",content,error:null,refreshing:false,clock});setNow(clock());})
+   .catch(()=>{if(!controller.signal.aborted)setState(s=>({...s,status:s.content?"ready":"error",error:FAILURE,refreshing:false}));});
+  return()=>controller.abort();
+ },[attempt]);
+ // Reavalia validade enquanto a tela está aberta, sem buscar novos dados.
+ useEffect(()=>{if(!state.clock)return;const id=setInterval(()=>setNow(state.clock()),TICK_MS);return()=>clearInterval(id);},[state.clock]);
+ const retry=useCallback(()=>setAttempt(v=>v+1),[]);
+ const sections=state.content?.sections??loadingSections();
+ return {status:state.status,content:state.content,sections,error:state.error,refreshing:state.refreshing,now,retry};
 }

@@ -19,7 +19,21 @@ Consulte ../../specs/004-cadastro-preferencias/quickstart.md para pré-requisito
 
 0001–0006 definem tabelas e restrições; 0007 define sessões; 0008 vincula a identidade Auth;
 0009–0010 inicializam perfil/intenção; 0011–0012 suportam retomada; 0013 altera publicidade;
-0014 registra e associa avatar com revisão. Aplicar todos antes de liberar a feature.
+0014 registra e associa avatar com revisão; 0015 cria o catálogo público da tela inicial.
+Aplicar 0015 após as anteriores. Ela cria o bucket público `catalog-media` (somente leitura pública,
+sem upload pelo cliente) e concede a anon/authenticated apenas SELECT filtrado por RLS.
+
+## Seed demonstrativo da tela inicial
+
+Convenção: arquivos em `seed/` contêm apenas dados fictícios, com `is_demo=true`, e ficam fora das
+migrações estruturais. Somente no ambiente de desenvolvimento:
+
+1. Executar `seed/home-demo.sql` (transacional; reexecutar substitui o conteúdo demonstrativo anterior).
+2. Enviar o conteúdo de `seed/media/` ao bucket `catalog-media`, preservando os caminhos
+   (`demo/stories/*.svg`). Sem esse envio, os stories mostram a mensagem de imagem indisponível.
+
+Para remover o conteúdo demonstrativo, apagar os registros `is_demo` (o início do seed mostra a ordem)
+sem descartar o schema.
 
 O script maintenance/cleanup-registration-state.sql é manual: limpa snapshots confirmados,
 intenções não vinculadas expiradas e sessões vencidas/revogadas. Não apaga identidades nem

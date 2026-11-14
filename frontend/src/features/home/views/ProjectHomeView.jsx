@@ -1,5 +1,5 @@
 import { Icon } from "../../../shared/components/Icon.jsx";
-import { useHomeViewModel } from "../viewmodels/useHomeViewModel.js";
+import { useSystemStatusViewModel } from "../viewmodels/useSystemStatusViewModel.js";
 
 const steps = [
   {
@@ -24,7 +24,7 @@ const steps = [
 ];
 
 export function ProjectHomeView() {
-  const { status, data, error, retry } = useHomeViewModel();
+  const { status, data, error, retry } = useSystemStatusViewModel();
   const connectionLabel =
     status === "loading"
       ? "Conectando ao serviço…"
