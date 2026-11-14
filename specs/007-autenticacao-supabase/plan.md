@@ -8,7 +8,7 @@ Estender a base web e API para recuperação por código, entrada social Google/
 
 ## Technical Context
 
-**Linguagem**: JavaScript/React no cliente; TypeScript 7.0.2 e Node.js 24 no serviço. **Dependências**: React 19.3.1, Express 5.3.0, `@supabase/supabase-js` 2.119.0, Supabase Auth e SMTP transacional. **Dados**: PostgreSQL Supabase; sem segundo banco. **Testes**: fluxo da equipe sem etapa de testes; cenários em quickstart são referência operacional opcional. **Plataforma**: web responsiva 360–1440 px, Chrome/gerenciador Google e Safari/Senhas iCloud em ambientes compatíveis. **Desempenho**: meta SC-001 da spec; nenhuma capacidade adicional presumida. **Limites**: credenciais privilegiadas no servidor, consentimento separado, campanhas e aplicativo móvel fora do recorte.
+**Linguagem**: JavaScript/React no cliente; TypeScript 7.0.2 e Node.js 24 no serviço. **Dependências**: React 19.3.1, Express 5.3.0, `@supabase/supabase-js` 2.119.0, Supabase Auth hospedado e SMTP transacional. **Dados**: PostgreSQL Supabase; sem segundo banco. **Testes**: fluxo da equipe sem etapa de testes; cenários em quickstart são referência operacional opcional. **Plataforma**: web responsiva 360–1440 px, Chrome/gerenciador Google e Safari/Senhas iCloud em ambientes compatíveis. **Desempenho**: meta SC-001 da spec; nenhuma capacidade adicional presumida. **Limites**: credenciais privilegiadas no servidor, consentimento separado, campanhas e aplicativo móvel fora do recorte.
 
 ## Constitution Check
 
@@ -26,7 +26,7 @@ Estender a base web e API para recuperação por código, entrada social Google/
 - **B2 — revogação imediata (FR-009, US1.5)**: sign-out global revoga sessões/refresh tokens, mas JWT já emitido pode permanecer válido. Validar `session_id` ativo na origem confiável em todas as operações privadas e revogar transacionalmente sessões web por usuário, inclusive refresh concorrente. Demonstrar acesso suportado e fail-closed à fonte de sessões no ambiente, incluindo bearer e acessos diretos ao banco/RLS; se não for possível, alinhar o requisito antes de liberar. Não confirmar sucesso enquanto sessão anterior puder autorizar acesso.
 - **B3 — associação social (FR-012)**: Supabase associa identidades automaticamente pelo mesmo e-mail verificado antes do callback. Em 2026-11-14 o usuário exigiu confirmação adicional antes de associar. Obter controle preventivo suportado, inclusive para conta não confirmada e possível remoção de identidade, antes de habilitar OAuth. Recusa após callback não desfaz efeitos anteriores.
 
-Esses pontos são dependências técnicas em aberto, não mudanças silenciosas da spec. Configuração e acesso aos fornecedores também permanecem pendentes. Ver [pesquisa](research.md).
+Esses pontos são dependências técnicas em aberto, não mudanças silenciosas da spec. O usuário corrigiu a informação anterior: o projeto usa Supabase hospedado, não instalação própria. Um gateway próprio sozinho não impede acesso direto à API hospedada. Configuração e acesso aos fornecedores também permanecem pendentes. Ver [pesquisa](research.md).
 
 ## Fases e dependências
 
@@ -35,6 +35,10 @@ Esses pontos são dependências técnicas em aberto, não mudanças silenciosas 
 3. **US3 (FR-010–013, 018)**: após B3, OAuth PKCE por provedor, retorno correlacionado, sessão web e onboarding social autenticado idempotente; publicidade inicia desligada.
 4. **US4 (FR-014, 017)**: campos e formulários semânticos, atributos de preenchimento e estados acessíveis; suporte manual. Independente dos bloqueios.
 5. Configurar SMTP e provedores sem registrar segredos; só disponibilizar cada fluxo após resolver suas dependências. Campanhas seguem pendentes.
+
+## Base de execução para a entrega final
+
+A decisão de disponibilizar o sistema para diferentes computadores está detalhada em [base de execução e publicação](../../docs/base-execucao-sistema.md): frontend e `/api` na mesma origem HTTPS pública, backend comunicando-se com o Supabase hospedado e segredos restritos ao servidor. Cada integrante poderá executar os serviços localmente com configuração própria. Hospedagem, domínio, ambientes e responsáveis continuam a definir; nenhuma publicação é presumida. As pendências de implementação e segurança B1–B3 continuam aplicáveis antes de habilitar os fluxos dependentes.
 
 ## Project Structure
 

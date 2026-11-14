@@ -20,6 +20,8 @@ npm run dev
 
 Frontend: `http://localhost:5173`; API: `http://127.0.0.1:3000/api/v1`. Para compilar: `npm run build`. Origens e cookies devem refletir a configuração real; OAuth Apple pode exigir domínio HTTPS próprio.
 
+Para a entrega final acessível de diferentes computadores, usar a [base de execução e publicação](../../docs/base-execucao-sistema.md): endereço HTTPS público único, frontend e API na mesma origem, configuração segura do backend e Supabase hospedado. A escolha da hospedagem e a publicação continuam pendentes.
+
 ## Cenários de referência
 
 1. Login válido e inválido, recarga, saída e entrada de outra conta. Esperado: dados isolados, mensagens genéricas e sessão encerrada sem acesso privado.
@@ -35,3 +37,7 @@ Rotas e formatos são propostas em [contracts/auth.md](contracts/auth.md). Depen
 Na branch `007-autenticacao-supabase`, os campos de login receberam nomes estáveis e indicações para gerenciadores de senha; o acesso ao reenvio de confirmação foi mantido visível para todos e o erro de login para e-mail não confirmado tornou-se genérico. O cadastro já utiliza `new-password`. `npm run build` compilou frontend e backend com Node 26.13.0; o projeto requer Node 24, portanto a compilação na versão exigida ainda não foi verificada. Não foram executados testes funcionais, nem configurados os serviços externos. As demais tarefas e bloqueios seguem em [tasks.md](tasks.md).
 
 Na retomada da implementação, o cadastro passou a capturar valores presentes no formulário ao avançar, e respostas 401 de recursos privados ou restauração da página pelo histórico acionam nova consulta da sessão. A configuração proposta de SMTP e provedores foi documentada em [desenvolvimento.md](../../docs/desenvolvimento.md). Após essas alterações, `npm run build` voltou a compilar os dois projetos com Node 26.13.0; isso não valida os fluxos funcionais nem a revogação imediata no serviço. Os arquivos `backend/.env`, `frontend/.env` e `.env` não estavam presentes quando verificados, sem inspeção de segredos fora do repositório.
+
+Na investigação posterior, a página inicial deixou de solicitar uma segunda atualização para o mesmo erro 401, pois o cliente HTTP já sinaliza a necessidade de revalidar a sessão. A opção experimental de isolamento de provedores identificada no código do Supabase foi documentada em [research.md](research.md); não foi ativada nem considerada suficiente para resolver os bloqueios.
+
+Após uma informação inicialmente recebida de que a instalação seria própria, a pesquisa descreveu um possível gateway de identidade. O usuário depois corrigiu: o Supabase é hospedado; o candidato para instalação própria não se aplica automaticamente. Na renovação da sessão web, erros 429 e falhas temporárias do serviço são propagados em vez de converter a condição em sessão inválida e revogar imediatamente a sessão local; a proteção de concorrência existente ainda pode manter a renovação ocupada até o fim do prazo da reserva. `npm run build` compilou frontend e backend com Node 26.13.0. Não houve execução funcional nem configuração ou alteração do projeto Supabase.

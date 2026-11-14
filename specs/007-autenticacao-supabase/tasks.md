@@ -56,10 +56,12 @@ Os bloqueios são independentes: T003–T005 condicionam apenas os fluxos indica
 
 - [ ] T021 Atualizar estado real e limitações da entrega em `docs/frontend.md` e `specs/007-autenticacao-supabase/quickstart.md`; distinguir configuração pendente, código implementado e ausência de testes.
 - [ ] T022 Compilar frontend e backend com `npm run build` na raiz, após as alterações, e registrar eventual falha ou limitação em `specs/007-autenticacao-supabase/quickstart.md`.
+- [ ] T023 Na preparação da publicação, definir hospedagem, domínio HTTPS e encaminhamento `/api` da mesma origem para o backend; registrar decisões e URL real de entrega em `docs/base-execucao-sistema.md`.
+- [ ] T024 Na preparação da publicação, configurar nos ambientes apropriados as origens, migrações, SMTP, provedores e segredos substituídos sem versioná-los; registrar o estado efetivo e as limitações em `docs/base-execucao-sistema.md` e `specs/007-autenticacao-supabase/quickstart.md`, após resolver as dependências dos fluxos habilitados.
 
 ## Dependências e estratégia
 
-T001 precede alterações de código conforme constituição. T003 bloqueia US2; T004 bloqueia revogação imediata e US2; T005 bloqueia US3. T019–T020 são independentes dos três bloqueios. T006 e T009 podem avançar após T001 com cuidado para preservar a confirmação de e-mail. T021–T022 acompanham o recorte efetivamente concluído; não marcar a feature inteira como concluída enquanto tarefas bloqueadas permanecerem abertas. Trabalho em arquivos distintos pode ocorrer em paralelo quando suas dependências estiverem satisfeitas; tarefas no mesmo arquivo são sequenciais. MVP: US1, após T004; US4 pode ser entregue separadamente.
+T001 precede alterações de código conforme constituição. T003 bloqueia US2; T004 bloqueia revogação imediata e US2; T005 bloqueia US3. T019–T020 são independentes dos três bloqueios. T006 e T009 podem avançar após T001 com cuidado para preservar a confirmação de e-mail. T021–T022 acompanham o recorte efetivamente concluído; T023–T024 são pendências para publicação, sem presumir que seja executada nesta etapa. Não marcar a feature inteira como concluída enquanto tarefas bloqueadas permanecerem abertas. Trabalho em arquivos distintos pode ocorrer em paralelo quando suas dependências estiverem satisfeitas; tarefas no mesmo arquivo são sequenciais. MVP: US1, após T004; US4 pode ser entregue separadamente.
 
 ```text
 T001 ─┬─ T004 → T007 → T008       (US1 e revogação)

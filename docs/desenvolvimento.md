@@ -53,6 +53,12 @@ No backend, configure `SUPABASE_URL` e `SUPABASE_SECRET_KEY` quando houver um pr
 Supabase real. Mantenha a chave apenas no servidor. `.env` e variações locais estão no
 `.gitignore`. Apenas `.env.example`, sem credenciais, é versionado.
 
+Para usar as funções de identidade e cadastro, configure também `SUPABASE_PUBLISHABLE_KEY`,
+`APP_SECURITY_KEY`, `TERMS_URL` e `PRIVACY_URL` conforme o exemplo e a configuração real
+do ambiente. Use um Supabase de desenvolvimento separado da produção quando disponível.
+Consulte a [base de execução e publicação](base-execucao-sistema.md) para os requisitos
+de acesso por outros computadores e para a configuração futura do ambiente hospedado.
+
 Sem configuração, `database.configured` é `false`. A resposta de saúde sempre identifica
 `database.connection` como `not_checked`: a base não abre uma consulta nem cria tabelas.
 O middleware de identidade está preparado; login e autorização por empresa ainda precisam
@@ -66,9 +72,11 @@ npm run start:backend
 ```
 
 Os resultados ficam em `backend/dist/` e `frontend/dist/`. Para visualizar o build web,
-use outro terminal com `npm run preview:frontend`. Esse modo não oferece o proxy do Vite;
-defina uma URL absoluta em `VITE_API_BASE_URL` antes do build ou forneça um proxy externo.
-Se usar a porta 4173, inclua essa origem em `FRONTEND_ORIGIN` no backend.
+use outro terminal com `npm run preview:frontend`. Esse modo não oferece o proxy `/api`
+do servidor de desenvolvimento. Os fluxos autenticados atuais exigem um proxy externo
+na mesma origem que encaminhe `/api` para a API; apenas definir uma URL absoluta de outra
+origem não faz os cookies de sessão serem enviados pelo cliente atual. Ajuste `APP_ORIGIN`
+e `FRONTEND_ORIGIN` à origem acessada, inclusive à porta, conforme a configuração usada.
 
 O build é compilação, não execução de testes. Conforme decisão da equipe, esta base
 não possui testes automatizados, testes manuais obrigatórios nem scripts de teste.

@@ -14,6 +14,7 @@
 
 ### Session 2026-11-14
 
+- Q: O Supabase será próprio ou hospedado? → A: Após correção, é um projeto criado pela equipe no serviço hospedado do Supabase.
 - Q: Quando não for possível garantir bloqueio após cinco tentativas em todas as chamadas ao Supabase, qual regra usar? → A: Aceitar os limites de segurança do Supabase para tentativas de recuperação.
 - Q: Uma pessoa já tem conta com o mesmo endereço verificado pelo Google ou Apple. O login social pode vinculá-la automaticamente? → A: Não; exigir confirmação adicional antes de vincular à conta existente.
 - Q: Conta criada somente com Google ou Apple pode criar senha pelo e-mail de recuperação? → A: Não; manter entrada somente pelo provedor.
