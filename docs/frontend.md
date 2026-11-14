@@ -2,7 +2,7 @@
 
 O Hackarum-Yvisalro é uma vitrine para quem está no shopping. A pessoa pode procurar um produto, comparar ofertas de lojas, acompanhar itens de interesse e visualizar o caminho até uma loja. O **Shopping Aurora**, as lojas, os preços e os trajetos das imagens são demonstrativos. **Achei** é o nome ainda impresso nas imagens antigas; **Vitrine Perto** aparece no caminho da especificação histórica. Ambos se referem ao mesmo projeto; as imagens não foram redesenhadas nesta revisão.
 
-**Estado do projeto.** Já existem o protótipo visual com 11 imagens, o planejamento e a especificação. A base React em `frontend/` tem uma página inicial e consulta o estado da WebAPI, conforme a [feature 003](../specs/003-base-webapi-frontend/plan.md). As telas 02/03, a entrada mínima e os estados de conta têm código implementado na feature 004; dependem de configuração real do Supabase. As demais telas e integrações continuam planejadas. Cada imagem é acompanhada das ações esperadas e dos pontos que precisam ser decididos antes da implementação.
+**Estado do projeto.** As 11 imagens são referência de UX. Há código para cadastro, mapa, promoções e busca pública de demonstração nas features 004, 005, 008 e 010; o funcionamento integrado depende de configuração e migrações. Desejos e recomendações ainda não estão integrados. A existência do código não comprova execução funcional.
 
 **Protótipo confirmado em 13/11/2026.** As 11 telas permanecem no canvas de design atual. As imagens exportadas neste documento continuam como referência de UX para a implementação em React na web. O formato das landing pages será definido separadamente.
 
@@ -14,7 +14,7 @@ O Hackarum-Yvisalro é uma vitrine para quem está no shopping. A pessoa pode pr
 
 - **Plataformas:** React confirmado para a interface web e o painel empresarial; Flutter/Dart para o aplicativo móvel. MVVM separará apresentação, estado e dados. TypeScript confirmado para o backend Node.js e proposto para React; os contratos serão detalhados no plano técnico.
 - **Acesso da empresa:** além das telas de consumidor mostradas no protótipo, será necessário desenhar o painel da empresa. Qualquer empresa poderá criar sua conta e publicar imediatamente; cada empresa deverá ter acesso de gestão apenas aos próprios dados.
-- **Busca:** os resultados disponíveis devem aparecer por relevância ao termo pesquisado e, entre semelhantes, pelo menor preço. Os esgotados ficam por último. Variações semelhantes, como cores diferentes, não são automaticamente o mesmo produto.
+- **Busca:** disponíveis aparecem por relevância e, entre semelhantes, pelo menor preço; depois vêm esgotados e, por decisão posterior da feature 010, ofertas de disponibilidade desconhecida. Variantes diferentes não são automaticamente o mesmo produto.
 - **Localização:** se não for possível obter a localização do dispositivo, mostrar a mensagem “Não foi possível encontrar a localização do dispositivo” e oferecer a escolha manual do shopping. No trajeto interno simulado, a pessoa escolhe um ponto inicial conhecido.
 - **Conta e alertas:** desejos e preferências acompanham a conta entre dispositivos. Os alertas solicitados são previstos por email quando houver reposição ou quando o preço desejado for atingido, conforme as preferências do usuário.
 - **Dados:** PostgreSQL no Supabase confirmado como banco do MVP; integração ainda pendente.
@@ -120,6 +120,8 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 **A definir.** Destinos de **Ver tudo** e do sino, regra de personalização e tratamento de uma oferta que expira enquanto aparece na tela.
 
+**Feature 010:** o código disponibiliza entrada pública para `/buscar` no início da conta e na página pública; sua operação depende do catálogo configurado. Recomendações da 009 continuam pendentes.
+
 ### 06 — Resultados da busca
 
 <img src="imagens/achei/06-resultados-da-busca.png" alt="Resultados para fone bluetooth até 300 com filtros, comparação entre lojas, preços, estoque e ação de rota" width="320">
@@ -135,7 +137,9 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 - Ordenar os itens disponíveis por relevância e, entre semelhantes, por menor preço, conforme a especificação. Itens sem estoque vêm depois dos disponíveis. O rótulo **Melhor preço e promoção primeiro** do protótipo precisa refletir a regra escolhida.
 - O botão de rota usa a loja do cartão escolhido. **Avise-me quando voltar** registra o pedido de reposição para o item conforme a regra de alerta definida.
 
-**A definir.** Critério de equivalência entre variantes, combinação dos filtros, como a distância será calculada e se o alerta de reposição vale para a oferta daquela loja ou para o produto em qualquer loja.
+**A definir.** Como a distância será calculada e se o alerta de reposição vale para a oferta daquela loja ou para o produto em qualquer loja.
+
+**Atualização da feature 010:** comparação exige mesma variante; filtros de texto, categoria, tipo e preço são combinados, e a loja aparece abaixo do produto. Disponibilidade desconhecida vem depois da esgotada. O rótulo da imagem **Melhor preço e promoção primeiro** diverge da ordenação especificada; a imagem não foi alterada. O mapa usa a loja escolhida sem inventar distância. Alertas não fazem parte deste recorte.
 
 ### 07 — Story promocional
 

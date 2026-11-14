@@ -45,6 +45,10 @@ Copiar .env.example para .env e preencher as entradas reais. Nunca versionar cha
 
 [Migrações e preparação](supabase/README.md): aplicar 0001–0014 em ordem no projeto da equipe, configurar Auth e SMTP, criar bucket consumer-avatars privado e informar URLs reais de Termos/Política.
 
-Sem configuração, a saúde continua disponível e cadastro/operações dependentes retornam indisponibilidade. Não existem catálogo, autorização empresarial, recuperação completa, provedores sociais ou campanhas neste recorte.
+Sem configuração, a saúde continua disponível e operações dependentes retornam indisponibilidade. A feature 010 acrescenta código para catálogo de demonstração e busca; ele depende das migrações e do corte coordenado. Autorização empresarial, recuperação completa, provedores sociais e campanhas continuam fora deste recorte.
+
+## Catálogo de demonstração
+
+GETs públicos em `/api/v1/catalog`: `/categories`, `/offers`, `/products/:id`, `/offers/:id`, `/variants/:id` e `/variants/:id/similar`. Filtros, erros e estados estão no [contrato](../specs/010-busca-comparacao-produtos/contracts/api.md). A fonte de promoções passa ao mesmo catálogo canônico; a ativação depende da [transição coordenada](../docs/migracao-catalogo-promocoes.md). Nenhuma migração remota foi aplicada nesta implementação.
 
 Build de backend concluído em 2026-11-14. Não foram executados testes, cadastros, migrações remotas ou envios reais nesta execução.

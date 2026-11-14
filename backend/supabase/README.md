@@ -72,4 +72,22 @@ com 0017 apenas, a lista de ofertas pode estar vazia. A aplicação usa somente 
 não armazena coordenadas ou ponto no servidor. Nenhum SQL foi aplicado remotamente aqui.
 
 Em 2026-11-14, o código e os arquivos SQL foram preparados; nenhum projeto remoto recebeu
-essas migrações nesta execução. Os scripts SQL não foram executados contra PostgreSQL/Supab
+essas migrações nesta execução. Os scripts SQL não foram executados contra PostgreSQL/Supabase.
+
+## Desejos e histórico (feature 009)
+
+Antes de criar as migrações de desejos e histórico, conferir a próxima numeração livre no
+conjunto integrado de migrações e coordená-la com as outras branches. A 009 previa 0019 e
+0020, agora utilizados pelos arquivos locais da 010; as migrações futuras da 009 devem usar
+numeração livre após a integração. Preservar 0017 e 0018 da feature 008.
+O esquema concreto de desejos depende dos identificadores e do ciclo de vida de produto e
+oferta do catálogo; a feature 010 adiciona código e migrações locais, mas o ambiente remoto
+e a integração de desejos não foram confirmados.
+
+## Catálogo de demonstração (feature 010)
+
+Os arquivos locais 0019_catalog_foundation.sql e 0020_catalog_demo.sql foram criados após
+0018. Conferir a numeração no conjunto integrado, incluindo a 009, antes de aplicar.
+O corte aposenta o acesso da API à fonte promocional antiga e exige backup, mapeamento
+explícito de cada oferta, janela coordenada e implantação conjunta do adaptador. Consultar
+../../docs/migracao-catalogo-promocoes.md. Nenhum SQL foi aplicado remotamente nesta execução.

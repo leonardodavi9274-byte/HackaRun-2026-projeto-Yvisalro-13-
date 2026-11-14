@@ -1,6 +1,6 @@
 # Contrato proposto: API de desejos e histórico
 
-**Estado**: desenho para planejamento; nomes e formas abaixo não indicam endpoints implementados. Depende da identidade da feature 004 e de um catálogo com busca de produtos, ainda não disponível. Segue os padrões atuais de resposta e autenticação da API; detalhes concretos devem ser alinhados aos contratos do catálogo antes da implementação.
+**Estado**: os endpoints privados abaixo continuam propostos e não indicam integração concluída. A feature 010 adicionou código para catálogo público, sujeito a configuração e migrações.
 
 ## Regras comuns
 
@@ -22,6 +22,8 @@
 
 ## Dependência de catálogo e busca
 
-O provedor futuro precisa identificar produtos, ofertas e lojas; informar preço e disponibilidade conhecidos; distinguir referência indisponível; e oferecer correspondência de produtos para um termo de busca. A comparação entre ofertas requer equivalência explicitamente definida pelo catálogo. Contrato, relevância textual, paginação e ciclo de vida dos identificadores devem ser definidos na feature responsável antes de concluir a implementação dependente. Sem esses dados, apresentar indisponibilidade ou vazio, não produtos ou preços fictícios sem identificação.
+A dependência exige identificar produtos, ofertas e lojas; informar preço e disponibilidade conhecidos; distinguir referência indisponível; e oferecer correspondência de produtos para um termo de busca. A comparação usa a mesma variante cadastrada. Sem dados confirmados, apresentar indisponibilidade ou vazio, não produtos ou preços fictícios sem identificação.
+
+A 010 fornece no código `GET /catalog/products/{id}`, `GET /catalog/offers/{id}` e `GET /catalog/offers?q=...`, além de `CatalogReader.findProduct/findOffer/searchProducts`. Referências usam `found`, `missing` ou `unavailable`; falha da fonte é rejeitada e exposta como 503. Produto e oferta têm IDs distintos. O provedor web deduplica produtos por ID a partir das ofertas; busca pública não grava histórico. Os fluxos privados da 009 ainda precisam ser conectados e não funcionam por consequência automática desses contratos.
 
 Visualizações podem compor o histórico, mas não são entrada de recomendação. Interesses, desejos e dados de compra também não são sinais. Nenhuma operação de integração de compras é prevista.

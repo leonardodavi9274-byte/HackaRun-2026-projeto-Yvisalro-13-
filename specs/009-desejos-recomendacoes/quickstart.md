@@ -5,12 +5,12 @@ Este guia descreve condições e resultados esperados; nenhum cenário foi execu
 ## Pré-requisitos
 
 1. Feature 004 configurada com identidade e acesso à conta, conforme [guia da 004](../004-cadastro-preferencias/quickstart.md).
-2. Catálogo e busca de produtos com produto, loja e oferta identificáveis, preço e disponibilidade conhecidos e contratos acordados conforme [contrato proposto](contracts/api.md). Essa dependência ainda não está disponível na base inspecionada.
+2. Catálogo e busca de produtos conforme [contrato](contracts/api.md). A feature 010 contém o código local; sua disponibilidade operacional depende das migrações e da configuração do ambiente.
 3. Backend, frontend e migrações desta feature implementados e configurados; seus comandos de preparação serão detalhados quando houver implementação. Credenciais reais não devem ser adicionadas ao repositório.
 
-**Dependência C1:** a conta autenticada é reaproveitada da feature 004, mas os fluxos completos de desejos, histórico e recomendações dependem de um catálogo e de uma busca de produtos com os contratos descritos acima. A fonte mínima de promoções da feature 008 fornece ofertas promocionais para leitura e nome do produto; ela não fornece identidade de produto ou busca de catálogo e não satisfaz C1. Até a disponibilização dessas capacidades, não é possível demonstrar os fluxos ponta a ponta nem preencher resultados com dados inventados.
+**Dependência C1:** a conta autenticada é reaproveitada da feature 004. A 010 adiciona identificadores de produto, variante e oferta e busca no código, substituindo a fonte limitada da 008 após corte coordenado; isso não comprova a configuração remota nem integra as operações privadas da 009. Sem ambas as condições, não é possível demonstrar desejos e recomendações ponta a ponta.
 
-Em 2026-11-14, a compilação dos workspaces de backend e frontend passou com Node 24.22.3. Foram preparados os modelos de desejos e histórico, clientes configuráveis e componentes de escolha e histórico; eles ainda não estão conectados à navegação, à persistência ou a um provedor de catálogo. A compilação não demonstra que desejos, histórico ou recomendações funcionem.
+Em 2026-11-14, a compilação dos workspaces passou com Node 24.22.3. Os clientes de catálogo possuem adaptador local, mas desejos e histórico ainda não estão conectados à navegação e persistência. Compilação não demonstra que esses fluxos funcionem.
 
 ## Inicialização futura
 

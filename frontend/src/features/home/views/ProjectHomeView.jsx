@@ -1,5 +1,6 @@
 import { Icon } from "../../../shared/components/Icon.jsx";
 import { useHomeViewModel } from "../viewmodels/useHomeViewModel.js";
+import { AppLink } from "../../../app/Link.jsx";
 
 const steps = [
   {
@@ -66,9 +67,9 @@ export function ProjectHomeView() {
                 Encontre produtos, compare ofertas e descubra o caminho até a
                 loja. Sua próxima descoberta começa aqui.
               </p>
-              <a className="primary-link" href="#proposta">
-                Conheça a proposta <Icon name="arrow" size={20} />
-              </a>
+              <AppLink className="primary-link" to="/buscar">
+                Buscar produtos <Icon name="arrow" size={20} />
+              </AppLink>
               <p className="hero-note">
                 Uma vitrine para descobrir. Compras e pagamentos acontecem fora
                 do aplicativo.
@@ -142,9 +143,7 @@ export function ProjectHomeView() {
                   </div>
                   <h3>{step.title}</h3>
                   <p>{step.description}</p>
-                  <span className="planned-label">
-                    Funcionalidade planejada
-                  </span>
+                  <span className="planned-label">Demonstração sujeita à disponibilidade dos dados</span>
                 </article>
               ))}
             </div>
@@ -159,8 +158,8 @@ export function ProjectHomeView() {
                 Estamos construindo essa experiência.
               </h2>
               <p>
-                A estrutura inicial está pronta para evoluir. Catálogo, contas e
-                mapa ainda serão implementados a partir das telas do protótipo.
+                O catálogo de demonstração e o mapa dependem de dados e serviços
+                configurados. As demais funcionalidades continuam em evolução.
               </p>
             </div>
             <div
