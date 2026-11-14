@@ -1,0 +1,3 @@
+import {useEffect,useState} from "react";
+export function navigate(path,{replace=false}={}){if(path===window.location.pathname&&!window.location.hash)return;window.history[replace?"replaceState":"pushState"]({},"",path);window.dispatchEvent(new Event("app:navigate"));window.scrollTo(0,0);}
+export function usePath(){const [path,setPath]=useState(location.pathname);useEffect(()=>{const update=()=>setPath(location.pathname);addEventListener("popstate",update);addEventListener("app:navigate",update);return()=>{removeEventListener("popstate",update);removeEventListener("app:navigate",update);};},[]);return path;}

@@ -1,0 +1,9 @@
+export const NOTICE_VERSION="marketing-email-v1";
+export const NOTICE_TEXT="Quero receber publicidade e ofertas por e-mail. Opcional; você pode alterar essa escolha nas preferências da conta.";
+export type Snapshot={name:string;categoryIds:string[];productInterests:string[];marketing:{allowed:boolean;noticeVersion:string};photoRequested:boolean};
+export type RegistrationInput=Snapshot & {email:string;password:string;mode:"complete"|"skip"};
+export type Intent={id:string;user_id:string|null;identity_state:"not_started"|"in_flight"|"unknown"|"bound"|"not_created";data_state:"pending"|"saved";photo_state:"not_requested"|"awaiting_upload"|"saved"|"waived";snapshot:Snapshot|null;lease_owner:string|null;lease_expires_at:string|null;email_dispatch_state:string;normalized_email:string;onboarding_completed_at?:string|null;photo_revision:number};
+export type OnboardingState={status:string;pendingActions:string[];preferredNextAction:string|null;retryAfterSeconds:number|null};
+export type Identity={id:string;email:string;confirmed:boolean};
+export type Receipt={mutationId:string;replayed:boolean;superseded:boolean};
+export type Profile={id:string;name:string;photo:{present:boolean;url:string|null};interests:{categoryIds:string[];productInterests:string[]};marketing:{allowed:boolean;revision:number;changedAt:string;noticeVersion:string};completedAt:string|null};

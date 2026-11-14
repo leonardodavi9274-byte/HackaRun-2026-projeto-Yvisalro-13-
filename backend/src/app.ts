@@ -1,46 +1,38 @@
-import { randomUUID } from "node:crypto";
+import {MarketingService} from "./application/services/marketing.service.ts";
+import {SupabaseMarketingRepository} from "./infrastructure/supabase/marketing.repository.ts";
+import {randomUUID} from "node:crypto";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import { env } from "./config/env.ts";
-import { SystemStatusService } from "./application/services/system-status.service.ts";
-import { isSupabaseConfigured } from "./infrastructure/supabase/client.ts";
-import { HealthController } from "./presentation/http/controllers/health.controller.ts";
-import { ApiError } from "./presentation/http/errors/api-error.ts";
-import {
-  errorHandler,
-  notFound,
-} from "./presentation/http/middlewares/error-handler.ts";
-import { createApiRoutes } from "./presentation/http/routes/index.ts";
-
-export function createApp() {
-  const app = express();
-  const health = new HealthController(
-    new SystemStatusService(isSupabaseConfigured()),
-  );
-  app.disable("x-powered-by");
-  app.use((_request, response, next) => {
-    response.locals.requestId = randomUUID();
-    response.setHeader("X-Request-Id", response.locals.requestId);
-    next();
-  });
-  app.use(helmet());
-  app.use(
-    cors({
-      origin(origin, callback) {
-        if (!origin || env.frontendOrigins.includes(origin))
-          callback(null, true);
-        else
-          callback(
-            new ApiError(403, "ORIGIN_NOT_ALLOWED", "Origem não autorizada."),
-          );
-      },
-    }),
-  );
-  app.use(express.json({ limit: "1mb" }));
-  app.get("/health", health.get);
-  app.use("/api/v1", createApiRoutes(health));
-  app.use(notFound);
-  app.use(errorHandler);
-  return app;
+import {env} from "./config/env.ts";
+import {SystemStatusService} from "./application/services/system-status.service.ts";
+import {isSupabaseConfigured} from "./infrastructure/supabase/client.ts";
+import {HealthController} from "./presentation/http/controllers/health.controller.ts";
+import {ApiError} from "./presentation/http/errors/api-error.ts";
+import {errorHandler,notFound} from "./presentation/http/middlewares/error-handler.ts";
+import {webRequestGuard} from "./presentation/http/middlewares/web-request-guard.ts";
+import {createApiRoutes} from "./presentation/http/routes/index.ts";
+import {SupabaseAuthGateway} from "./infrastructure/supabase/auth-gateway.ts";
+import {SupabaseSessionStore} from "./infrastructure/supabase/session-store.ts";
+import {SupabaseRegistrationRepository} from "./infrastructure/supabase/registration.repository.ts";
+import {SupabaseConsumerRepository} from "./infrastructure/supabase/consumer.repository.ts";
+import {RegistrationOptionsRepository} from "./infrastructure/supabase/registration-options.repository.ts";
+import {WebSessionService} from "./application/services/web-session.service.ts";
+import {RegistrationConfigService} from "./application/services/registration-config.service.ts";
+import {RegistrationService} from "./application/services/registration.service.ts";
+import {ConsumerService} from "./application/services/consumer.service.ts";
+import {IdentityService} from "./application/services/identity.service.ts";
+import {SessionService} from "./application/services/session.service.ts";
+import {OnboardingService} from "./application/services/onboarding.service.ts";
+export function createApp(){
+ const app=express();const health=new HealthController(new SystemStatusService(isSupabaseConfigured()));
+ app.disable("x-powered-by");
+ app.use((_req,res,next)=>{const started=Date.now();res.locals.requestId=randomUUID();res.setHeader("X-Request-Id",res.locals.requestId);res.on("finish",()=>{console.info(JSON.stringify({requestId:res.locals.requestId,code:res.statusCode,stage:"http",duration:Date.now()-started}));});next();});
+ app.use(helmet());app.use(cors({credentials:true,origin(origin,callback){if(!origin||env.frontendOrigins.includes(origin))callback(null,true);else callback(new ApiError(403,"ORIGIN_NOT_ALLOWED","Origem não autorizada."));}}));
+ app.use("/api/v1",webRequestGuard);app.use(express.json({limit:"1mb"}));app.get("/health",health.get);
+ const auth=new SupabaseAuthGateway(),repo=new SupabaseRegistrationRepository(),consumerRepo=new SupabaseConsumerRepository(),config=new RegistrationConfigService();
+ const webSessions=new WebSessionService(auth,new SupabaseSessionStore()),consumers=new ConsumerService(consumerRepo,repo);
+ const registrations=new RegistrationService(auth,repo,consumerRepo,config);
+ const services={marketing:new MarketingService(new SupabaseMarketingRepository()),webSessions,consumers,registrations,config,options:new RegistrationOptionsRepository(),identity:new IdentityService(auth,webSessions,consumers),sessions:new SessionService(auth,webSessions,consumers),onboarding:new OnboardingService(registrations,consumers,repo)};
+ app.use("/api/v1",createApiRoutes(health,services));app.use(notFound);app.use(errorHandler);return app;
 }
