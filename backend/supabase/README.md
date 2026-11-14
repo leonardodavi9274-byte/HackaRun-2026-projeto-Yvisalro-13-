@@ -55,3 +55,12 @@ violada, sem o conteúdo do mapa.
 
 Em 2026-11-14, o código e os arquivos SQL foram preparados; nenhum projeto remoto recebeu
 essas migrações nesta execução. Os scripts SQL não foram executados contra PostgreSQL/Supabase.
+
+## Desejos e histórico (feature 009)
+
+A feature 008 propõe as migrações 0017 e 0018 na pull request #8, ainda não integrada
+à main nesta preparação. As migrações 0019 e 0020 de desejos e histórico são apenas
+nomes previstos, sem reserva garantida ou arquivos criados. Após integrar as dependências,
+conferir a numeração livre antes de criar migrações, preservando as migrações existentes.
+O esquema concreto depende dos identificadores e do ciclo de vida de produto e oferta do
+catálogo ainda não disponibilizado; não aplicar ou inventar migrações antes disso.
