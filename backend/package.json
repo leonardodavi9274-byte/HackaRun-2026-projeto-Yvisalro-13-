@@ -1,0 +1,23 @@
+{
+  "name": "@hackarum-yvisalro/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node --env-file-if-exists=.env dist/server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.119.0",
+    "cors": "2.8.6",
+    "express": "5.3.0",
+    "helmet": "8.3.0"
+  },
+  "devDependencies": {
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.6",
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
+  }
+}

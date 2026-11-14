@@ -2,16 +2,19 @@
 
 O Hackarum-Yvisalro é uma vitrine para quem está no shopping. A pessoa pode procurar um produto, comparar ofertas de lojas, acompanhar itens de interesse e visualizar o caminho até uma loja. O **Shopping Aurora**, as lojas, os preços e os trajetos das imagens são demonstrativos. **Achei** é o nome ainda impresso nas imagens antigas; **Vitrine Perto** aparece no caminho da especificação histórica. Ambos se referem ao mesmo projeto; as imagens não foram redesenhadas nesta revisão.
 
-**Estado do projeto.** Já existem o protótipo visual com 11 imagens, o planejamento e a especificação. As telas, as integrações e os comportamentos descritos abaixo estão planejados. Cada imagem é acompanhada das ações esperadas e dos pontos que precisam ser decididos antes da implementação.
+**Estado do projeto.** Já existem o protótipo visual com 11 imagens, o planejamento e a especificação. A base React em `frontend/` tem uma página inicial e consulta o estado da WebAPI, conforme a [feature 003](../specs/003-base-webapi-frontend/plan.md). As 11 telas, as integrações e os comportamentos descritos abaixo continuam planejados. Cada imagem é acompanhada das ações esperadas e dos pontos que precisam ser decididos antes da implementação.
+
+**Protótipo confirmado em 13/11/2026.** As 11 telas permanecem no canvas de design atual. As imagens exportadas neste documento continuam como referência de UX para a implementação em React na web. O formato das landing pages será definido separadamente.
 
 ## Decisões recentes para o frontend
 
-- **Plataformas:** React para a interface web e o painel empresarial; Flutter/Dart para o aplicativo móvel. MVVM separará apresentação, estado e dados. TypeScript é a linguagem prevista para Node.js e proposta para React; os contratos serão detalhados no plano técnico.
+- **Plataformas:** React confirmado para a interface web e o painel empresarial; Flutter/Dart para o aplicativo móvel. MVVM separará apresentação, estado e dados. TypeScript confirmado para o backend Node.js e proposto para React; os contratos serão detalhados no plano técnico.
 - **Acesso da empresa:** além das telas de consumidor mostradas no protótipo, será necessário desenhar o painel da empresa. Qualquer empresa poderá criar sua conta e publicar imediatamente; cada empresa deverá ter acesso de gestão apenas aos próprios dados.
 - **Busca:** os resultados disponíveis devem aparecer por relevância ao termo pesquisado e, entre semelhantes, pelo menor preço. Os esgotados ficam por último. Variações semelhantes, como cores diferentes, não são automaticamente o mesmo produto.
 - **Localização:** se não for possível obter a localização do dispositivo, mostrar a mensagem “Não foi possível encontrar a localização do dispositivo” e oferecer a escolha manual do shopping. No trajeto interno simulado, a pessoa escolhe um ponto inicial conhecido.
 - **Conta e alertas:** desejos e preferências acompanham a conta entre dispositivos. Os alertas solicitados são previstos por email quando houver reposição ou quando o preço desejado for atingido, conforme as preferências do usuário.
-- **Páginas de apresentação:** serão representadas em slides no Canva, com [roteiros propostos para consumidores e lojistas](landing-pages-canva.md). Quantidade final e eventual publicação web dependem de revisão; os slides ainda não foram produzidos.
+- **Dados:** PostgreSQL no Supabase confirmado como banco do MVP; integração ainda pendente.
+- **Páginas de apresentação:** formato, ferramenta, quantidade e finalidades ainda serão definidos. Há um [rascunho de roteiro em slides do Canva para consumidores e lojistas](landing-pages-canva.md).
 
 Estas decisões descrevem o comportamento esperado. O painel empresarial e os pontos de acesso às opções de login Google e Apple ainda precisam de telas próprias no protótipo.
 

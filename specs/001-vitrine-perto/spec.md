@@ -21,6 +21,8 @@ O protótipo usará nomes fictícios, por exemplo **Shopping Veredas Douradas**,
 - Q: Quando o aplicativo deve enviar emails de reposição e de preço desejado? → A: Quando o produto voltar ao estoque ou atingir o preço desejado.
 - Q: Como os resultados disponíveis devem ser ordenados inicialmente na busca? → A: Primeiro os mais relacionados à busca; entre semelhantes, o menor preço. Itens fora de estoque aparecem por último.
 - Q: Que conteúdos diferentes as duas landing pages devem apresentar? → A: O projeto pode ter mais de duas páginas; a quantidade e os conteúdos serão confirmados posteriormente.
+- Decisões técnicas confirmadas após a análise da branch `VictorXavierSL-patch-1-dev`: manter React no frontend web e painel empresarial, PostgreSQL no Supabase como banco do MVP e TypeScript no backend Node.js. Os papéis estão no [README](../../README.md#decisões-confirmadas-pela-equipe).
+- Q: Manter as telas como canvas significa conservar o canvas de design atual ou apresentá-las no Canva? → A: Manter o canvas de design atual, com as 11 telas existentes. O formato das landing pages continua pendente.
 
 ## Cenários e validação
 
@@ -108,7 +110,7 @@ Como visitante, quero conhecer o MVP em landing pages com conteúdos diferentes.
 - **FR-010**: Permitir que o usuário gerencie desejos, interesses e consentimento para comunicação e solicite alertas por email; enviar o aviso quando houver reposição ou o preço desejado for atingido, conforme as preferências do usuário.
 - **FR-011**: Exibir recomendações e stories conforme interesses e interações disponíveis; não presumir histórico de compras existente.
 - **FR-012**: Prever listas por shopping, roteiros com várias lojas, preço por unidade, histórico de preços e compartilhamento como evoluções priorizadas conforme prazo.
-- **FR-013**: Apresentar landing pages com conteúdos distintos sobre o MVP; propor apresentação ao consumidor e ao lojista, confirmar quantidade final e identificar demonstrações e funções futuras. O roteiro e a ferramenta escolhida estão no [planejamento](../../docs/landing-pages-canva.md); eventual publicação web depende da exigência da disciplina.
+- **FR-013**: Apresentar landing pages com conteúdos distintos sobre o MVP; propor apresentação ao consumidor e ao lojista, confirmar formato, ferramenta e quantidade final e identificar demonstrações e funções futuras. Há um [rascunho de roteiro em slides do Canva](../../docs/landing-pages-canva.md); eventual publicação web depende da exigência da disciplina.
 - **FR-014**: Disponibilizar experiência em web e aplicativo móvel; apresentar mensagens compreensíveis para resultados vazios e falhas.
 
 ### Entidades principais
@@ -131,6 +133,7 @@ Como visitante, quero conhecer o MVP em landing pages com conteúdos diferentes.
 ## Premissas e limites
 
 - O MVP é uma vitrine e não inclui pagamento ou compra dentro do aplicativo.
+- As 11 telas permanecem no canvas de design atual como referência de UX; as imagens exportadas estão em [frontend.md](../../docs/frontend.md). A implementação web será em React, com backend TypeScript e PostgreSQL no Supabase, conforme as decisões técnicas confirmadas.
 - O shopping, lojas, ofertas e mapa usados na demonstração são fictícios; o uso de coordenadas para demonstração ainda exige definição.
 - A medida de relevância e o critério exato de equivalência entre variantes, os detalhes de associação de representantes a empresas e a frequência de emails promocionais ainda precisam de detalhamento.
 - A prática sorteada é landing page, conforme o registro da equipe no commit remoto `8bcbfeb`. A apresentação inicial propõe públicos consumidor e lojista; quantidade final e exigência de site publicado dependem de revisão. O roteiro não representa páginas ou slides já produzidos.

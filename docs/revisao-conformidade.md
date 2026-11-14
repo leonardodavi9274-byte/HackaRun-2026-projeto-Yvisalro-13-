@@ -1,5 +1,7 @@
 # Hackarum-Yvisalro — revisão de conformidade do planejamento inicial
 
+> **Atualização posterior à revisão, em 13/11/2026:** foram confirmados React no frontend web e painel empresarial, PostgreSQL no Supabase como banco do MVP, TypeScript no backend Node.js e manutenção das 11 telas no canvas de design atual. O formato das landing pages continua pendente; o roteiro no Canva é uma proposta. As seções abaixo preservam o registro da revisão anterior. Consulte as [decisões atuais](../README.md#decisões-confirmadas-pela-equipe).
+
 **Data:** 13/11/2026.
 **Escopo:** repositório local e versões remotas acessíveis da mesma equipe; documentação, nomes, tecnologias e seis itens da entrega. Não houve execução da aplicação nem nova inspeção visual das imagens.
 
