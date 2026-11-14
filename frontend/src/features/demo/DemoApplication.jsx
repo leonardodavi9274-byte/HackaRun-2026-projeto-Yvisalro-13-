@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {navigate, usePath} from "../../app/navigation.js";
 import {AppLink} from "../../app/Link.jsx";
-import {ProjectHomeView} from "../home/views/ProjectHomeView.jsx";
+import {LandingView} from "../landing/views/LandingView.jsx";
 import {MallMapView} from "../mall-map/views/MallMapView.jsx";
 import {useDemoStore} from "./viewmodels/DemoStore.jsx";
 import {DemoLoginView, DemoPreferencesView, DemoRecoveryView, DemoSignupView} from "./views/DemoAuthViews.jsx";
@@ -30,8 +30,8 @@ export function DemoApplication() {
   }, [path, account, isPrivate]);
 
   if (path === "/") return null;
-  // A landing page do projeto continua disponível em /sobre.
-  if (path === "/sobre") return <ProjectHomeView />;
+  // Landing page (consumidores e lojistas).
+  if (path === "/sobre") return <LandingView />;
   if (path === "/mapa") return <MallMapView ownerId={account ? "demo:" + account.email : null} />;
   if (path === "/entrar") return <DemoLoginView />;
   if (path === "/cadastro") return <DemoSignupView />;
