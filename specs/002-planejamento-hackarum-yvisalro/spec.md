@@ -10,6 +10,8 @@
 ### Session 2026-11-13
 
 - Q: Como MySQL e PostgreSQL devem participar do primeiro MVP? → A: Opção A, PostgreSQL como banco principal do MVP e MySQL somente como alternativa documentada; não haverá dois bancos operacionais no primeiro recorte.
+- Decisões confirmadas após a análise dos debates da branch `VictorXavierSL-patch-1-dev`: manter React no frontend web e painel empresarial, PostgreSQL no Supabase como banco do MVP e TypeScript no backend Node.js.
+- Q: Manter as telas como canvas significa conservar o canvas de design atual ou apresentá-las no Canva? → A: Manter o canvas de design atual, com as 11 telas existentes. O formato das landing pages continua pendente; o roteiro no Canva é uma proposta.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -106,7 +108,7 @@ Como integrante da equipe, quero conhecer as versões verificadas e as alteraç�
 - O nome canônico é Hackarum-Yvisalro; endereços, caminhos históricos e nomes dentro das imagens podem conservar referências antigas explicadas.
 - Landing page é a prática sorteada conforme a branch da equipe. As ferramentas concretas e seus papéis ficam na documentação técnica.
 - Duas apresentações, para consumidor e lojista, são proposta inicial; quantidade final e páginas adicionais dependem de revisão da equipe.
-- Esta revisão produz documentação e roteiros; slides na conta externa e publicação da aplicação são etapas posteriores.
+- As telas do protótipo permanecem no canvas de design atual; a revisão produz documentação e roteiros. O formato das landing pages será definido separadamente, e sua produção e a publicação da aplicação são etapas posteriores.
 - A constituição existente é um template, sem princípios aprovados.
 - A equipe confirmou uma fonte principal de dados no MVP; a segunda tecnologia de persistência será somente alternativa documentada. A escolha concreta está registrada nesta sessão e na matriz técnica do README.
-- Dependências: produzir slides e revisar as exigências da disciplina; versões, contratos e hospedagem ficam para o planejamento técnico.
+- Dependências: definir o formato das landing pages, produzir os materiais correspondentes e revisar as exigências da disciplina; versões, contratos e hospedagem ficam para o planejamento técnico.

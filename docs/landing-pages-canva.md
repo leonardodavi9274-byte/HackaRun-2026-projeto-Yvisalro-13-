@@ -1,8 +1,10 @@
 # Hackarum-Yvisalro — roteiro das landing pages em slides do Canva
 
+> **Rascunho de proposta.** O formato, a ferramenta, a quantidade e as finalidades das landing pages ainda serão definidos pela equipe. Em 13/11/2026, o usuário confirmou que as 11 telas do protótipo permanecem no canvas de design atual. Essa escolha se refere ao protótipo da aplicação; este roteiro no Canva continua como possibilidade de apresentação.
+
 **Situação:** roteiro de planejamento. Slides, link de visualização e PDF final ainda não foram produzidos.
 **Tecnologia sorteada:** landing page, conforme o registro da equipe no commit `8bcbfeb`.
-**Ferramenta escolhida:** Canva, conforme orientação do usuário.
+**Ferramenta proposta:** Canva, a confirmar pela equipe.
 **Quantidade:** duas apresentações propostas inicialmente; revisão final pela equipe.
 
 ## Objetivo e formato
@@ -31,14 +33,16 @@ Usar o título **Hackarum-Yvisalro**, textos legíveis e as imagens do [protóti
 
 ## Evidências para a entrega
 
+As evidências de slides, link e PDF abaixo se aplicam caso a proposta no Canva seja aprovada. A equipe deverá adequá-las ao formato escolhido e à exigência da disciplina.
+
 | Evidência | Critério de revisão | Situação |
 | --- | --- | --- |
 | Nome e público | Nome Hackarum-Yvisalro e público identificados em cada apresentação. | Definidos no roteiro. |
 | Conteúdos diferentes | Uma apresentação ao consumidor e outra ao lojista, com benefícios e ações próprios. | Propostos; confirmar recorte final. |
-| Slides no Canva | Conferir legibilidade, imagens e ordem das páginas em modo de apresentação. | A produzir. |
-| Link de visualização | Abrir com acesso de avaliador, sem depender de permissão de edição. | A fornecer após produção. |
-| Exportação PDF | Confirmar que contém todos os slides e que os textos podem ser lidos. | A exportar e revisar. |
+| Slides no Canva | Conferir legibilidade, imagens e ordem das páginas em modo de apresentação. | A produzir se a proposta for aprovada. |
+| Link de visualização | Abrir com acesso de avaliador, sem depender de permissão de edição. | A fornecer após aprovação e produção. |
+| Exportação PDF | Confirmar que contém todos os slides e que os textos podem ser lidos. | A exportar e revisar se a proposta for aprovada. |
 | Estado real | Ações ilustrativas e dados fictícios identificados; ausência de serviços reais explicitada. | Exigência do roteiro. |
 | Exigência da disciplina | Confirmar se slides atendem à etapa ou se uma landing page web publicada também será exigida. | A conferir pela equipe. |
 
-Não há integração de banco, API ou autenticação nos slides. Uma página dinâmica de oferta compartilhada é evolução possível e depende de aplicação web e contratos próprios. A escolha do Canva para esta apresentação é independente da interface React planejada para o produto.
+Não há integração de banco, API ou autenticação nos slides. Uma página dinâmica de oferta compartilhada é evolução possível e depende de aplicação web e contratos próprios. A proposta do Canva para esta apresentação é independente do React confirmado para a interface web e do canvas de design mantido para as telas.

@@ -1,10 +1,37 @@
 # Hackarum-Yvisalro — planejamento inicial
 
-> Nome padronizado: **Hackarum-Yvisalro**. Primeira entrega acadêmica de planejamento. Aplicativo, backend, frontend web e slides das landing pages ainda não foram implementados ou produzidos nesta revisão.
+> Nome padronizado: **Hackarum-Yvisalro**. A base do frontend React e da WebAPI TypeScript está em `frontend/` e `backend/`. As funcionalidades do produto, o aplicativo móvel e as landing pages continuam pendentes.
 
 [Detalhamento do frontend](docs/frontend.md) com as 11 imagens do protótipo, a navegação e o comportamento esperado em cada tela.
 
 [Detalhamento geral do projeto](docs/detalhamento-projeto.md) com o estado atual, funcionalidades, arquitetura prevista e pendências. O [guia de Git e GitHub](docs/guia-git.md) explica como atualizar o computador e publicar o trabalho da equipe.
+
+## Executar a base do projeto
+
+Com Node.js 24 LTS, execute na raiz:
+
+```sh
+npm install
+npm run dev
+```
+
+Frontend: `http://localhost:5173`. WebAPI: `http://127.0.0.1:3000/api/v1`.
+`npm run build` compila os dois projetos. No Windows sem Node.js, use o bootstrap e o
+wrapper descritos no [guia de desenvolvimento](docs/desenvolvimento.md).
+Arquitetura e escopo desta inicialização estão na [feature 003](specs/003-base-webapi-frontend/plan.md).
+
+## Decisões confirmadas pela equipe
+
+Em **13/11/2026**, após a análise dos pontos de discussão da branch `VictorXavierSL-patch-1-dev`, foram confirmadas as seguintes escolhas:
+
+| Parte | Decisão |
+| --- | --- |
+| Frontend web e painel empresarial | Manter **React**. |
+| Banco de dados do MVP | **PostgreSQL no Supabase**. |
+| Backend | **TypeScript**, mantendo Node.js como ambiente de execução previsto. |
+| Telas do protótipo | Manter as **11 telas no canvas de design atual**, com as imagens exportadas como referência na documentação. |
+
+Essas decisões orientam a implementação ainda pendente. O canvas de design é o material de referência das telas. O formato, a ferramenta, a quantidade e as finalidades das landing pages continuam a ser definidos pela equipe; o roteiro em slides do Canva permanece como proposta.
 
 ## Proposta e estrutura inicial das telas
 
@@ -30,7 +57,7 @@ Este README reúne a proposta inicial. Já existem 11 imagens de protótipo e um
 | Regras do produto | [Especificação funcional](specs/001-vitrine-perto/spec.md). |
 | Revisão da entrega inicial | [Feature 002](specs/002-planejamento-hackarum-yvisalro/spec.md) e [checklist](specs/002-planejamento-hackarum-yvisalro/checklists/requirements.md). |
 | Arquitetura e tecnologias | Seções próprias abaixo e [detalhamento técnico](docs/detalhamento-projeto.md). |
-| Apresentação da prática sorteada | [Roteiro dos slides no Canva](docs/landing-pages-canva.md). |
+| Apresentação da prática sorteada | [Rascunho de roteiro em slides do Canva](docs/landing-pages-canva.md); formato a confirmar. |
 | Conferência das versões e seis itens | [Relatório de conformidade](docs/revisao-conformidade.md). |
 | Organização e versionamento | [Entrega](docs/entrega-e-proximos-passos.md) e [guia de Git](docs/guia-git.md). |
 
@@ -44,7 +71,7 @@ Este README reúne a proposta inicial. Já existem 11 imagens de protótipo e um
 - Lista de desejos e recomendações baseadas em interesses e interações. A origem de histórico de compras ainda precisa ser definida.
 - Geolocalização para apoiar a descoberta de lojas próximas; mapa fictício com aparência 3D, ícones de sacola que se tornam logos ao aproximar e indicação de trajeto simulado até a loja.
 - Pop-ups de promoções próximas; não exibi-los enquanto um trajeto estiver ativo.
-- Landing pages apresentadas em slides do Canva, com roteiros distintos para consumidores e lojistas. São demonstrações de apresentação; quantidade final e eventual publicação como site dependem da revisão da equipe.
+- Landing pages com conteúdos distintos para consumidores e lojistas. Há uma proposta de roteiro em slides do Canva; formato, ferramenta, quantidade final e eventual publicação como site dependem da revisão da equipe.
 
 Promoções e preços de demonstração devem ser identificáveis como fictícios; quando houver desconto, preço anterior e preço promocional devem ser coerentes.
 
@@ -179,18 +206,18 @@ Para um primeiro recorte, a equipe pode priorizar informações claras das ofert
 7. **Mapa e lista de lojas:** escolha do shopping e do ponto inicial, localização das lojas, aproximação e rota simulada.
 8. **Lista de desejos e compras:** produtos salvos, preço desejado, agrupamento por shopping e roteiro com várias lojas.
 9. **Perfil e notificações:** dados da conta, preferências e controles de comunicação.
-10. **Landing pages:** slides no Canva com conteúdos diferentes para apresentar o MVP; roteiro inicial para consumidores e lojistas, com quantidade final a confirmar.
+10. **Landing pages:** conteúdos diferentes para apresentar o MVP; roteiro inicial proposto para consumidores e lojistas, com formato, ferramenta e quantidade final a confirmar.
 11. **Painel da empresa:** cadastro e publicação imediata de produtos, preços, promoções e estoque pela própria empresa, com acesso limitado aos seus dados.
 
 Os fluxos devem contemplar estados sem resultados, sem conexão, carregamento, erro e permissão de localização negada; o comportamento detalhado ainda precisa ser especificado.
 
 ## Linguagem de programação escolhida
 
-- **TypeScript:** linguagem prevista para o backend Node.js, conforme a definição registrada na branch da equipe; também proposta para o frontend React para compartilhar os tipos dos contratos. O build e a versão serão definidos no plano técnico.
+- **TypeScript:** linguagem confirmada para o backend Node.js; também proposta para o frontend React para compartilhar os tipos dos contratos. O build e a versão serão definidos no plano técnico.
 - **Dart:** linguagem do aplicativo Flutter.
 - **SQL:** definição e consulta dos dados no PostgreSQL.
 
-Node.js é o ambiente de execução; React e Flutter são ferramentas de interface. Canva será usado para compor os slides das landing pages e não exige programar essas apresentações. Referências: [Node.js](https://nodejs.org/en/about), [React](https://react.dev/) e [arquitetura Flutter](https://docs.flutter.dev/app-architecture/guide).
+Node.js é o ambiente de execução; React e Flutter são ferramentas de interface. As telas permanecem no canvas de design atual. Canva é uma ferramenta proposta para apresentar as landing pages; o formato final ainda será definido. Referências: [Node.js](https://nodejs.org/en/about), [React](https://react.dev/) e [arquitetura Flutter](https://docs.flutter.dev/app-architecture/guide).
 
 ## Arquitetura proposta
 
@@ -208,33 +235,34 @@ flowchart LR
     I -. token validado .-> A
 ```
 
-A API recebe requisições HTTPS/JSON, valida a identidade e a autorização da empresa e aplica as regras de catálogo, ofertas, desejos e alertas. As credenciais do banco ficam no servidor. O backend seguirá camadas de entrada, serviços e persistência; MVVM organiza as interfaces. Os slides do Canva apresentam esses fluxos, sem executar chamadas reais.
+A API recebe requisições HTTPS/JSON, valida a identidade e a autorização da empresa e aplica as regras de catálogo, ofertas, desejos e alertas. As credenciais do banco ficam no servidor. O backend seguirá camadas de entrada, serviços e persistência; MVVM organiza as interfaces. O canvas de design e as imagens exportadas representam as telas e os fluxos planejados.
 
-**Decisão esclarecida em 13/11/2026:** PostgreSQL será o banco principal do MVP, mantendo Supabase para dados e identidade. **MySQL fica como alternativa documentada**, sem segundo banco operacional, replicação ou escrita dupla. Supabase oferece [um banco PostgreSQL](https://supabase.com/docs/guides/database/overview).
+**Decisão confirmada em 13/11/2026:** PostgreSQL no Supabase será o banco do MVP, mantendo Supabase para dados e identidade. O registro anterior de **MySQL como alternativa documentada** permanece fora da operação do MVP, sem segundo banco operacional, replicação ou escrita dupla. Supabase oferece [um banco PostgreSQL](https://supabase.com/docs/guides/database/overview).
 
 ## Plataforma e tecnologias adotadas
 
 | Parte | Escolha | Papel e situação |
 | --- | --- | --- |
 | Aplicativo móvel | Flutter / Dart | Interface com MVVM; planejada, sem código da aplicação. |
-| Frontend web e painel empresarial | React; TypeScript proposto | Interface web com separação de apresentação e estado; planejada. Node.js apoia as ferramentas de desenvolvimento e build. |
-| Backend | Node.js / TypeScript | API, validações e regras de negócio; framework e hospedagem pendentes. |
-| Banco principal | PostgreSQL no Supabase | Persistência do MVP; integração ainda não configurada. |
+| Frontend web e painel empresarial | React confirmado; TypeScript proposto para a interface | Base React/Vite em JavaScript/JSX criada em `frontend/`, com MVVM; fluxos de consumidor e painel ainda pendentes. |
+| Backend | Node.js / TypeScript / Express 5 | Base WebAPI criada em `backend/`, com saúde, erros e infraestrutura Supabase; regras de produto e hospedagem pendentes. |
+| Banco principal | PostgreSQL no Supabase | Escolha confirmada para persistência do MVP; integração ainda não configurada. |
 | Identidade | Supabase Auth | Login real, recuperação e provedores sociais previstos; integração pendente. |
 | Banco alternativo | MySQL | Alternativa documentada para avaliação futura; fora da operação do primeiro MVP. |
-| Landing pages | Slides no Canva | Apresentação da prática sorteada; roteiro preparado, slides ainda a produzir. |
+| Protótipos das telas | Canvas de design atual | Manter as 11 telas existentes e suas imagens exportadas como referência de UX. |
+| Landing pages | Formato a decidir | Rascunho de roteiro em slides do Canva; ferramenta, quantidade e finalidades a confirmar. |
 | Mapa e dados | Mapa fictício e geolocalização | Rotas simuladas e localização do dispositivo prevista; coordenadas e implementação pendentes. |
 | Processo | Git, GitHub e Spec Kit | Versionamento e organização dos requisitos; já disponíveis. |
 
-Vercel não é requisito para os slides. A hospedagem da aplicação web e da API será escolhida no plano técnico; não há implantação configurada.
+A hospedagem da aplicação web, da API e de eventuais landing pages publicadas será escolhida no plano técnico; não há implantação configurada.
 
 ## Descrição de como a tecnologia ou prática sorteada será incorporada à solução
 
-A tecnologia sorteada é **landing page**, conforme o registro da equipe na [branch verificada](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-/commit/8bcbfeb5889c9be843ef8917be56fb7ebbca67ae). Nesta etapa, a equipe a apresentará por **slides do Canva**, como você definiu.
+A tecnologia sorteada é **landing page**, conforme o registro da equipe na [branch verificada](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-/commit/8bcbfeb5889c9be843ef8917be56fb7ebbca67ae). O formato, a ferramenta, a quantidade e as finalidades das páginas ainda serão definidos pela equipe. A decisão de manter as telas no canvas de design atual se refere ao protótipo da aplicação.
 
 O [roteiro](docs/landing-pages-canva.md) propõe uma página para o consumidor (buscar, comparar e encontrar a loja) e outra para o lojista (publicar produtos e promoções). Cada página tem problema, benefício, referência visual e chamada para ação ilustrativa. O material deve identificar os dados fictícios e as funcionalidades futuras. Uma página de oferta compartilhada poderá ser acrescentada como evolução.
 
-A evidência final deverá incluir o link de visualização e uma exportação PDF dos slides. Esses materiais ainda não foram produzidos. A equipe deve conferir se a avaliação exige também uma página web publicada; apresentar slides não comprova essa publicação.
+Se a proposta em slides for aprovada, a evidência final deverá incluir o link de visualização e uma exportação PDF. Esses materiais ainda não foram produzidos. A equipe deve conferir se a avaliação exige uma página web publicada e definir as evidências conforme o formato aprovado.
 
 ## Estrutura preliminar de dados
 
@@ -251,12 +279,12 @@ Esta é uma proposta conceitual, não um esquema de banco final.
 
 ## Pontos para decidir com a equipe
 
-1. Revisar os dois roteiros de landing pages no Canva e confirmar a quantidade final. Consumidor e lojista são os públicos iniciais propostos.
+1. Definir formato, ferramenta, quantidade e finalidade das landing pages. O rascunho de roteiro no Canva propõe consumidor e lojista como públicos iniciais.
 2. As lojas serão fictícias e inspiradas em Palmas; quais coordenadas serão usadas na demonstração de proximidade?
 3. A localização indisponível exibirá mensagem de erro e seleção manual; o ponto inicial interno será escolhido no mapa.
 4. Listas de desejos e preferências serão sincronizadas por usuário. Avisos solicitados serão enviados por email quando houver reposição ou quando o preço desejado for atingido; a frequência das mensagens promocionais ainda precisa ser definida.
 5. A busca deverá encontrar variantes relacionadas, sem tratá-las automaticamente como produtos idênticos. Resultados disponíveis serão ordenados por relevância e, entre semelhantes, menor preço; itens sem estoque virão por último. A equivalência exata ainda precisa ser detalhada.
-6. A prática sorteada é landing page e a ferramenta escolhida é Canva. Confirmar com a disciplina se os slides bastam ou se também será exigido site publicado.
+6. A prática sorteada é landing page. Confirmar com a disciplina se uma apresentação atende à entrega ou se será exigido site publicado.
 7. A plataforma será web e aplicativo móvel; a equipe de TI do shopping é a responsável indicada. Cronograma, hospedagem do backend e limites dos serviços permanecem a definir.
 
 ## Próximos passos
@@ -269,4 +297,9 @@ Esta é uma proposta conceitual, não um esquema de banco final.
 
 ## Situação atual
 
-Este repositório contém planejamento inicial e ferramentas do Spec Kit. Não há aplicação funcional, backend, testes ou serviços configurados. Nenhum prazo, integração ou implementação deve ser interpretado como concluído.
+Este repositório contém planejamento, constituição 1.0.0, ferramentas do Spec Kit e a
+base executável do frontend e da WebAPI. A página inicial consulta o estado do serviço;
+os fluxos do consumidor e da empresa ainda precisam ser implementados. Supabase não
+possui credenciais, tabelas ou integração real configurada nesta inicialização.
+O projeto segue o fluxo sem testes escolhido pela equipe. Consulte o
+[guia de desenvolvimento](docs/desenvolvimento.md) para instalar, compilar e executar.

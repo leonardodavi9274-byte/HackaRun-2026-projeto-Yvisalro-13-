@@ -1,5 +1,9 @@
 # Detalhamento do projeto Hackarum-Yvisalro
 
+**Base técnica inicializada:** `frontend/` contém React/Vite com organização MVVM e `backend/` contém a WebAPI Express/TypeScript em camadas. O [guia de desenvolvimento](desenvolvimento.md) descreve execução, arquitetura e limites. As funções de produto e a integração real com Supabase permanecem pendentes; a análise de implementação abaixo registra o estado anterior à [feature 003](../specs/003-base-webapi-frontend/plan.md).
+
+**Atualização das decisões em 13/11/2026:** React confirmado para frontend web e painel empresarial; PostgreSQL no Supabase para o banco do MVP; TypeScript para o backend Node.js; manutenção das 11 telas no canvas de design atual. O formato das landing pages continua pendente, com o roteiro no Canva como proposta. O [README](../README.md#decisões-confirmadas-pela-equipe) reúne essas decisões. As referências de branches e commits abaixo registram a consulta anterior.
+
 **Data da análise:** 13/11/2026.
 **Base local:** branch `docs/detalhamento-frontend`, commit `bbbda4a`, antes do commit desta revisão.
 **Verificação no GitHub:** `main` e `docs/detalhamento-frontend` em `bbbda4a`; `VictorXavierSL-patch-1-dev` em `8bcbfeb`, incluindo `e3d5af5`. As mudanças remotas consultadas não foram integradas como histórico nesta revisão. Consulte o [relatório de conformidade](revisao-conformidade.md).
@@ -24,7 +28,7 @@ O MVP não inclui compra nem pagamento dentro do aplicativo. A presença de uma 
 | Repositório Git e GitHub | Existem, com histórico de commits, branches e um PR já integrado. |
 | Proposta e tecnologias | Documentadas no README. São decisões iniciais. |
 | Especificação | Há histórias, requisitos, cenários e critérios de sucesso; o documento está em rascunho com pendências. |
-| Protótipo visual | Há 11 imagens de telas de consumidor e explicação de comportamento. |
+| Protótipo visual | Manter as 11 telas no canvas de design atual; há imagens exportadas e explicação de comportamento como referência de UX. |
 | Organização do protótipo | Há uma atualização na branch do Victor que renomeia a pasta das imagens e acrescenta um índice com rastreabilidade. Ainda não faz parte da `main` verificada. |
 | Ferramentas de planejamento | O Spec Kit tem scripts PowerShell, templates, integrações e habilidades locais. |
 | Constituição | O arquivo ainda contém o modelo com campos a preencher; não estabelece princípios aprovados. |
@@ -98,14 +102,15 @@ Os detalhes de cada ação estão em [frontend.md](frontend.md). Ainda faltam de
 | Parte | Escolha registrada | O que precisa ser detalhado |
 | --- | --- | --- |
 | Aplicativo | Flutter e Dart, com MVVM. | Estrutura de módulos, navegação, estado e contratos de dados. |
-| Experiência web | React; TypeScript proposto. MVVM com componentes como Views e hooks ou módulos de estado como ViewModels. | Navegação, contratos e separação entre consumidor e painel empresarial. |
-| Backend | Node.js com TypeScript e comunicação HTTPS/JSON. | Framework, endpoints, validações, autorização e hospedagem. |
-| Dados | PostgreSQL no Supabase. | Esquema, relacionamentos, migrações e regras de acesso. |
+| Experiência web | React confirmado; TypeScript proposto para a interface. MVVM com componentes como Views e hooks ou módulos de estado como ViewModels. | Navegação, contratos e separação entre consumidor e painel empresarial. |
+| Backend | TypeScript confirmado para Node.js e comunicação HTTPS/JSON. | Framework, endpoints, validações, autorização e hospedagem. |
+| Dados | PostgreSQL no Supabase confirmado como banco do MVP. | Esquema, relacionamentos, migrações e regras de acesso. |
 | Alternativa de dados | MySQL somente documentado para avaliação futura, conforme opção A aceita pela equipe. | Sem instância operacional, réplica ou escrita dupla no MVP. |
 | Identidade | Supabase Auth. | Fluxos de sessão, recuperação, Google/Apple e integração com a API. |
 | Mapa | Representação interna fictícia com aparência 3D. | Tecnologia de desenho, pontos, conexões, andares e algoritmo do trajeto. |
 | Emails | Alertas solicitados e publicidade conforme preferências. | Serviço de envio, processamento, prevenção de avisos repetidos e frequência promocional. |
-| Landing pages | Slides no Canva, como apresentação da tecnologia sorteada. | Produzir os slides a partir do roteiro para consumidor e lojista; confirmar quantidade final e eventual exigência de site. |
+| Protótipo das telas | Canvas de design atual, mantido pela equipe. | Completar as telas e os estados ausentes mantendo a referência das 11 telas existentes. |
+| Landing pages | Formato a definir; roteiro em slides do Canva como proposta. | Definir formato, ferramenta, quantidade, finalidades e eventual exigência de site; produzir o material aprovado. |
 
 O fluxo proposto para os dados da aplicação é:
 
@@ -118,7 +123,7 @@ flowchart LR
 
 Na organização MVVM, a tela apresenta conteúdo e recebe ações; o view model mantém o estado e coordena o comportamento; a camada de dados acessa os serviços. O contrato técnico ainda deve estabelecer como a autenticação e as interfaces web se conectam a esse fluxo.
 
-GitHub hospeda o repositório e o histórico. Supabase está previsto para dados e identidade. Canva é a ferramenta escolhida para os slides; Vercel deixou de ser premissa das apresentações. Hospedagem da interface React e da API será definida posteriormente. A presença dos documentos no GitHub não comprova integração ou implantação.
+GitHub hospeda o repositório e o histórico. PostgreSQL no Supabase foi confirmado para o banco, e Supabase Auth está previsto para identidade. As telas permanecem no canvas de design atual; Canva é uma proposta para apresentar as landing pages. Hospedagem da interface React e da API será definida posteriormente. A presença dos documentos no GitHub não comprova integração ou implantação.
 
 MVVM organiza as interfaces Flutter e React. A API mantém camadas de entrada, serviços e repositórios de dados. Ambas as interfaces usarão a mesma API; o fluxo de identidade proposto é cliente → Supabase Auth → token → API, que valida a sessão e o acesso aos dados de cada empresa. Credenciais do banco permanecem no servidor. O [diagrama no README](../README.md#arquitetura-proposta) registra essas responsabilidades.
 
@@ -164,7 +169,7 @@ Esses apontamentos vieram da documentação dessa branch; esta análise não rea
 5. **Conta:** fechar validações, confirmação, recuperação e configuração de Google/Apple.
 6. **Comunicação:** detalhar envio de alertas, frequência promocional e comportamento em falhas de email.
 7. **UX:** completar as telas ausentes e decidir sobre a ação de reserva.
-8. **Entrega acadêmica:** revisar os roteiros de consumidor e lojista, produzir slides no Canva e conferir se a disciplina exige site publicado. Landing page já foi identificada como tecnologia sorteada.
+8. **Entrega acadêmica:** definir formato, ferramenta, quantidade e finalidades das landing pages, revisar os roteiros de consumidor e lojista e conferir se a disciplina exige site publicado. Landing page já foi identificada como tecnologia sorteada.
 9. **Operação:** definir cronograma, responsáveis por execução, hospedagem do backend e limites dos serviços.
 10. **Planejamento técnico:** preencher os princípios do projeto e produzir plano, modelo de dados, contratos e tarefas da feature.
 

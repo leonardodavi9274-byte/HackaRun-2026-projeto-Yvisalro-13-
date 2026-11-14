@@ -1,0 +1,24 @@
+{
+  "name": "hackarum-yvisalro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Base do frontend React e da WebAPI do Hackarum-Yvisalro.",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=24.22.3 <25"
+  },
+  "scripts": {
+    "dev": "concurrently --kill-others --names api,web --prefix-colors cyan,yellow \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "build": "npm run build --workspaces",
+    "start:backend": "npm run start --workspace backend",
+    "preview:frontend": "npm run preview --workspace frontend"
+  },
+  "devDependencies": {
+    "concurrently": "10.0.7"
+  }
+}
