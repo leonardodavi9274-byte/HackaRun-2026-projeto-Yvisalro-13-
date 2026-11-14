@@ -30,5 +30,28 @@ consumer_profiles.photo_object_path ou operação ainda retomável referencia o 
 remover pela API Storage administrativa. Nunca apagar linhas de storage.objects diretamente
 ou remover foto vigente. Não executar limpeza automática junto ao cadastro/upload.
 
+## Mapa do shopping (feature 005)
+
+Aplicar depois de 0001–0014, em ordem: 0015_mall_map_stores.sql (malls, mall_maps, stores,
+RLS e grants só para service_role) e 0016_demo_mall_seed.sql (Shopping Aurora, mapa
+provisório de três pisos e 18 lojas fictícias, uma delas sem posição). O 0015 depende de
+interest_categories (0002). A WebAPI é a única leitora, por GET /api/v1/mall.
+
+Logos são opcionais: criar bucket público store-logos e preencher stores.logo_url com a URL
+pública HTTPS. As lojas de demonstração não usam logo.
+
+Troca do mapa provisório pela planta da coordenação, sem mudar código:
+
+1. Converter a planta para o documento schemaVersion 1 (metros, eixo y para baixo), conforme
+   ../../specs/005-mapa-rota-lojas/data-model.md.
+2. Inserir a nova linha em mall_maps com source = 'coordination' e active = false.
+3. Atualizar stores.unit_id para as unidades da nova planta; lojas sem unidade ficam sem posição.
+4. Numa transação: update mall_maps set active = false onde está ativo; depois
+   update mall_maps set active = true na nova versão (o índice único parcial exige essa ordem).
+5. Ajustar malls.reference_lat, reference_lng, area_radius_m e is_demo conforme a coordenação.
+
+Se o documento ativo for inválido, a API responde 503 MAP_INVALID e o log registra a regra
+violada, sem o conteúdo do mapa.
+
 Em 2026-11-14, o código e os arquivos SQL foram preparados; nenhum projeto remoto recebeu
 essas migrações nesta execução. Os scripts SQL não foram executados contra PostgreSQL/Supabase.

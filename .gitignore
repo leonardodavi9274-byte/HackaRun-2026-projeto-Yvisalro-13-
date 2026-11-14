@@ -10,6 +10,8 @@ build/
 *.tsbuildinfo
 *.tmp
 *.swp
+.claude/settings.local.json
+.playwright-mcp/
 .vscode/
 .idea/
 .DS_Store

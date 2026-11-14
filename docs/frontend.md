@@ -186,6 +186,13 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 
 **A definir.** Dados do mapa, coordenadas de demonstração, regra da lista de proximidade e como selecionar o ponto de partida. O ponto azul da imagem representa uma posição no mapa do protótipo.
 
+**Divergências registradas pela feature 005** ([spec](../specs/005-mapa-rota-lojas/spec.md)), para correção do protótipo; a imagem não foi alterada:
+
+- O ponto azul representa o ponto de partida escolhido pela pessoa em **Onde você está?**, não a posição do GPS.
+- O painel **Perto de você** mostra só dados da loja (nome, piso e distância de caminhada simulada); ofertas como "promo café" e "-30%" dependem do catálogo.
+- A busca é **Buscar loja no mapa** (nome e categoria); busca por produto entra com o catálogo.
+- O nome do shopping vem dos dados do mapa, e a tela acrescenta **Mapa de demonstração**, **Usar minha localização** e **Ver lista de lojas**. A barra inferior mostra só **Início** e **Mapa** até as demais telas existirem.
+
 ### 10 — Rota ativa
 
 <img src="imagens/achei/10-rota-ativa.png" alt="Mapa em rota ativa com instrução de curva, anúncios pausados, resumo do trajeto e ações de encerrar e reservar" width="320">
@@ -200,6 +207,13 @@ A barra inferior aparece nas imagens de **Início**, **Buscar**, **Desejos** e *
 - Manter seta, texto e traçado coerentes. Nesta imagem, o texto orienta virar à esquerda e a seta aponta à direita. Esse detalhe precisa ser corrigido no protótipo.
 - **Encerrar rota** finaliza o trajeto e devolve a navegação ao mapa. Enquanto houver rota ativa, as ofertas de proximidade ficam suspensas.
 - A ação **Reservar item** depende de uma definição de escopo e de confirmação de disponibilidade. O escopo atual da vitrine deixa compras e pagamentos fora do aplicativo.
+
+**Divergências registradas pela feature 005** ([spec](../specs/005-mapa-rota-lojas/spec.md)), para correção do protótipo; a imagem não foi alterada:
+
+- **Em 40 m, vire à esquerda** aparece com seta para a direita. Texto, seta e traçado devem indicar a mesma direção.
+- **Reservar item** continua fora do escopo e não aparece na implementação.
+- Produto, preço e estoque no painel só aparecem quando o catálogo existir.
+- A implementação acrescenta **Anterior** e **Próxima** para avançar a simulação; a chegada é indicada por **Você chegou à {loja}**.
 
 **A definir.** Como detectar a chegada na simulação, como lidar com troca de destino e se a reserva entra no MVP. Se entrar, é preciso decidir como a loja confirma o pedido, por quanto tempo guarda o item e o que acontece se o estoque acabar.
 
