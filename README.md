@@ -1,10 +1,12 @@
-# Hackarum-Yvisalro — planejamento inicial
+# Hackarum-Yvisalro — planejamento inicial 
 
 > Nome padronizado: **Hackarum-Yvisalro**. A base do frontend React e da WebAPI TypeScript está em `frontend/` e `backend/`. As funcionalidades do produto, o aplicativo móvel e as landing pages continuam pendentes.
-
+a
 [Detalhamento do frontend](docs/frontend.md) com as 11 imagens do protótipo, a navegação e o comportamento esperado em cada tela.
 
 [Detalhamento geral do projeto](docs/detalhamento-projeto.md) com o estado atual, funcionalidades, arquitetura prevista e pendências. O [guia de Git e GitHub](docs/guia-git.md) explica como atualizar o computador e publicar o trabalho da equipe.
+
+[Base de execução e publicação](docs/base-execucao-sistema.md): arquitetura planejada para acessar o sistema de diferentes computadores, configuração do Supabase e pendências para a entrega final. A hospedagem e a publicação ainda não foram realizadas.
 
 ## Executar a base do projeto
 

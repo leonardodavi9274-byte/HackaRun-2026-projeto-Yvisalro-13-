@@ -1,5 +1,4 @@
 import {ConfirmedAvatar} from "./ConfirmedAvatar.jsx";
-import {useEffect} from "react";
 import {useAccountHomeViewModel} from "../viewmodels/useHomeViewModel.js";
 import {FormFeedback} from "../../../shared/components/FormFeedback.jsx";
 import {AppLink} from "../../../app/Link.jsx";
@@ -12,7 +11,6 @@ import "../../../styles/mall-map.css";
 export function HomeView({auth}){
  const {profile,categories,accountError,categoryError,reloadAccount}=useAccountHomeViewModel();const reg=useRegistration();
  const nearby=useNearbyPromotions({ownerId:auth.session?.user?.id??null,categoryIds:accountError?[]:profile?.interests?.categoryIds??[],profileReady:Boolean(profile||accountError)});
- useEffect(()=>{if(accountError?.status===401)auth.refresh().catch(()=>{});},[accountError]);
  return <main className="account-shell"><header className="account-header"><AppLink to="/inicio" className="account-brand">Hackarum<span> · </span>Yvisalro</AppLink><nav aria-label="Conta"><AppLink to="/perfil/preferencias">Preferências da conta</AppLink><button className="text-button" onClick={async()=>{await auth.logout();reg.clear();navigate("/entrar");}}>Sair</button></nav></header>
  <FormFeedback message={accountError}><button className="text-button" onClick={reloadAccount}>Tentar novamente</button></FormFeedback>
  {!profile&&!accountError&&<p role="status">Carregando sua conta…</p>}

@@ -53,6 +53,12 @@ No backend, configure `SUPABASE_URL` e `SUPABASE_SECRET_KEY` quando houver um pr
 Supabase real. Mantenha a chave apenas no servidor. `.env` e variações locais estão no
 `.gitignore`. Apenas `.env.example`, sem credenciais, é versionado.
 
+Para usar as funções de identidade e cadastro, configure também `SUPABASE_PUBLISHABLE_KEY`,
+`APP_SECURITY_KEY`, `TERMS_URL` e `PRIVACY_URL` conforme o exemplo e a configuração real
+do ambiente. Use um Supabase de desenvolvimento separado da produção quando disponível.
+Consulte a [base de execução e publicação](base-execucao-sistema.md) para os requisitos
+de acesso por outros computadores e para a configuração futura do ambiente hospedado.
+
 Sem configuração, `database.configured` é `false`. A resposta de saúde sempre identifica
 `database.connection` como `not_checked`: a base não abre uma consulta nem cria tabelas.
 O middleware de identidade está preparado; login e autorização por empresa ainda precisam
@@ -66,9 +72,11 @@ npm run start:backend
 ```
 
 Os resultados ficam em `backend/dist/` e `frontend/dist/`. Para visualizar o build web,
-use outro terminal com `npm run preview:frontend`. Esse modo não oferece o proxy do Vite;
-defina uma URL absoluta em `VITE_API_BASE_URL` antes do build ou forneça um proxy externo.
-Se usar a porta 4173, inclua essa origem em `FRONTEND_ORIGIN` no backend.
+use outro terminal com `npm run preview:frontend`. Esse modo não oferece o proxy `/api`
+do servidor de desenvolvimento. Os fluxos autenticados atuais exigem um proxy externo
+na mesma origem que encaminhe `/api` para a API; apenas definir uma URL absoluta de outra
+origem não faz os cookies de sessão serem enviados pelo cliente atual. Ajuste `APP_ORIGIN`
+e `FRONTEND_ORIGIN` à origem acessada, inclusive à porta, conforme a configuração usada.
 
 O build é compilação, não execução de testes. Conforme decisão da equipe, esta base
 não possui testes automatizados, testes manuais obrigatórios nem scripts de teste.
@@ -115,3 +123,11 @@ executadas em PostgreSQL/Supabase. Não houve configuração de SMTP/bucket ou p
 Para ativar a integração, usar o [guia da feature](../specs/004-cadastro-preferencias/quickstart.md)
 e concluir T070 no [tasks.md](../specs/004-cadastro-preferencias/tasks.md). A ausência dos
 serviços reais não é tratada pela aplicação como autenticação ou salvamento bem-sucedido.
+
+## Preparação para autenticação 007
+
+Esta seção descreve a configuração necessária para o futuro funcionamento dos fluxos; ela não afirma que a recuperação ou o login social estejam implementados ou ativados. Antes de habilitá-los, resolver os bloqueios de segurança B1–B3 em [plan.md](../specs/007-autenticacao-supabase/plan.md), inclusive a confirmação adicional antes de vincular contas e a restrição de senha em contas exclusivamente sociais.
+
+Para e-mail transacional, configure no projeto Supabase um [provedor SMTP próprio](https://supabase.com/docs/guides/auth/auth-smtp), remetente e domínio autorizados. No [modelo de recuperação](https://supabase.com/docs/guides/auth/auth-email-templates), inclua o código `{{ .Token }}`; configure seis dígitos, validade de 600 segundos e intervalo mínimo de 60 segundos segundo as opções disponíveis no projeto. A validade de OTP pode afetar também a confirmação de cadastro: reveja o fluxo 004 antes de aplicar. Os limites de tentativas são os do Supabase e o aceite de uma solicitação não comprova entrega ao destinatário. Esses e-mails transacionais não dependem de consentimento publicitário e não configuram campanhas.
+
+Para Google e Apple, prepare as credenciais dos provedores e a lista restrita de URLs de retorno por ambiente conforme os guias oficiais de [Google](https://supabase.com/docs/guides/auth/social-sign-in/auth-google), [Apple](https://supabase.com/docs/guides/auth/social-sign-in/auth-apple) e [URLs de retorno](https://supabase.com/docs/guides/auth/redirect-urls). Planeje a rotação do segredo Apple conforme as exigências do provedor. Guarde credenciais em configurações protegidas dos respectivos serviços, fora do Git; não as coloque em `backend/.env.example` ou no frontend. Ter credenciais configuradas não resolve, por si só, os bloqueios do plano.

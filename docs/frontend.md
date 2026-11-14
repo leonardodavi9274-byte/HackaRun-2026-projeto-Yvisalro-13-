@@ -8,6 +8,8 @@ O Hackarum-Yvisalro é uma vitrine para quem está no shopping. A pessoa pode pr
 
 **Cadastro e preferências detalhados.** A [feature 004](../specs/004-cadastro-preferencias/spec.md) especifica as telas 02 e 03, as regras dos campos, a foto opcional, os interesses, o consentimento promocional e a integração funcional entre frontend e backend. Ela registra as adequações necessárias às imagens, incluindo publicidade desligada inicialmente. O código desses fluxos está implementado; a configuração externa e a execução funcional ainda estão pendentes.
 
+**Autenticação 007 em andamento.** O código do login inclui campos compatíveis com gerenciadores de senhas e respostas genéricas para credenciais inválidas; o cadastro captura os valores preenchidos pelo navegador, e a sessão é consultada novamente após resposta 401 em recursos privados ou restauração da página pelo histórico. Recuperação de senha, login Google/Apple e revogação imediata de todas as sessões ainda dependem dos bloqueios do [plano 007](../specs/007-autenticacao-supabase/plan.md). Não foram executados testes funcionais ou configurados os serviços externos nesta etapa.
+
 ## Decisões recentes para o frontend
 
 - **Plataformas:** React confirmado para a interface web e o painel empresarial; Flutter/Dart para o aplicativo móvel. MVVM separará apresentação, estado e dados. TypeScript confirmado para o backend Node.js e proposto para React; os contratos serão detalhados no plano técnico.
