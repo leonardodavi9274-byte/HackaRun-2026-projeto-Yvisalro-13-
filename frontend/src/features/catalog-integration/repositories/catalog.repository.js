@@ -1,4 +1,6 @@
-/** A fonte de produtos ainda não foi disponibilizada pela feature de catálogo. */
+import {catalogRepository as provider} from "../../catalog/repositories/catalog.repository.js";
+
+/** Erro explícito caso o provedor do catálogo não esteja configurado. */
 export class CatalogUnavailableError extends Error {
   constructor() {
     super("O catálogo de produtos está indisponível no momento.");
@@ -32,4 +34,4 @@ export function createCatalogRepository(provider = null) {
   };
 }
 
-export const catalogRepository = createCatalogRepository();
+export const catalogRepository = createCatalogRepository(provider);

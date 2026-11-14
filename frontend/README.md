@@ -14,7 +14,7 @@ React/Vite em JavaScript/JSX com MVVM. O código implementa cadastro em dois pas
 | /inicio | Conta, categorias e interesses salvos |
 | /perfil/preferencias | Ativação/revogação da publicidade |
 
-Catálogo, recomendações, Desejos, alertas, empresas, mapa, login social e recuperação completa não foram implementados neste recorte.
+A busca pública de demonstração fica em `/buscar` e o detalhe em `/produto/:variantId`; também há mapa em `/mapa`. O catálogo depende de dados e migrações configurados. Recomendações, Desejos, alertas, empresas, login social e recuperação completa não foram integrados neste recorte.
 
 ## Organização
 
