@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-13
 
-**Status**: Draft — revisão documental concluída; pronta para planejamento.
+**Status**: Código implementado; ativação dos serviços e documentos reais pendente em T070 (2026-11-14).
 
 **Input**: User description: "Cadastro com nome, e-mail, senha e imagem opcional; definição de interesses e permissão para receber publicidade por email. (Semi-Essencial). É necessário especificar a integração do frontend com o backend seguindo o padrão do design das telas."
 

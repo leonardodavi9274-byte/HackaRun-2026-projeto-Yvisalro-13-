@@ -1,6 +1,6 @@
 # Hackarum-Yvisalro — entrega inicial e próximos passos
 
-Este documento organiza o trabalho da equipe. Os itens abaixo são pendências de planejamento, não uma lista de tarefas de implementação gerada pelo Spec Kit.
+Este documento organiza o trabalho da equipe. As pendências gerais abaixo continuam separadas das tarefas da feature 004; o relatório desta implementação aparece ao final.
 
 ## Materiais disponíveis
 
@@ -44,3 +44,49 @@ Este documento organiza o trabalho da equipe. Os itens abaixo são pendências d
 Na verificação de 13/11/2026, o [repositório GitHub](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-) estava publicado. A `main` do GitHub e `docs/detalhamento-frontend` estavam no commit `bbbda4a`, antes desta revisão. A branch do Victor estava em `8bcbfeb`, incluindo a reorganização `e3d5af5`, o tema do desafio, a prática sorteada e TypeScript. O [relatório](revisao-conformidade.md) distingue as versões consultadas; não houve merge dessa branch nesta revisão.
 
 O repositório reúne planejamento e protótipos. A publicação do aplicativo e a configuração dos serviços ainda não foram realizadas no material analisado. Consulte o guia de Git para atualizar a base local e enviar novos documentos por branch e pull request.
+
+
+## Cadastro e preferências — implementação de 2026-11-14
+
+O código da feature 004 implementa os dois passos de cadastro do consumidor, entrada
+mínima por e-mail/senha, confirmação, interesses, publicidade optativa/revogável e avatar
+privado. Também inclui consulta e correção de cadastro incompleto e resolução de
+respostas perdidas usando a mesma intenção, sem aplicar escolhas a contas encontradas
+apenas por e-mail.
+
+São 70 de 71 tarefas concluídas no código/documentação. T070 permanece pendente:
+projeto/chaves Supabase, aplicação das migrações, configuração Auth/SMTP/bucket e
+documentos legais reais. Foi identificada uma integração Supabase disponível, ainda
+sem instalação/conexão confirmada. Nenhuma migração remota, criação de conta, envio
+de e-mail, upload real ou publicação foi executada nesta entrega.
+
+### Cobertura por requisito
+
+| Requisitos | Implementação |
+| --- | --- |
+| FR-001–FR-005 | Views/ViewModels de registration; validation.ts; registration.service.ts; intenção e trigger de vínculo |
+| FR-006–FR-007 | PhotoPicker/PhotoCompletion; SharpImageProcessor; AvatarService; recibos e Storage privado |
+| FR-008–FR-010 | CategoryGrid/ProductInterestInput; transação de inicialização e restrições de interesses |
+| FR-011–FR-013 | MarketingConsentField/MarketingPreferencesView; MarketingService e transação de evento/projeção |
+| FR-014 | requireAuth, WebSessionService, ConsumerService e vínculo de sujeito nas RPCs |
+| FR-015–FR-017 | Estados/receipts; snapshot congelado; correções autorizadas; finalização persistida; revisão de foto |
+| FR-018–FR-019 | Guardas HTTP, rate limit, erros estruturados, logs sem credenciais e estados de falha/retomada |
+| FR-020 | Componentes de formulário, foco/labels, seleção textual e estilos responsivos das telas 02/03 |
+| FR-021 | Links do cadastro provenientes da configuração; destinos/conteúdo reais ainda dependem de T070 |
+| FR-022 | IdentityService/ConfirmationView e verificação explícita de TokenHash/reenvio |
+| SC-001–SC-006 | Mantidos como critérios de produto, sem medição ou execução de cenários nesta entrega |
+
+O [tasks.md](../specs/004-cadastro-preferencias/tasks.md) contém caminhos específicos e
+dependências. O [contrato HTTP](../specs/004-cadastro-preferencias/contracts/api.md) e o
+[modelo](../specs/004-cadastro-preferencias/data-model.md) descrevem limites e transações.
+
+### Evidência e limites
+
+- npm run build concluiu compilação TypeScript e build Vite, sem erros ou avisos ao final.
+- Não foram criados/executados testes; a política da constituição foi preservada.
+- A revisão de código não comprova execução do SQL, entrega de e-mail, sincronização
+  entre dispositivos, aparência renderizada ou metas de uso.
+- Não foram adicionados catálogo, recomendações, Desejos, alertas, empresas, login
+  social, recuperação completa, app móvel ou hospedagem.
+- Os protótipos/imagens foram preservados. A implementação usa o padrão visual deles
+  com os ajustes de publicidade inicialmente desligada e separação de alertas.

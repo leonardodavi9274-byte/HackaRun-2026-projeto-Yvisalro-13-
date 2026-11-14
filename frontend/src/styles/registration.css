@@ -35,3 +35,11 @@
 @media(min-width:768px){.auth-page{padding-top:62px;padding-bottom:62px}.auth-shell{max-width:464px}.auth-page h1{font-size:36px}}
 @media(max-width:400px){.auth-page{padding:26px 18px}.auth-page h1{font-size:30px}.category-option{font-size:11px;min-height:96px}.category-grid{gap:8px}.consent-card{padding:16px}.account-header{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.spinner{animation:none}.consent-track:after{transition:none}}
+
+
+.auth-page button:disabled{cursor:not-allowed}.category-option:disabled,.text-button:disabled,.secondary-button:disabled{opacity:.6}
+.auth-page [role=alert]:focus,.auth-page [role=status]:focus{outline-offset:4px}
+.auth-page input,.auth-page button,.auth-page a{touch-action:manipulation}
+.auth-page .status-card,.auth-page .legal-note{overflow-wrap:anywhere}
+.account-avatar:not(img){display:inline-grid;place-items:center;background:#e8ece7;color:#0f5c66;font-size:22px;font-weight:650}
+.password-caption:has(+ .field-error){color:#a22e20}

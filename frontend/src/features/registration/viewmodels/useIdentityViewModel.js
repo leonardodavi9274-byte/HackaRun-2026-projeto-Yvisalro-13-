@@ -12,3 +12,7 @@ export function useIdentityViewModel(onAuthenticated){
  const resend=email=>run(async()=>{const r=await repo.resend(email);setMessage("Se houver cadastro pendente para este e-mail, a solicitação de reenvio foi aceita.");setUntil(Date.now()+r.retryAfterSeconds*1000);});
  return {token,busy,error,message,until,verify,resend};
 }
+
+
+export const hasPendingConfirmation=()=>Boolean(confirmationToken);
+export const dismissConfirmation=()=>{confirmationToken=null;};

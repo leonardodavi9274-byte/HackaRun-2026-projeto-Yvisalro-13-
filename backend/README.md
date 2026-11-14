@@ -1,51 +1,50 @@
 # Hackarum-Yvisalro — WebAPI
 
-Base HTTP/JSON em Node.js, TypeScript e Express 5. Rotas disponíveis:
+WebAPI Node.js/TypeScript/Express 5 com cadastro, confirmação de e-mail, sessão, retomada, interesses, publicidade e avatar privado implementados no código. A integração real depende da aplicação das migrações e configuração do Supabase/SMTP/documentos; veja [guia da feature 004](../specs/004-cadastro-preferencias/quickstart.md).
 
-| Método | Caminho | Finalidade |
-| --- | --- | --- |
-| GET | `/api/v1` | Identificação da API. |
-| GET | `/api/v1/health` | Estado do processo e presença de configuração do banco. |
-| GET | `/health` | Alias de saúde. |
+## Rotas
 
-O envelope de sucesso é `{ "data": ... }`; erros usam
-`{ "error": { "code", "message", "requestId" } }`. A saúde não consulta o banco e não
-comprova autenticação ou conectividade com Supabase.
+Todas usam /api/v1, exceto o alias /health. A saúde informa presença de configuração, não conexão verificada.
+
+| Grupo | Rotas |
+| --- | --- |
+| Base | GET /, GET /health; alias GET /health fora do prefixo |
+| Configuração | GET /registration-config, GET /interest-categories |
+| Cadastro | POST /auth/registrations, GET /auth/registrations/:registrationId |
+| Identidade | POST /auth/email/verify, POST /auth/email/resend |
+| Sessão | POST /auth/sessions, GET /auth/session, DELETE /auth/session |
+| Conta | GET /me, GET /me/onboarding, POST /me/onboarding/complete |
+| Publicidade | PATCH /me/marketing-preference |
+| Foto | PUT/DELETE /me/onboarding/avatar, GET /me/avatar |
+
+Sucesso: { data: ... }. Erro: { error: { code, message, requestId, fields?, retryAfterSeconds? } }. Requisições de mutação web exigem Origin permitido e X-App-Request: web. Os cabeçalhos de idempotência e todos os payloads estão no [contrato HTTP](../specs/004-cadastro-preferencias/contracts/api.md).
 
 ## Arquitetura
 
-`presentation/http` recebe as requisições, define rotas e controllers e traduz erros.
-`application/services` contém casos de uso; `domain` contém modelos independentes de
-Express. `infrastructure/supabase` concentra a integração externa. `config` lê e valida
-o ambiente. `app.ts` compõe os objetos e `server.ts` inicia o processo.
+Controllers traduzem HTTP; serviços dependem de portas; domínio valida dados e projeta estados; adaptadores usam Supabase e Sharp. app.ts compõe as dependências. A identidade usa cliente publicável por requisição; o cliente privilegiado nunca recebe sessão de usuário.
 
-O middleware `requireAuth` valida uma sessão com Supabase quando aplicado a uma rota.
-As rotas iniciais são públicas. Ainda não existem operações de negócio ou autorização
-por empresa; futuros endpoints restritos precisam de ambas as proteções.
+A sessão web usa cookie opaco HttpOnly, tokens criptografados no PostgreSQL e renovação serializada. A API valida getUser antes de operações privadas e deriva o proprietário dessa identidade. RLS não substitui autorização: a chave privilegiada do servidor ignora RLS.
 
-## Execução
+Perfil/interesses/consentimento são transacionais; Auth, SMTP e Storage têm confirmações separadas. Repetição não reativa publicidade antiga, recria conta ou associa upload ultrapassado por uma dispensa.
 
-Na raiz do repositório, com Node.js 24 LTS:
+## Executar
 
-```sh
-npm install
+Na raiz, com Node.js 24.22.3:
+
+~~~sh
+npm ci
 npm run dev:backend
 npm run build --workspace backend
-npm run start:backend
-```
+~~~
 
-O modo desenvolvimento recarrega o servidor quando o código muda. O comando `start`
-depende do build e não deve disputar a porta com o modo desenvolvimento.
-O Node.js 24 executa os arquivos TypeScript diretamente em desenvolvimento, usando
-apenas sintaxe removível. O build com `tsc` confere os tipos e reescreve os imports
-relativos de `.ts` para `.js` em `dist/`.
-Veja também o [guia de desenvolvimento](../docs/desenvolvimento.md).
+No Windows sem Node global, usar scripts/npm.ps1 conforme [desenvolvimento](../docs/desenvolvimento.md). start:backend depende do build; não disputar a porta 3000 com desenvolvimento.
 
-## Ambiente
+## Configuração
 
-O arquivo `.env` é opcional: sem ele a API inicia em `127.0.0.1:3000`. Para configurar,
-copie `.env.example` para `.env` dentro desta pasta e preencha as variáveis necessárias.
-As variáveis `SUPABASE_URL` e `SUPABASE_SECRET_KEY` devem ser fornecidas juntas.
-A chave permanece no backend; nunca use prefixo `VITE_` para uma chave privilegiada.
+Copiar .env.example para .env e preencher as entradas reais. Nunca versionar chaves ou usar VITE_* para segredos. APP_SECURITY_KEY representa 32 bytes em base64 e não possui fallback inseguro.
 
-Testes não fazem parte do fluxo deste recorte, conforme a constituição.
+[Migrações e preparação](supabase/README.md): aplicar 0001–0014 em ordem no projeto da equipe, configurar Auth e SMTP, criar bucket consumer-avatars privado e informar URLs reais de Termos/Política.
+
+Sem configuração, a saúde continua disponível e cadastro/operações dependentes retornam indisponibilidade. Não existem catálogo, autorização empresarial, recuperação completa, provedores sociais ou campanhas neste recorte.
+
+Build de backend concluído em 2026-11-14. Não foram executados testes, cadastros, migrações remotas ou envios reais nesta execução.

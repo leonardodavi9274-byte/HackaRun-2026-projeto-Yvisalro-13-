@@ -1,44 +1,41 @@
 # Hackarum-Yvisalro — frontend
 
-Base React com Vite e JavaScript/JSX. A página inicial apresenta a proposta do produto
-e consulta o estado da WebAPI. Catálogo, login, desejos, painel empresarial e mapa
-ainda não foram implementados. Esta página não entrega as landing pages pendentes.
+React/Vite em JavaScript/JSX com MVVM. O código implementa cadastro em dois passos conforme as telas 02/03, interesses, autorização promocional, confirmação, entrada mínima, retomada e foto opcional. As operações usam retornos reais da WebAPI; falta configurar o Supabase para operar o fluxo completo.
 
-## Arquitetura MVVM
+## Rotas
 
-- **View:** `features/home/views/HomeView.jsx` apresenta a interface.
-- **ViewModel:** `features/home/viewmodels/useHomeViewModel.js` controla carregamento,
-  sucesso, falha, cancelamento e nova tentativa.
-- **Model:** `features/home/models/system-status.js` representa a resposta consumida.
-- **Repository:** `features/home/repositories/system.repository.js` obtém e converte dados.
-- **Serviço:** `shared/services/http-client.js` concentra a comunicação HTTP.
-- **Composição:** `app/App.jsx`; elementos compartilhados em `shared/components`.
+| Caminho | Interface |
+| --- | --- |
+| / | Página de apresentação da base e estado do serviço |
+| /entrar | E-mail/senha e acesso ao cadastro |
+| /cadastro | Nome, e-mail, senha e prévia da foto opcional |
+| /cadastro/preferencias | Categorias, termos, publicidade e Concluir/Pular |
+| /cadastro/confirmar | Confirmação, estado e retomada de pendências |
+| /inicio | Conta, categorias e interesses salvos |
+| /perfil/preferencias | Ativação/revogação da publicidade |
 
-As próximas funcionalidades podem seguir a mesma organização em `features/`. A View
-não deve consultar Supabase nem conter regras de acesso aos dados de empresas.
+Catálogo, recomendações, Desejos, alertas, empresas, mapa, login social e recuperação completa não foram implementados neste recorte.
 
-## Execução
+## Organização
 
-Na raiz do repositório, com Node.js 24 LTS:
+features/registration, features/session, features/account-preferences e features/home mantêm Views, ViewModels, Models e Repositories. shared/services/http-client.js trata HTTP e erros. App.jsx e navigation.js compõem navegação e guardas.
 
-```sh
-npm install
-npm run dev:frontend
-npm run build --workspace frontend
-npm run preview:frontend
-```
+A View não chama Supabase. Rascunho, senha, File e TokenHash ficam somente em memória, sem localStorage/sessionStorage/URL persistente. O cookie de sessão é HttpOnly; não há SDK Auth, JWT ou chaves de serviço no navegador.
 
-Desenvolvimento em `http://localhost:5173`; prévia do build em `http://localhost:4173`.
-Inicie também a WebAPI para a consulta de estado. O [guia de desenvolvimento](../docs/desenvolvimento.md)
-explica execução conjunta e Node.js portátil no Windows.
+Continuar do passo 1 não cria identidade. Pular registra interesses vazios/publicidade false e mantém a foto quando solicitada. A imagem só é enviada após autenticação; recarga/outro dispositivo pede selecionar novamente ou dispensar. Respostas incertas não são tratadas como sucesso.
 
-## Ambiente
+## Executar
 
-`.env` é opcional. O padrão `/api/v1` é encaminhado pelo proxy do Vite à porta 3000.
-Para mudar o destino local, copie `.env.example` para `.env` e ajuste `API_PROXY_TARGET`.
-Em um build publicado ou no modo preview, o proxy de desenvolvimento não existe:
-configure `VITE_API_BASE_URL` com a URL da WebAPI antes de gerar o build, ou providencie
-um proxy `/api` na hospedagem. Libere a origem correspondente no backend.
+Na raiz:
 
-Variáveis `VITE_` são públicas no navegador e não devem conter segredos.
-Testes não fazem parte do fluxo deste recorte, conforme a constituição.
+~~~sh
+npm ci
+npm run dev
+npm run build
+~~~
+
+Abrir http://127.0.0.1:5173/cadastro. O proxy /api segue para 127.0.0.1:3000; usar o mesmo hostname do link de confirmação. O modo preview atual não inclui esse proxy: para usar o build autenticado, fornecer proxy HTTPS de mesma origem, sem simplesmente apontar a API para outra origem.
+
+Variáveis: VITE_API_BASE_URL=/api/v1 e API_PROXY_TARGET=http://127.0.0.1:3000. Nenhum segredo fica no frontend.
+
+Veja [execução e configuração](../specs/004-cadastro-preferencias/quickstart.md) e [contrato de telas](../specs/004-cadastro-preferencias/contracts/ui.md). Build de frontend concluído em 2026-11-14; cenários funcionais não foram executados, conforme a política sem testes.

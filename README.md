@@ -244,10 +244,10 @@ A API recebe requisições HTTPS/JSON, valida a identidade e a autorização da 
 | Parte | Escolha | Papel e situação |
 | --- | --- | --- |
 | Aplicativo móvel | Flutter / Dart | Interface com MVVM; planejada, sem código da aplicação. |
-| Frontend web e painel empresarial | React confirmado; TypeScript proposto para a interface | Base React/Vite em JavaScript/JSX criada em `frontend/`, com MVVM; fluxos de consumidor e painel ainda pendentes. |
-| Backend | Node.js / TypeScript / Express 5 | Base WebAPI criada em `backend/`, com saúde, erros e infraestrutura Supabase; regras de produto e hospedagem pendentes. |
+| Frontend web e painel empresarial | React confirmado; TypeScript proposto para a interface | Cadastro e preferências implementados em JavaScript/JSX com MVVM; configuração real e demais fluxos/painel pendentes. |
+| Backend | Node.js / TypeScript / Express 5 | WebAPI com cadastro, sessão, retomada, preferências e foto privada; serviços reais e hospedagem pendentes. |
 | Banco principal | PostgreSQL no Supabase | Escolha confirmada para persistência do MVP; integração ainda não configurada. |
-| Identidade | Supabase Auth | Login real, recuperação e provedores sociais previstos; integração pendente. |
+| Identidade | Supabase Auth | Cadastro, confirmação e entrada e-mail/senha implementados no código; configuração real pendente. Recuperação e provedores sociais continuam previstos. |
 | Banco alternativo | MySQL | Alternativa documentada para avaliação futura; fora da operação do primeiro MVP. |
 | Protótipos das telas | Canvas de design atual | Manter as 11 telas existentes e suas imagens exportadas como referência de UX. |
 | Landing pages | Formato a decidir | Rascunho de roteiro em slides do Canva; ferramenta, quantidade e finalidades a confirmar. |
@@ -297,9 +297,14 @@ Esta é uma proposta conceitual, não um esquema de banco final.
 
 ## Situação atual
 
-Este repositório contém planejamento, constituição 1.0.0, ferramentas do Spec Kit e a
-base executável do frontend e da WebAPI. A página inicial consulta o estado do serviço;
-os fluxos do consumidor e da empresa ainda precisam ser implementados. Supabase não
-possui credenciais, tabelas ou integração real configurada nesta inicialização.
-O projeto segue o fluxo sem testes escolhido pela equipe. Consulte o
-[guia de desenvolvimento](docs/desenvolvimento.md) para instalar, compilar e executar.
+A [feature 004](specs/004-cadastro-preferencias/plan.md) tem cadastro em dois passos, interesses,
+publicidade opcional/alterável, entrada por e-mail/senha, confirmação, retomada e foto privada
+implementados no código. A página de apresentação e a saúde da base foram preservadas.
+
+Em 2026-11-14, os builds de frontend e backend passaram. Supabase, SMTP, bucket e documentos
+legais ainda precisam de configuração real; as 14 migrações estão em backend/supabase/migrations.
+Nenhuma migração remota, criação de conta ou envio de e-mail foi executado nesta entrega.
+
+As demais funcionalidades da vitrine continuam pendentes. O fluxo permanece sem testes.
+Consulte o [guia da feature](specs/004-cadastro-preferencias/quickstart.md) e o
+[acompanhamento das tarefas](specs/004-cadastro-preferencias/tasks.md).

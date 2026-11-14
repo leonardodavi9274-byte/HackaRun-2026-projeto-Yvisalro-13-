@@ -1,0 +1,5 @@
+import {useState} from "react";
+import {usePhotoViewModel} from "../viewmodels/usePhotoViewModel.js";
+import {PhotoPicker} from "./PhotoPicker.jsx";
+import {FormFeedback} from "../../../shared/components/FormFeedback.jsx";
+export function PhotoCompletionView({email,onResult}){const [preparing,setPreparing]=useState(false);const vm=usePhotoViewModel(email,onResult);return <div className="auth-form"><FormFeedback message={vm.error}/><FormFeedback tone="info" message={vm.message}/><PhotoPicker onPreparing={setPreparing} file={vm.file} onChange={vm.select} disabled={vm.busy}/><p className="muted">A foto só é salva na conta autenticada. Se você abriu em outro dispositivo, selecione a imagem novamente ou continue sem ela.</p><button className="primary-button" onClick={vm.upload} disabled={!vm.file||vm.busy||preparing}>{vm.busy?"Salvando…":"Salvar foto e continuar"}</button><button className="secondary-button" onClick={vm.waive} disabled={vm.busy||preparing}>Continuar sem foto</button></div>;}
