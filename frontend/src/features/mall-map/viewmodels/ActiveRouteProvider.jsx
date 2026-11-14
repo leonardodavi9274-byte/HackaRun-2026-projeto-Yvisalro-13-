@@ -14,8 +14,11 @@ const Context=createContext(null);
 export function ActiveRouteProvider({children}){
  const [route,setRoute]=useState(null);
  const [startPointId,setStartPointId]=useState(null);
+ const [promotionPoint,setPromotionPoint]=useState(null);
  const value=useMemo(()=>({
-  route,startPointId,setStartPointId,
+  route,startPointId,promotionPoint,
+  setStartPointId:(id,context)=>{setStartPointId(id);setPromotionPoint(id&&context?{pointId:id,...context}:null);},
+  clearPromotionPoint:()=>setPromotionPoint(null),
   /** Verdadeiro em "ativa" e "chegou", até a pessoa encerrar. */
   isActive:Boolean(route),
   destinationStoreId:route?.storeId??null,
@@ -24,7 +27,7 @@ export function ActiveRouteProvider({children}){
   end:()=>setRoute(null),
   next:()=>setRoute(r=>!r||r.arrived?r:r.stepIndex<r.instructions.length-1?{...r,stepIndex:r.stepIndex+1}:{...r,arrived:true}),
   previous:()=>setRoute(r=>!r?r:r.arrived?{...r,arrived:false}:{...r,stepIndex:Math.max(0,r.stepIndex-1)}),
- }),[route,startPointId]);
+ }),[route,startPointId,promotionPoint]);
  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 export function useActiveRoute(){
@@ -32,3 +35,5 @@ export function useActiveRoute(){
  if(!value)throw new Error("useActiveRoute precisa de ActiveRouteProvider.");
  return value;
 }
+/** A publicidade trata a ausência do provedor como estado desconhecido, nunca como inativo. */
+export function useOptionalActiveRoute(){return useContext(Context);}

@@ -26,9 +26,9 @@ import "../../../styles/mall-map.css";
 const NOT_FOUND="Loja não encontrada no mapa";
 
 /** Página /mapa (telas 09 e 10). Pública: não depende da sessão. */
-export function MallMapView(){
+export function MallMapView({ownerId}){
  const map=useMallMapViewModel();
- const routing=useRouteViewModel(map.index,map.graph);
+ const routing=useRouteViewModel(map.index,map.graph,ownerId);
  const location=useLocationViewModel(map.index?.mall);
  const storeParam=useSearchParam("loja");
  const handledParam=useRef(null);
