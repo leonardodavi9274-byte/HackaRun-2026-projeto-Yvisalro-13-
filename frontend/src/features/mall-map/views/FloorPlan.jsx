@@ -4,6 +4,7 @@ const CATEGORY_COLORS={
  moda:["#e8def8","#6a3fc8"],tenis:["#dce4fb","#2e4fd0"],eletronicos:["#dfe6ef","#36506e"],
  "cafe-doces":["#ecdfd2","#6b4428"],casa:["#f6e0cf","#b45a1c"],beleza:["#f8dce7","#b3346a"],
  games:["#d8efe3","#1e7a4c"],livros:["#f3ead0","#86690f"],esporte:["#d4eeec","#0f6b66"],
+ alimentacao:["#fbe3d6","#b8461b"],servicos:["#e4e7ec","#4b5563"],lazer:["#fdeccb","#a1620a"],
 };
 const VACANT=["#ecebe6","#bdb8ad"];
 const MARGIN=6;
