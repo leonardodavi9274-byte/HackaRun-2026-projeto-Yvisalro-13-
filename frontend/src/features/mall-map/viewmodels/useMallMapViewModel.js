@@ -5,7 +5,8 @@ import {buildGraph} from "../models/pathfinding.js";
 import {searchStores} from "../models/store-search.js";
 import {isNetworkFailure} from "../../../shared/services/http-client.js";
 
-export const ZOOM_MIN=1,ZOOM_MAX=4;
+/** Até 12×: o térreo da planta tem 361 m, e uma loja de 5 m precisa caber sob o marcador. */
+export const ZOOM_MIN=1,ZOOM_MAX=12;
 const clamp=(v,min,max)=>Math.min(max,Math.max(min,v));
 const UNAVAILABLE="O mapa do shopping está indisponível no momento.";
 const OFFLINE="Sem conexão. Verifique sua internet e tente novamente.";

@@ -53,6 +53,13 @@ Troca do mapa provisório pela planta da coordenação, sem mudar código:
 Se o documento ativo for inválido, a API responde 503 MAP_INVALID e o log registra a regra
 violada, sem o conteúdo do mapa.
 
+Planta da coordenação (Capim Dourado Shopping): 0020_capim_dourado_map.sql aplica os passos
+acima de uma vez. Cria as categorias inativas alimentacao, servicos e lazer (só para lojas), o
+shopping capim-dourado, a versão planta-mix-2026-11 (source = 'coordination', Térreo e Praça de
+Alimentação) e 152 lojas, e torna o capim-dourado o shopping ativo. Aplicar depois de 0001–0018;
+o número 0019 está reservado para a migração da feature 006 na branch dev. Coordenadas de
+referência e raio continuam provisórios (passo 5 pendente). Ver research D13 da feature 005.
+
 ## Promoções próximas (feature 008)
 
 Após 0015–0016, preparar 0017_published_promotional_offers.sql e, para demonstração,

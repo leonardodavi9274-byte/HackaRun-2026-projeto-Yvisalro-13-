@@ -23,6 +23,9 @@ import {NearbyPanel} from "./NearbyPanel.jsx";
 import "../../../styles/registration.css";
 import "../../../styles/mall-map.css";
 
+/** Nome e logo com até 70 m visíveis; marcador compacto acima de 140 m visíveis. */
+const DETAIL_MAX_M=70,COMPACT_MIN_M=140;
+
 const NOT_FOUND="Loja não encontrada no mapa";
 
 /** Página /mapa (telas 09 e 10). Pública: não depende da sessão. */
@@ -96,11 +99,13 @@ export function MallMapView({ownerId}){
      selectedUnitId={destinationUnit?.id} route={route} label={`Mapa do ${index.mall.name}, ${floor.name}`}>
      {(project,vb)=>{
       const visible=([x,y])=>x>=vb.x&&x<=vb.x+vb.w&&y>=vb.y&&y<=vb.y+vb.h;
+      // Detalhe pela largura visível em metros, não pelo zoom: a planta tem pisos de 117 m a 361 m.
+      const detailed=vb.w<=DETAIL_MAX_M,compact=vb.w>COMPACT_MIN_M;
       return <>
        {map.markers.filter(store=>visible(index.unitById.get(store.unitId).anchor)).map(store=>{
         const unit=index.unitById.get(store.unitId);
         return <StoreMarker key={store.id} store={store} accessibleName={storeAccessibleName(index,store)} style={project(unit.anchor)}
-         selected={store.id===destinationId} showLogo={map.zoom>=2} showName={map.zoom>=2} onSelect={selectFromMap}/>;
+         selected={store.id===destinationId} showLogo={detailed} showName={detailed} compact={compact} onSelect={selectFromMap}/>;
        })}
        {picking&&floor.points.filter(p=>visible([index.nodeById.get(p.node).x,index.nodeById.get(p.node).y])).map(point=>{
         const node=index.nodeById.get(point.node);
