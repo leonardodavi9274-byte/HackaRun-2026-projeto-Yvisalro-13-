@@ -1,17 +1,7 @@
-import { Router } from "express";
-import type { HealthController } from "../controllers/health.controller.ts";
-
-export function createApiRoutes(health: HealthController): Router {
-  const router = Router();
-  router.get("/", (_request, response) => {
-    response.json({
-      data: {
-        name: "Hackarum-Yvisalro WebAPI",
-        version: "v1",
-        health: "/api/v1/health",
-      },
-    });
-  });
-  router.get("/health", health.get);
-  return router;
-}
+import {Router} from "express";
+import type {HealthController} from "../controllers/health.controller.ts";
+import type {Services} from "../controllers/context.ts";
+import {registrationRoutes} from "./registration.routes.ts";
+import {authRoutes} from "./auth.routes.ts";
+import {meRoutes} from "./me.routes.ts";
+export function createApiRoutes(health:HealthController,services:Services){const router=Router();router.get("/",(_req,res)=>res.json({data:{name:"Hackarum-Yvisalro WebAPI",version:"v1",health:"/api/v1/health"}}));router.get("/health",health.get);router.use(registrationRoutes(services));router.use("/auth",authRoutes(services));router.use("/me",meRoutes(services));return router;}

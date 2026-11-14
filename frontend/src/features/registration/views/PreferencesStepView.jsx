@@ -1,0 +1,6 @@
+import {useRegistrationViewModel} from "../viewmodels/useRegistrationViewModel.js";
+import {FormFeedback} from "../../../shared/components/FormFeedback.jsx";
+import {AuthLayout} from "./AuthLayout.jsx";
+import {navigate} from "../../../app/navigation.js";
+import {AppLink} from "../../../app/Link.jsx";
+export function PreferencesStepView(){const vm=useRegistrationViewModel();return <AuthLayout title="Do que você gosta?" description="A personalização é opcional. Você pode continuar sem interesses e sem publicidade por e-mail." onBack={()=>navigate("/cadastro")}><FormFeedback message={vm.error?.message}/><form className="auth-form" aria-busy={vm.busy} onSubmit={e=>{e.preventDefault();vm.submit("complete");}}><p className="muted">Neste passo você pode concluir o cadastro sem personalização.</p><button type="submit" className="primary-button" disabled={vm.busy||vm.frozen}>{vm.busy?"Criando conta…":"Concluir cadastro"}</button><button type="button" className="text-button" disabled={vm.busy||vm.frozen} onClick={()=>vm.submit("skip")}>Pular</button><p className="legal-note">Pular continua sem interesses e sem publicidade por e-mail.</p></form>{vm.frozen&&!vm.busy&&<AppLink to="/cadastro/confirmar">Consultar situação do cadastro</AppLink>}</AuthLayout>;}

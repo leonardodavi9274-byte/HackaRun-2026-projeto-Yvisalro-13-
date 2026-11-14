@@ -1,0 +1,3 @@
+export function AuthLayout({step=2,title,description,onBack,children,action}){
+ return <main className="auth-page"><div className="auth-shell"><div className="auth-top"><button type="button" className="back-button" onClick={onBack} aria-label="Voltar">‹</button>{action||<span>Passo {step} de 2</span>}</div><div className="auth-progress" role="progressbar" aria-label="Progresso do cadastro" aria-valuemin={1} aria-valuemax={2} aria-valuenow={step}><span className="active"/><span className={step===2?"active":""}/></div><h1>{title}</h1>{description&&<p className="auth-lead">{description}</p>}{children}</div></main>;
+}
