@@ -21,6 +21,7 @@ import "../styles/catalog.css";
 import {isDemoMode} from "../features/demo/demo-mode.js";
 import {DemoStoreProvider} from "../features/demo/viewmodels/DemoStore.jsx";
 import {DemoApplication} from "../features/demo/DemoApplication.jsx";
+import {LandingView} from "../features/landing/views/LandingView.jsx";
 import "../styles/registration.css";
 function Application(){
  const path=usePath(),auth=useSessionViewModel(),reg=useRegistration();
@@ -38,6 +39,7 @@ function Application(){
   }
   if(path==="/cadastro/preferencias"&&!reg.draft.name&&!reg.frozen)navigate("/cadastro",{replace:true});
  },[path,auth.loading,auth.session,auth.error,complete,reg.draft.name,reg.frozen]);
+ if(path==="/sobre")return <LandingView/>;
  if(path==="/")return <><nav className="account-entry-links" style={{display:"flex",justifyContent:"flex-end",gap:20,padding:"14px 32px",fontSize:13}} aria-label="Acesso à conta"><AppLink to="/cadastro">Criar conta</AppLink><AppLink to={complete?"/inicio":"/entrar"}>{complete?"Minha conta":"Entrar"}</AppLink></nav><ProjectHomeView/></>;
  // Mapa público: resolvido antes da espera e da falha da consulta de sessão (research D8).
  if(path==="/mapa")return <MallMapView ownerId={auth.session?.user?.id??null}/>;

@@ -1,12 +1,98 @@
-# Hackarum-Yvisalro — planejamento inicial 
+# Hackarum-Yvisalro
 
-> Nome padronizado: **Hackarum-Yvisalro**. A base do frontend React e da WebAPI TypeScript está em `frontend/` e `backend/`. As funcionalidades do produto, o aplicativo móvel e as landing pages continuam pendentes.
-a
+> Nome padronizado: **Hackarum-Yvisalro**. O frontend React e a WebAPI TypeScript estão em `frontend/` e `backend/`. A **entrega final do MVP** reúne as 11 telas do protótipo funcionando com dados fictícios, o mapa com rotas em uma planta em escala real e a landing page; veja [Entrega final do MVP](#entrega-final-do-mvp). O aplicativo móvel nativo continua fora desta entrega.
+
 [Detalhamento do frontend](docs/frontend.md) com as 11 imagens do protótipo, a navegação e o comportamento esperado em cada tela.
 
 [Detalhamento geral do projeto](docs/detalhamento-projeto.md) com o estado atual, funcionalidades, arquitetura prevista e pendências. O [guia de Git e GitHub](docs/guia-git.md) explica como atualizar o computador e publicar o trabalho da equipe.
 
 [Base de execução e publicação](docs/base-execucao-sistema.md): arquitetura planejada para acessar o sistema de diferentes computadores, configuração do Supabase e pendências para a entrega final. A hospedagem e a publicação ainda não foram realizadas.
+
+## Entrega final do MVP
+
+Esta seção resume o que foi desenvolvido para a entrega final. Todos os shoppings, lojas, produtos, preços, estoques, distâncias e contas exibidos são **fictícios**.
+
+### Como executar e testar
+
+Com Node.js 24 LTS, na raiz do repositório:
+
+```sh
+npm install
+npm run dev
+```
+
+Abra `http://127.0.0.1:5173`. Sem arquivo `backend/.env` (ou sem `SUPABASE_URL` e `SUPABASE_SECRET_KEY`), o sistema abre em **modo demonstração**:
+
+1. Na tela de login, clique em **Preencher** e depois em **Entrar** (conta fictícia `marina.souza@exemplo.com`).
+2. No Início, a oferta próxima aparece após alguns segundos.
+3. Em Buscar, digite `fone bluetooth até 300`, toque na seta de rota de um resultado, escolha **Entrada Sul (principal)** e avance com **Próxima**.
+4. Explore Desejos, Avise-me, Perfil e os stories (círculos das lojas no Início).
+5. A landing page fica em `http://127.0.0.1:5173/sobre`.
+
+### Telas do protótipo funcionando
+
+As 11 telas de `docs/imagens/achei/` foram implementadas em React e funcionam de ponta a ponta no modo demonstração:
+
+| Tela | Endereço | O que funciona |
+| --- | --- | --- |
+| 01 Login | `/entrar` | Conta lembrada, troca de conta, mostrar senha, preenchimento da conta de demonstração. |
+| 02 Cadastro | `/cadastro` | Foto opcional (recortada e reduzida no navegador), validações, medidor de força e sugestão de senha forte. |
+| 03 Preferências | `/cadastro/preferencias` | Categorias, produtos desejados em etiquetas, ofertas por e-mail (começa desligado), pular. |
+| 04 Recuperação de senha | `/recuperar-senha` | Envio de código de 6 dígitos (exibido na tela; nenhum e-mail é enviado), colar código, reenviar com contagem, nova senha. |
+| 05 Início | `/inicio` | Stories das lojas, atalhos "Pra você" com desconto, destaque da lista de desejos com contagem regressiva, recomendações. |
+| 06 Busca | `/buscar` | Interpretação de "até 300", filtros (promoção, estoque, tipo), comparação entre lojas, Avise-me para itens esgotados. |
+| 07 Story | `/stories?loja=moda-leve` | Avanço automático, toque nas laterais, setas do teclado, pausa, salvar nos desejos, ir até a loja. |
+| 08 Desejos | `/desejos` | Queda de preço desde que o item foi salvo, loja mais barata, ordenação, aba Avise-me. |
+| 09 Mapa | `/mapa` | Planta com pisos, zoom, arrastar, busca de lojas, lista de lojas, lojas próximas do ponto escolhido. |
+| 10 Rota ativa | `/mapa?loja=pixel-house` | Escolha do ponto de partida, instruções passo a passo, troca de piso, anúncios pausados durante a rota. |
+| 11 Oferta próxima | `/inicio` | Oferta servida pela API, priorizando categorias de interesse; nunca aparece com rota ativa. |
+
+O Perfil (`/perfil`) permite alterar interesses e ofertas por e-mail, sair e restaurar os dados da demonstração. Contas, desejos e buscas ficam só no navegador (`localStorage`); senhas criadas na demonstração são guardadas apenas como hash.
+
+### Regras de negócio aplicadas
+
+- **Busca:** relevância primeiro e, entre resultados semelhantes, o menor preço; itens sem estoque sempre por último, com "Avise-me quando voltar".
+- **Ofertas próximas:** no máximo uma por visita ao Início, descartável com "Agora não" e bloqueada durante uma rota ativa.
+- **Comunicação:** ofertas por e-mail só com consentimento explícito, revogável no Perfil.
+- **Sem compras no app:** o objetivo é encontrar, comparar e chegar à loja; o usuário pode sair sem comprar.
+
+### Mapa e rotas em escala real
+
+- A demonstração usa a planta de dois pisos do **Shopping Veredas Douradas** (fictício): Térreo e Praça de Alimentação, 206 unidades, entradas, escadas rolantes e corredores.
+- As lojas do catálogo do protótipo (Pixel House, Grão Fino, Moda Leve e outras) são posicionadas em unidades da mesma categoria por `backend/scripts/generate-demo-veredas.mjs`, que também calcula a distância de caminhada real a partir da entrada principal. Essas distâncias aparecem na busca, nos stories e na oferta próxima.
+- As rotas usam o menor caminho no grafo de corredores. O mapa enquadra automaticamente a área livre da tela: piso inteiro ao abrir, trajeto completo no primeiro passo, trecho atual nos passos seguintes e a loja na chegada.
+- Marcadores sobrepostos são omitidos para manter o mapa legível; o destino sempre aparece.
+
+### Modo demonstração e dados
+
+- **Ativação:** `VITE_DEMO_MODE=true` força o modo demonstração e `VITE_DEMO_MODE=false` o desliga (use em produção). Vazio, ele liga quando a API informa que o Supabase não está configurado.
+- **API em memória:** sem Supabase, a WebAPI serve `GET /api/v1/mall` e `GET /api/v1/promotions` a partir de `backend/src/infrastructure/demo`. Com Supabase configurado, o fluxo real, incluindo o catálogo da feature 010, continua igual.
+- **Migrações novas:**
+  - `0021_veredas_douradas_map.sql` cria o shopping fictício com 152 lojas de nomes inventados. Ele substitui a versão anterior da planta, que usava nomes reais de shopping, marcas e ruas, e é criado inativo.
+  - `0022_prototype_demo_stores.sql` acrescenta ao Shopping Aurora as lojas e ofertas fictícias das telas.
+- **Navegação:** o endereço raiz abre direto o login (ou o Início, com sessão), e a landing page fica em `/sobre`.
+
+### Landing page
+
+A tecnologia sorteada (landing page) foi entregue como página web em `/sobre`, seguindo o roteiro de [landing-pages-canva.md](docs/landing-pages-canva.md) para os dois públicos:
+
+- **Consumidores:** proposta "Encontre o produto, o melhor preço e o caminho até a loja", os três passos (busque, compare, chegue lá), os recursos e uma galeria com capturas reais das telas.
+- **Lojistas:** benefícios de publicar catálogo e promoções. O painel da empresa aparece como "em desenvolvimento", sem prometer cadastro.
+- **Perguntas frequentes e rodapé:** identificam os dados como fictícios.
+- **Visual:** a página segue a linguagem do protótipo e é responsiva. As capturas estão em `frontend/public/landing/`.
+
+### Correções feitas durante a entrega
+
+- O backend reiniciava sem parar em desenvolvimento; agora observa apenas `src` (`--watch-path=src`).
+- O endereço correto do frontend é `http://127.0.0.1:5173`: o Vite escuta só nesse endereço e a API confere a origem.
+- A detecção do modo demonstração tenta a API algumas vezes antes de desistir, para não cair no fluxo real durante um reinício do backend.
+
+### Limitações conhecidas
+
+- As migrações SQL não foram aplicadas em um projeto Supabase real; o fluxo com Supabase (cadastro, login, e-mails) depende da configuração descrita em [base de execução](docs/base-execucao-sistema.md).
+- No banco, o Shopping Veredas Douradas é criado inativo; a planta grande é usada pelo modo demonstração.
+- "Reservar item" (tela 10) e o painel da empresa continuam fora do MVP.
+- A hospedagem pública ainda não foi configurada.
 
 ## Executar a base do projeto
 
@@ -17,7 +103,7 @@ npm install
 npm run dev
 ```
 
-Frontend: `http://localhost:5173`. WebAPI: `http://127.0.0.1:3000/api/v1`.
+Frontend: `http://127.0.0.1:5173`. WebAPI: `http://127.0.0.1:3000/api/v1`.
 `npm run build` compila os dois projetos. No Windows sem Node.js, use o bootstrap e o
 wrapper descritos no [guia de desenvolvimento](docs/desenvolvimento.md).
 Arquitetura e escopo desta inicialização estão na [feature 003](specs/003-base-webapi-frontend/plan.md).
@@ -260,7 +346,7 @@ A hospedagem da aplicação web, da API e de eventuais landing pages publicadas 
 
 ## Descrição de como a tecnologia ou prática sorteada será incorporada à solução
 
-A tecnologia sorteada é **landing page**, conforme o registro da equipe na [branch verificada](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-/commit/8bcbfeb5889c9be843ef8917be56fb7ebbca67ae). O formato, a ferramenta, a quantidade e as finalidades das páginas ainda serão definidos pela equipe. A decisão de manter as telas no canvas de design atual se refere ao protótipo da aplicação.
+A tecnologia sorteada é **landing page**, conforme o registro da equipe na [branch verificada](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-/commit/8bcbfeb5889c9be843ef8917be56fb7ebbca67ae). Na entrega final, ela foi implementada como página web em `/sobre`, com seções para consumidores e lojistas; detalhes em [Landing page](#landing-page). A decisão de manter as telas no canvas de design atual se refere ao protótipo da aplicação.
 
 O [roteiro](docs/landing-pages-canva.md) propõe uma página para o consumidor (buscar, comparar e encontrar a loja) e outra para o lojista (publicar produtos e promoções). Cada página tem problema, benefício, referência visual e chamada para ação ilustrativa. O material deve identificar os dados fictícios e as funcionalidades futuras. Uma página de oferta compartilhada poderá ser acrescentada como evolução.
 
@@ -298,6 +384,10 @@ Esta é uma proposta conceitual, não um esquema de banco final.
 5. Manter o [repositório GitHub](https://github.com/leonardodavi9274-byte/HackaRun-2026-projeto-Yvisalro-13-) atualizado e integrar o trabalho da equipe por pull requests.
 
 ## Situação atual
+
+**Entrega final do MVP:** telas do protótipo funcionando em modo demonstração, mapa com rotas na planta em escala real e landing page, conforme [Entrega final do MVP](#entrega-final-do-mvp). Os builds de frontend e backend passam; o fluxo foi verificado no navegador em tamanho de celular e de computador.
+
+Histórico das etapas anteriores:
 
 A [feature 004](specs/004-cadastro-preferencias/plan.md) tem cadastro em dois passos, interesses,
 publicidade opcional/alterável, entrada por e-mail/senha, confirmação, retomada e foto privada

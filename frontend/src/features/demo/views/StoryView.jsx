@@ -51,7 +51,7 @@ export function StoryView() {
     <header className="demo-story-head">
       <span className="demo-story-avatar" style={{background: store.color}}>{store.initials}</span>
       <div><strong>{store.name}</strong><span>{store.distanceM} m · {store.floor} · há {story.postedHoursAgo} h</span></div>
-      <button type="button" className="demo-story-pause" aria-label={paused ? "Continuar" : "Pausar"} onClick={() => setPaused(p => !p)}>{paused ? "▶" : "❚❚"}</button>
+      <button type="button" className="demo-story-pause" aria-label={paused ? "Continuar" : "Pausar"} onClick={() => setPaused(p => !p)}><Icon name={paused ? "play" : "pause"} size={22} /></button>
       <button type="button" className="demo-story-close" aria-label="Fechar stories" onClick={close}><Icon name="close" size={26} /></button>
     </header>
     <div className="demo-story-stage">
