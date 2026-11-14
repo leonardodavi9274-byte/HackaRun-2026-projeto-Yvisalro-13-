@@ -15,7 +15,7 @@ function client(){
 }
 function failure(error:{status?:number;code?:string}|null,login=false,retryAfter=env.resendInterval):never{
  if(error?.status===429)throw new ApiError(429,"AUTH_RATE_LIMITED","Aguarde antes de tentar novamente.",undefined,retryAfter);
- if(error?.code==="email_not_confirmed")throw new ApiError(403,"EMAIL_CONFIRMATION_REQUIRED","Confirme seu e-mail para continuar.");
+ if(error?.code==="email_not_confirmed"&&!login)throw new ApiError(403,"EMAIL_CONFIRMATION_REQUIRED","Confirme seu e-mail para continuar.");
  if(login&&error?.status&&error.status<500)throw new ApiError(401,"INVALID_CREDENTIALS","Não foi possível entrar com esses dados.");
  throw new ApiError(503,"AUTH_SERVICE_UNAVAILABLE","O serviço de identidade está indisponível.");
 }

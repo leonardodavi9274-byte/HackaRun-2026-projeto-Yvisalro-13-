@@ -6,6 +6,8 @@ a
 
 [Detalhamento geral do projeto](docs/detalhamento-projeto.md) com o estado atual, funcionalidades, arquitetura prevista e pendências. O [guia de Git e GitHub](docs/guia-git.md) explica como atualizar o computador e publicar o trabalho da equipe.
 
+[Base de execução e publicação](docs/base-execucao-sistema.md): arquitetura planejada para acessar o sistema de diferentes computadores, configuração do Supabase e pendências para a entrega final. A hospedagem e a publicação ainda não foram realizadas.
+
 ## Executar a base do projeto
 
 Com Node.js 24 LTS, execute na raiz:
