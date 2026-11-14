@@ -1,4 +1,4 @@
-# Hackarum-Yvisalro — planejamento inicial
+# Hackarum-Yvisalro — planejamento inicial 
 
 > Nome padronizado: **Hackarum-Yvisalro**. A base do frontend React e da WebAPI TypeScript está em `frontend/` e `backend/`. As funcionalidades do produto, o aplicativo móvel e as landing pages continuam pendentes.
 a
