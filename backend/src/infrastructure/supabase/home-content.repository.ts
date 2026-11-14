@@ -5,7 +5,7 @@ import {HOME_LIMITS,previousPrice,utc,type HomeCarousel,type HomeCategory,type H
 
 // Leitor público: publishable key, papel anon, sem sessão. A RLS decide o que é visível.
 // Nunca usar SUPABASE_SECRET_KEY aqui — chaves secret/service_role ignoram a RLS.
-// Shopping e lojas são public.malls/public.stores da feature 005 (colunas públicas liberadas na 0017).
+// Shopping e lojas são public.malls/public.stores da feature 005 (colunas públicas liberadas na 0019).
 const MEDIA_BUCKET = "catalog-media";
 const PRODUCT = "id,name,image_path,image_alt,is_demo";
 const STORE = "id,name,is_demo,mall_id";

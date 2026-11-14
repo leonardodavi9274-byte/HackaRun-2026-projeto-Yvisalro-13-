@@ -1,7 +1,7 @@
 -- Catálogo público somente leitura da tela inicial (feature 006).
 -- Reutiliza public.malls e public.stores da feature 005 (0015): o shopping da tela inicial é o
 -- shopping ativo. Escrita fica para o painel empresarial futuro; anon/authenticated recebem
--- apenas SELECT filtrado por RLS. Aplicar após 0015 e 0016.
+-- apenas SELECT filtrado por RLS. Aplicar após 0001–0018.
 begin;
 
 create type public.catalog_status as enum ('draft','published','archived');

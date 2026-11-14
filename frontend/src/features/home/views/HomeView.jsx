@@ -1,6 +1,9 @@
 import {useState} from "react";
 import {navigate,searchPath} from "../../../app/navigation.js";
 import {useHomeViewModel} from "../viewmodels/useHomeViewModel.js";
+import {useAccountInterests} from "../viewmodels/useAccountInterests.js";
+import {useNearbyPromotions} from "../../nearby-promotions/viewmodels/useNearbyPromotions.js";
+import {NearbyPromotionDialog} from "../../nearby-promotions/views/NearbyPromotionDialog.jsx";
 import {HomeHeader} from "./HomeHeader.jsx";
 import {SearchBox} from "./SearchBox.jsx";
 import {CategoryRail} from "./CategoryRail.jsx";
@@ -16,6 +19,10 @@ import "../../../styles/mall-map.css";
 export function HomeView({auth,onLogout}){
  const vm=useHomeViewModel(),[detail,setDetail]=useState(null),[loggingOut,setLoggingOut]=useState(false);
  const {content,sections,now}=vm,authenticated=Boolean(auth?.session?.authenticated);
+ // Promoção próxima (feature 008): só com sessão e ponto de partida escolhido no mapa.
+ const ownerId=authenticated?auth.session.user?.id??null:null;
+ const interests=useAccountInterests({ownerId,onUnauthorized:()=>auth?.refresh?.().catch(()=>{})});
+ const nearby=useNearbyPromotions({ownerId,categoryIds:interests.categoryIds,profileReady:interests.ready});
  const search=query=>navigate(searchPath({query}));
  const browseCategory=category=>navigate(searchPath({categoryId:category.id}));
  const openOffer=(offer,opener)=>setDetail(d=>({type:"offer",item:offer,opener:opener??d?.opener??null}));
@@ -28,7 +35,7 @@ export function HomeView({auth,onLogout}){
   <HomeHeader shopping={content?.shopping} authenticated={authenticated} onLogout={logout} loggingOut={loggingOut}/>
   <main className="home-shell" id="home-content" tabIndex="-1" aria-busy={vm.status==="loading"||vm.refreshing}>
    <div className="home-intro">
-    <h1>O que você procura hoje?</h1>
+    <h1 tabIndex={-1}>O que você procura hoje?</h1>
     <p>Encontre produtos, lojas e ofertas{content?.shopping?" no "+content.shopping.name:" no shopping"}.</p>
    </div>
    <SearchBox onSearch={search}/>
@@ -47,6 +54,7 @@ export function HomeView({auth,onLogout}){
   </main>
   <BottomNav current="/inicio"/>
   {detail?.type==="offer"&&<OfferDetails key={"o-"+detail.item.offerId} offer={detail.item} now={now} returnFocus={detail.opener} onClose={close}/>}
+  {nearby.promotion&&!detail&&<NearbyPromotionDialog promotion={nearby.promotion} onDismiss={nearby.dismiss} onClose={nearby.close} canRestoreFocus={nearby.canRestoreFocus}/>}
   {detail?.type==="story"&&<StoryViewer key={"s-"+detail.item.id} story={detail.item} now={now} returnFocus={detail.opener} onClose={close} onOpenOffer={offer=>openOffer(offer)}/>}
  </div>;
 }

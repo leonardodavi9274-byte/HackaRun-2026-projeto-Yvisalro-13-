@@ -12,7 +12,7 @@ Guia de preparação para futura conferência manual. Não é suíte de testes n
 ## Supabase de desenvolvimento
 
 1. Confirmar que o ambiente é o projeto de desenvolvimento pretendido.
-2. Aplicar backend/supabase/migrations/0017_home_catalog.sql após 0001–0016 (0015/0016 são o mapa e as lojas da feature 005).
+2. Aplicar backend/supabase/migrations/0019_home_catalog.sql após 0001–0018 (0015/0016: mapa e lojas da feature 005; 0017/0018: promoções da feature 008).
 3. Aplicar backend/supabase/seed/home-demo.sql para criar o conteúdo demo sobre o Shopping Aurora e as lojas da 0016 (reexecutar substitui o conteúdo demo).
 4. Enviar backend/supabase/seed/media/demo/ ao bucket catalog-media criado pela migração, mantendo os caminhos demo/stories/*.svg.
 5. Conferir RLS em todas as tabelas e ausência de DML público.

@@ -23,8 +23,8 @@
 
 **⚠️ CRITICAL**: Nenhuma história começa antes desta fase.
 
-- [X] T005 Criar `backend/supabase/migrations/0017_home_catalog.sql` (renumerada de 0015; ver research D8) reutilizando `malls`/`stores` da feature 005, com `catalog_categories`, `catalog_products`, `catalog_offers`, `promo_stories`, `home_carousels` e `home_carousel_items`; aplicar todos os limites, enums, FKs e regras de preço/validade descritos em `specs/006-tela-inicial-descoberta/data-model.md`.
-- [X] T006 Criar RLS, grants e índices em `backend/supabase/migrations/0017_home_catalog.sql`: somente SELECT anon/authenticated para conteúdo ativo, publicado e vigente; nenhum DML público; índices por status, validade, categoria, ordem e posição.
+- [X] T005 Criar `backend/supabase/migrations/0019_home_catalog.sql` (renumerada de 0015 e depois 0017; ver research D8) reutilizando `malls`/`stores` da feature 005, com `catalog_categories`, `catalog_products`, `catalog_offers`, `promo_stories`, `home_carousels` e `home_carousel_items`; aplicar todos os limites, enums, FKs e regras de preço/validade descritos em `specs/006-tela-inicial-descoberta/data-model.md`.
+- [X] T006 Criar RLS, grants e índices em `backend/supabase/migrations/0019_home_catalog.sql`: somente SELECT anon/authenticated para conteúdo ativo, publicado e vigente; nenhum DML público; índices por status, validade, categoria, ordem e posição.
 - [X] T007 Criar `backend/supabase/seed/home-demo.sql` transacional com shopping, lojas, categorias, produtos, ofertas, stories e carrosséis fictícios, todos com `is_demo=true` e dados coerentes.
 - [X] T008 Criar `backend/src/domain/home/home-content.ts` com tipos, limites e DTOs do agregado público, usando centavos inteiros BRL, ISO 8601 UTC e estados de seção do contrato.
 - [X] T009 Criar `backend/src/infrastructure/supabase/home-content.repository.ts` com cliente Supabase de publishable key sem sessão e consultas de leitura limitadas, ordenadas e filtradas por publicação, validade e relações ativas.

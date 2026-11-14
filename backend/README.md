@@ -44,7 +44,7 @@ No Windows sem Node global, usar scripts/npm.ps1 conforme [desenvolvimento](../d
 
 Copiar .env.example para .env e preencher as entradas reais. Nunca versionar chaves ou usar VITE_* para segredos. APP_SECURITY_KEY representa 32 bytes em base64 e não possui fallback inseguro.
 
-[Migrações e preparação](supabase/README.md): aplicar 0001–0017 em ordem (e o seed demonstrativo apenas em desenvolvimento) no projeto da equipe, configurar Auth e SMTP, criar bucket consumer-avatars privado e informar URLs reais de Termos/Política.
+[Migrações e preparação](supabase/README.md): aplicar 0001–0019 em ordem (e o seed demonstrativo apenas em desenvolvimento) no projeto da equipe, configurar Auth e SMTP, criar bucket consumer-avatars privado e informar URLs reais de Termos/Política.
 
 Sem configuração, a saúde continua disponível e cadastro/operações dependentes retornam indisponibilidade. O catálogo da tela inicial depende da migração 0015 e do seed demonstrativo; o painel empresarial de escrita, recuperação completa, provedores sociais e campanhas ficam fora deste recorte.
 

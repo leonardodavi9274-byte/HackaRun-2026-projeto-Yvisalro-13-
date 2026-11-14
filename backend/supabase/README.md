@@ -19,13 +19,13 @@ Consulte ../../specs/004-cadastro-preferencias/quickstart.md para pré-requisito
 
 0001–0006 definem tabelas e restrições; 0007 define sessões; 0008 vincula a identidade Auth;
 0009–0010 inicializam perfil/intenção; 0011–0012 suportam retomada; 0013 altera publicidade;
-0014 registra e associa avatar com revisão; 0015–0016 criam o mapa e as lojas (feature 005);
-0017 cria o catálogo público da tela inicial (feature 006).
+0014 registra e associa avatar com revisão; 0015–0016 criam o mapa e as lojas (feature 005); 0017–0018 criam as ofertas promocionais
+próximas (feature 008); 0019 cria o catálogo público da tela inicial (feature 006).
 
 ## Catálogo da tela inicial (feature 006)
 
-Aplicar 0017_home_catalog.sql depois de 0015 e 0016. Ofertas e stories referenciam public.stores e o
-shopping da tela inicial é o shopping ativo em public.malls. A 0017 libera a anon/authenticated
+Aplicar 0019_home_catalog.sql depois de 0001–0018. Ofertas e stories referenciam public.stores e o
+shopping da tela inicial é o shopping ativo em public.malls. A 0019 libera a anon/authenticated
 somente as colunas id, name, is_demo, active (malls) e id, mall_id, name, is_demo, active (stores),
 sob RLS; mall_maps continua restrito à service_role. Cria também o bucket público `catalog-media`
 (leitura pública, sem upload pelo cliente). O leitor GET /api/v1/home usa a publishable key.
@@ -74,5 +74,25 @@ Troca do mapa provisório pela planta da coordenação, sem mudar código:
 Se o documento ativo for inválido, a API responde 503 MAP_INVALID e o log registra a regra
 violada, sem o conteúdo do mapa.
 
+## Promoções próximas (feature 008)
+
+Após 0015–0016, preparar 0017_published_promotional_offers.sql e, para demonstração,
+0018_demo_promotional_offers.sql. A fonte contém somente ofertas publicadas para leitura;
+os dados do segundo arquivo são fictícios. A API é a única leitora. O catálogo definitivo
+deverá substituir ou absorver esses dados, sem escrita dupla ou fontes concorrentes.
+Antes da integração, conferir conflitos de numeração com migrações de outras branches.
+O arquivo 0018 é opcional e insere café fictício na loja de demonstração Grão Fino;
+com 0017 apenas, a lista de ofertas pode estar vazia. A aplicação usa somente a API e
+não armazena coordenadas ou ponto no servidor. Nenhum SQL foi aplicado remotamente aqui.
+
 Em 2026-11-14, o código e os arquivos SQL foram preparados; nenhum projeto remoto recebeu
 essas migrações nesta execução. Os scripts SQL não foram executados contra PostgreSQL/Supabase.
+
+## Desejos e histórico (feature 009)
+
+Antes de criar as migrações de desejos e histórico, conferir a próxima numeração livre no
+conjunto integrado de migrações e coordená-la com as outras branches. Nesta revisão local,
+0018 é o último número presente; 0019 e 0020 são nomes previstos nas tarefas da feature 009,
+não uma reserva garantida nem arquivos já criados. Preservar 0017 e 0018 da feature 008.
+O esquema concreto de desejos depende dos identificadores e do ciclo de vida de produto e
+oferta do catálogo ainda não disponibilizado; não aplicar ou inventar migrações antes disso.

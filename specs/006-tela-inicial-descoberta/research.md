@@ -60,7 +60,7 @@
 
 ## D8 — Reconciliação com a feature 005 (2026-11-14)
 
-**Decision:** a feature 005 (mapa e rotas, PR #6) chegou à main com public.malls e public.stores. O catálogo da 006 passa a referenciar essas tabelas em vez de criar shopping_centers/stores próprias; a migração foi renumerada para 0017. O shopping da tela inicial é o shopping ativo de malls. A 0017 libera ao papel anon somente colunas de identificação de malls/stores sob RLS; mall_maps segue restrito.
+**Decision:** a feature 005 (mapa e rotas, PR #6) chegou à main com public.malls e public.stores. O catálogo da 006 passa a referenciar essas tabelas em vez de criar shopping_centers/stores próprias; a migração foi renumerada para 0017 e, após a chegada da feature 008 (que usa 0017/0018), para 0019. O shopping da tela inicial é o shopping ativo de malls. A 0019 libera ao papel anon somente colunas de identificação de malls/stores sob RLS; mall_maps segue restrito.
 
 **Rationale:** as duas migrações criavam public.stores com esquemas incompatíveis e não podiam ser aplicadas juntas. Uma única tabela de lojas mantém a oferta ligada à loja do mapa, permitindo "ver no mapa" (/mapa?loja=…).
 

@@ -307,7 +307,7 @@ no Supabase por GET /api/v1/home. O conteúdo inicial é um seed fictício marca
 os resultados da busca dependem de uma feature futura. Lojas e shopping são os da feature 005.
 
 Em 2026-11-14, os builds de frontend e backend passaram. Supabase, SMTP, bucket e documentos
-legais ainda precisam de configuração real; as 17 migrações estão em backend/supabase/migrations.
+legais ainda precisam de configuração real; as 19 migrações estão em backend/supabase/migrations.
 Nenhuma migração remota, criação de conta ou envio de e-mail foi executado nesta entrega.
 
 As demais funcionalidades da vitrine continuam pendentes. O fluxo permanece sem testes.

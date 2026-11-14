@@ -1,6 +1,6 @@
 import {hasPendingConfirmation} from "../features/registration/viewmodels/useIdentityViewModel.js";
 import {MarketingPreferencesView} from "../features/account-preferences/views/MarketingPreferencesView.jsx";
-import {useEffect} from "react";
+import {useEffect,useRef} from "react";
 import {HomeView} from "../features/home/views/HomeView.jsx";
 import {ProjectHomeView} from "../features/home/views/ProjectHomeView.jsx";
 import {SearchHandoffView} from "../features/home/views/SearchHandoffView.jsx";
@@ -14,10 +14,13 @@ import {FormFeedback} from "../shared/components/FormFeedback.jsx";
 import {navigate,usePath,SEARCH_PATH} from "./navigation.js";
 import {AppLink} from "./Link.jsx";
 import {MallMapView} from "../features/mall-map/views/MallMapView.jsx";
-import {ActiveRouteProvider} from "../features/mall-map/viewmodels/ActiveRouteProvider.jsx";
+import {ActiveRouteProvider,useActiveRoute} from "../features/mall-map/viewmodels/ActiveRouteProvider.jsx";
+import {PromotionSessionProvider} from "../features/nearby-promotions/viewmodels/PromotionSessionProvider.jsx";
 import "../styles/registration.css";
 function Application(){
  const path=usePath(),auth=useSessionViewModel(),reg=useRegistration();
+ const activeRoute=useActiveRoute(),previousOwner=useRef(undefined);
+ useEffect(()=>{if(auth.loading)return;const owner=auth.session?.user?.id??null;if(previousOwner.current!==undefined&&previousOwner.current!==owner)activeRoute.clearPromotionPoint();previousOwner.current=owner;},[auth.loading,auth.session?.user?.id]);
  useEffect(()=>{const email=auth.session?.user?.email;if(email&&reg.file&&reg.fileOwner!==email){reg.setFile(null);reg.setFileOwner(null);}},[auth.session?.user?.id,reg.fileOwner,reg.file]);
  const complete=auth.session?.authenticated&&auth.session.onboarding?.status==="completed";
  const protectedRoute=["/perfil/preferencias"].includes(path);
@@ -34,7 +37,7 @@ function Application(){
  // Rotas públicas: não esperam nem dependem da consulta de sessão (FR-001).
  if(path==="/inicio")return <HomeView auth={auth.error?null:auth} onLogout={async()=>{await auth.logout();reg.clear();}}/>;
  if(path===SEARCH_PATH)return <SearchHandoffView/>;
- if(path==="/mapa")return <MallMapView/>;
+ if(path==="/mapa")return <MallMapView ownerId={auth.session?.user?.id??null}/>;
  if(auth.loading)return <main className="auth-page"><div className="auth-shell"><p role="status">Consultando sua sessão…</p></div></main>;
  if(auth.error)return <main className="auth-page"><div className="auth-shell"><FormFeedback message={auth.error}/><button className="primary-button" onClick={()=>auth.refresh().catch(()=>{})}>Tentar novamente</button></div></main>;
  if(path==="/entrar")return <LoginView auth={auth}/>;
@@ -44,4 +47,4 @@ function Application(){
  if(path==="/perfil/preferencias")return complete?<MarketingPreferencesView key={auth.session.user.id}/>:null;
  return <main className="auth-page"><div className="auth-shell"><h1>Página não encontrada</h1><AppLink to="/">Voltar ao início</AppLink></div></main>;
 }
-export function App(){return <RegistrationProvider><ActiveRouteProvider><Application/></ActiveRouteProvider></RegistrationProvider>;}
+export function App(){return <RegistrationProvider><ActiveRouteProvider><PromotionSessionProvider><Application/></PromotionSessionProvider></ActiveRouteProvider></RegistrationProvider>;}

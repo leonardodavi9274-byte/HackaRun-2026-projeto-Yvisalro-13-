@@ -1,5 +1,5 @@
 -- Conteúdo FICTÍCIO da tela inicial (feature 006). Somente para o projeto de desenvolvimento.
--- Pré-requisito: migrações 0015–0017 aplicadas (shopping "aurora" e lojas demo vêm da 0016).
+-- Pré-requisito: migrações 0015–0019 aplicadas (shopping "aurora" e lojas demo vêm da 0016).
 -- Todos os registros têm is_demo=true. Reexecutar substitui o conteúdo demonstrativo anterior;
 -- dados não demonstrativos não são tocados. Imagens: enviar seed/media/demo ao bucket catalog-media.
 begin;
