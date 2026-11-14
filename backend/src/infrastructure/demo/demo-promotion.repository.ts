@@ -1,9 +1,10 @@
 import type {Promotion} from "../../domain/promotions/promotion.ts";
 import type {PromotionRepository} from "../../application/ports/promotion-repository.ts";
+import {DEMO_MALL_ID} from "./demo-mall.repository.ts";
 
 type Seed = Omit<Promotion, "revision" | "startsAt" | "endsAt" | "updatedAt" | "isDemo" | "published"> & {hours: number};
 
-/** Ofertas fictícias das telas 05, 07 e 11; espelham 0022_prototype_demo_stores.sql. */
+/** Ofertas fictícias das telas 05, 07 e 11 (as mesmas de 0022_prototype_demo_stores.sql). */
 const SEEDS: Seed[] = [
   {id: "cafe-pao-de-queijo-grao-fino", storeId: "grao-fino", categoryId: "cafe-doces", productName: "Café + pão de queijo", priceCents: 1290, previousPriceCents: 1520, availability: "available", hours: 6},
   {id: "jaqueta-corta-vento-moda-leve", storeId: "moda-leve", categoryId: "moda", productName: "Jaqueta corta-vento", priceCents: 13900, previousPriceCents: 19900, availability: "available", hours: 48},
@@ -20,7 +21,7 @@ export class DemoPromotionRepository implements PromotionRepository {
       updatedAt, isDemo: true, published: true,
     }));
   }
-  async isActiveMall(mallId: string) { return mallId === "aurora"; }
-  async list(mallId: string) { return mallId === "aurora" ? this.offers.map(o => ({...o})) : []; }
-  async find(mallId: string, id: string) { return mallId === "aurora" ? this.offers.find(o => o.id === id) ?? null : null; }
+  async isActiveMall(mallId: string) { return mallId === DEMO_MALL_ID; }
+  async list(mallId: string) { return mallId === DEMO_MALL_ID ? this.offers.map(o => ({...o})) : []; }
+  async find(mallId: string, id: string) { return mallId === DEMO_MALL_ID ? this.offers.find(o => o.id === id) ?? null : null; }
 }

@@ -28,7 +28,8 @@ reconfiguradas; o frontend não troca de porta silenciosamente.
 ## Modo demonstração (sem Supabase)
 
 Sem `backend/.env` (ou sem `SUPABASE_URL` e `SUPABASE_SECRET_KEY`), `npm run dev` já abre o sistema
-em modo demonstração: a WebAPI serve o mapa e as promoções do Shopping Aurora fictício em memória e
+em modo demonstração: a WebAPI serve, em memória, a planta em escala real do Shopping Veredas Douradas
+(fictício, Térreo e Praça de Alimentação) com as lojas do protótipo posicionadas, as promoções e
 o frontend mostra as 11 telas do protótipo (`docs/imagens/achei/`) com um catálogo fictício.
 
 | Tela | Endereço |

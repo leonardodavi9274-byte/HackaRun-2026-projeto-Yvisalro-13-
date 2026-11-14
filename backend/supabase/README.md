@@ -68,7 +68,9 @@ Pixel House) com vigência relativa ao momento da aplicação. Requer 0016 e 001
 ## Modo demonstração sem Supabase
 
 Sem SUPABASE_URL e SUPABASE_SECRET_KEY, a API serve GET /mall e /promotions a partir de
-backend/src/infrastructure/demo (o mesmo Shopping Aurora de 0016 + 0022, em memória). O frontend
+backend/src/infrastructure/demo: a planta do Shopping Veredas Douradas (0021) em memória, com as
+21 lojas do catálogo do protótipo posicionadas por backend/scripts/generate-demo-veredas.mjs
+(que também grava piso e distância de caminhada em frontend/src/features/demo/data). O frontend
 detecta database.configured = false em /health e usa o catálogo fictício e uma conta local
 (frontend/src/features/demo). Em produção, defina VITE_DEMO_MODE=false.
 

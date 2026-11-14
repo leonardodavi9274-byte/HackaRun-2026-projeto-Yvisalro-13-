@@ -2,11 +2,12 @@
  * Catálogo de demonstração — TODOS os dados são fictícios.
  * Lojas, produtos, marcas, preços, estoques e distâncias foram inventados para ilustrar as
  * telas do protótipo (docs/imagens/achei). Não representam empresas nem ofertas reais.
- * Os ids das lojas coincidem com o Shopping Aurora fictício servido pela API
- * (0016_demo_mall_seed.sql, 0022_prototype_demo_stores.sql e backend/src/infrastructure/demo).
+ * Os ids das lojas coincidem com as lojas servidas pela API em modo demonstração
+ * (backend/src/infrastructure/demo, planta do Shopping Veredas Douradas fictício).
  */
+import {STORE_PLACEMENT} from "./store-placement.js";
 
-export const DEMO_MALL = {id: "aurora", name: "Shopping Aurora"};
+export const DEMO_MALL = {id: "veredas-douradas", name: "Shopping Veredas Douradas"};
 
 export const CATEGORIES = [
   {id: "moda", label: "Moda"}, {id: "tenis", label: "Tênis"}, {id: "eletronicos", label: "Eletrônicos"},
@@ -14,8 +15,11 @@ export const CATEGORIES = [
   {id: "games", label: "Games"}, {id: "livros", label: "Livros"}, {id: "esporte", label: "Esporte"},
 ];
 
-/** distanceM: distância simulada a partir da entrada principal do mapa de demonstração. */
-export const STORES = [
+/**
+ * floor/distanceM abaixo são os das telas; na planta em escala real eles são substituídos pelo piso e
+ * pela distância de caminhada calculados em store-placement.js (gerado a partir do mapa).
+ */
+const BASE_STORES = [
   {id: "moda-leve", name: "Moda Leve", initials: "ML", color: "#6c34c9", floor: "Piso 1", distanceM: 80},
   {id: "pixel-house", name: "Pixel House", initials: "PH", color: "#2f4fd8", floor: "Piso 2", distanceM: 120},
   {id: "grao-fino", name: "Grão Fino", initials: "GF", color: "#6b3f22", floor: "Piso 1", distanceM: 30},
@@ -37,6 +41,8 @@ export const STORES = [
   {id: "lar-sereno", name: "Lar Sereno", initials: "LS", color: "#92400e", floor: "Piso 3", distanceM: 370},
   {id: "lumen-tech", name: "Lumen Tech", initials: "LT", color: "#334155", floor: "Piso 3", distanceM: 350},
 ];
+
+export const STORES = BASE_STORES.map(s => ({...s, ...(STORE_PLACEMENT[s.id] ? {floor: STORE_PLACEMENT[s.id].floor, distanceM: STORE_PLACEMENT[s.id].distanceM} : {})}));
 
 /**
  * glyph: desenho do produto (ProductGlyph). tint/ink: cores do cartão.

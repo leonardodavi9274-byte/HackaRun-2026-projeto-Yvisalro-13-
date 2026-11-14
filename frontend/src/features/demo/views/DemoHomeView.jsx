@@ -47,7 +47,7 @@ export function DemoHomeView() {
   return <DemoPage current="/inicio" className="demo-home">
     <header className="demo-home-head">
       <AppLink to="/perfil" aria-label="Abrir perfil"><Initials name={account.name} size={58} photo={account.photo} /></AppLink>
-      <div className="demo-home-greeting"><span>{DEMO_MALL.name} · Piso 1</span><h1>Olá, {account.name.split(" ")[0]}</h1></div>
+      <div className="demo-home-greeting"><span>{DEMO_MALL.name} · Térreo</span><h1>Olá, {account.name.split(" ")[0]}</h1></div>
       <button type="button" className="demo-bell" aria-label={drops ? `${drops} itens dos seus desejos baixaram de preço` : "Notificações"} onClick={() => navigate("/desejos")}>
         <Icon name="bell" size={22} />{drops > 0 && <span className="demo-dot" />}
       </button>
